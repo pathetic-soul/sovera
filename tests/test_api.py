@@ -37,6 +37,8 @@ EXPECTED_PATHS = {
     "/api/audit/verify",
     "/ws/agent",
     "/ws/sovereignty",
+    "/static/app.css",
+    "/static/js/agent.js",
 }
 
 
