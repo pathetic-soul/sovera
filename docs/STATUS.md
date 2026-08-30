@@ -19,7 +19,7 @@ project and the cheapest to close.
 | Dimension | Score | Note |
 |---|---|---|
 | Scope delivery | 🟢 62% | legs 1–5 of 8 built and verified; legs 6–8 open |
-| Quality | 🟢 | 221 tests pass, 1 deliberate xfail; mypy strict clean over 52 files |
+| Quality | 🟢 | 225 tests pass, 1 deliberate xfail; mypy strict clean over 52 files |
 | Technical risk | 🟡 | router gate failing 86.7% vs 90%; grounding gap closed by `tools/calc.py` |
 | Delivery risk | 🔴 | no version-control history; golden path never timed end to end |
 | Evidence quality | 🟢 | every headline claim has a measured number and a way to reproduce it |
@@ -36,7 +36,7 @@ and "broken" cost the same). Verdicts are never collapsed: **SKIP is not PASS.**
 
 | Gate | Verdict | Number | Note |
 |---|---|---|---|
-| `pytest` suite | ✅ PASS | 221 passed, 1 xfailed | 35 s |
+| `pytest` suite | ✅ PASS | 225 passed, 1 xfailed | 185 s |
 | `mypy --strict` | ✅ PASS | clean, 52 source files | includes `finetune/`, the largest module |
 | Router accuracy on held-out | ❌ **FAIL** | **86.7% vs 90% gate** | 10 of 75 misrouted — risk R3 |
 | Model accuracy vs base | ✅ PASS | base 85.5% (CI 83.6–87.2), noise floor 1.53 pts | no unproven adapter registered |
@@ -149,7 +149,7 @@ SIH 26117/
 ├─ config/              models.yaml (the ONLY place models are named) + profiles + exemplars
 ├─ data/corpus/         refinery SOPs, API 510 UT reports, filings
 ├─ finetune/            build-time only: QLoRA, benchmarks, corpus curation
-├─ tests/               221 tests, 1 deliberate xfail
+├─ tests/               225 tests, 1 deliberate xfail
 ├─ sandbox/Dockerfile   the network-less execution image
 └─ web/index.html       the panel — vanilla JS, zero dependencies
 ```

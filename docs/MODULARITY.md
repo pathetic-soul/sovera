@@ -9,7 +9,7 @@
 > passed / 1 xfailed**, **mypy strict clean over 45 files**, **router accuracy
 > 80.3%, 13 held-out prompts misrouted** — identical before and after (see
 > each item below for that historical snapshot). Current state, after all six:
-> **221 passed / 1 xfailed**, **mypy strict clean over 52 files**, router
+> **225 passed / 1 xfailed**, **mypy strict clean over 52 files**, router
 > accuracy since moved to **86.7%** by a later, separate corpus-expansion
 > commit — not by this modularity work, which changed no scoring code.
 
@@ -207,7 +207,7 @@ behind each design choice (why lexical, why the hybrid, why standardisation).
 **Move them with their code, do not summarise them.** They are a large part of
 why this repo reads as engineered rather than generated.
 
-Verified: 221 passed (184 at the time), mypy clean, accuracy 80.3% / 13 misrouted — unchanged.
+Verified: 225 passed (184 at the time), mypy clean, accuracy 80.3% / 13 misrouted — unchanged.
 Largest file in the package is now `scorers.py` at ~190 lines, comfortably inside
 the §11 cap with room for leg 6-7 routes.
 
@@ -362,7 +362,7 @@ the demo path.
 A refactor is only correct if the numbers do not move. After each step:
 
 ```powershell
-.venv\Scripts\python -m pytest -q      # 221 passed, 1 xfailed (184 at M1/M3/M4 time) — unchanged by this refactor
+.venv\Scripts\python -m pytest -q      # 225 passed, 1 xfailed (184 at M1/M3/M4 time) — unchanged by this refactor
 .venv\Scripts\python -m mypy           # strict, clean, 52 files (45 at M1/M3/M4 time)
 .venv\Scripts\python gates.py          # router accuracy MUST still read 80.3% at M1/M3/M4 time;
                                         # 86.7% is a later, separate corpus-expansion commit
