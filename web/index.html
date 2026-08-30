@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sovereign Workbench — Containment</title>
+<!-- No CDN, no webfont, no npm build. AGENTS.md §2.1. -->
+<style>
+  :root { --bg:#11131a; --panel:#1a1d27; --line:#2c3040; --fg:#dfe3ee; --dim:#818aa3;
+          --ok:#3fb950; --bad:#f85149; --warn:#d29922; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:13px/1.5 Consolas, monospace; }
+  header { padding:10px 16px; border-bottom:1px solid var(--line); display:flex;
+           gap:16px; align-items:baseline; }
+  h1 { font-size:14px; margin:0; font-weight:600; letter-spacing:.5px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); }
+  section { background:var(--panel); padding:14px 16px; min-height:340px; }
+  h2 { font-size:11px; color:var(--dim); text-transform:uppercase; letter-spacing:1px;
+       margin:0 0 10px; font-weight:600; }
+  .big { font-size:34px; font-weight:700; line-height:1.1; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); } .warn { color:var(--warn); }
+  .dim { color:var(--dim); }
+  button { font:inherit; padding:10px 14px; border:1px solid var(--bad); border-radius:3px;
+           background:#3d1418; color:#ffb3ae; cursor:pointer; }
+  button:hover { background:var(--bad); color:#fff; }
+  button.plain { border-color:var(--line); background:#22263200; color:var(--fg); padding:5px 10px; }
+  table { width:100%; border-collapse:collapse; }
+  td, th { text-align:left; padding:3px 8px 3px 0; border-bottom:1px solid var(--line);
+           white-space:nowrap; }
+  th { color:var(--dim); font-weight:400; font-size:11px; }
+  .scroll { max-height:230px; overflow:auto; }
+  pre { background:#0c0e14; border:1px solid var(--line); padding:10px; overflow:auto;
+        max-height:240px; margin:0; color:var(--dim); font-size:12px; }
+  .rec { border-left:2px solid var(--line); padding:2px 0 2px 8px; margin-bottom:3px; }
+  .rec.egress { border-left-color:var(--bad); color:#ffb3ae; }
+  textarea, input { width:100%; font:inherit; background:#0c0e14; color:var(--fg);
+                    border:1px solid var(--line); border-radius:3px; padding:7px; }
+  @keyframes flash { from { background:#5c1a1f; } to { background:transparent; } }
+  .flash { animation: flash 1.2s ease-out; }
+  button.go { border-color:var(--ok); background:#12301a; color:#8ef0a6; }
+  button.go:hover { background:var(--ok); color:#04140a; }
+  .step { border-left:2px solid var(--line); padding:4px 0 6px 9px; margin-bottom:6px; }
+  .step.gate { border-left-color:var(--warn); background:#241d0c; padding:8px 0 8px 9px; }
+  .step.deny { border-left-color:var(--bad); }
+  .step.done { border-left-color:var(--ok); }
+  .tag { display:inline-block; padding:0 5px; border:1px solid var(--line);
+         border-radius:2px; font-size:11px; color:var(--dim); }
+  .obs { white-space:pre-wrap; color:var(--dim); max-height:120px; overflow:auto;
+         border-left:1px solid var(--line); padding-left:8px; margin-top:3px; }
+  a { color:#79c0ff; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SOVEREIGN WORKBENCH</h1>
+  <span class="dim">PS 26117 · containment panel</span>
+  <span style="margin-left:auto" id="chain" class="dim">chain: …</span>
+  <button class="plain" onclick="checkChain()">verify chain</button>
+</header>
+
+<div class="grid">
+
+  <section>
+    <h2>Egress — blocked packets</h2>
+    <div class="big" id="drops">0</div>
+    <div class="dim" id="mon">connecting…</div>
+
+    <p><button onclick="fire()">▶ Attempt external call (api.openai.com:443)</button></p>
+    <div id="result" class="dim">no attempt this session</div>
+
+    <h2 style="margin-top:18px">Recent drops</h2>
+    <div class="scroll">
+      <table><thead><tr><th>time</th><th>proto</th><th>destination</th><th>port</th></tr></thead>
+      <tbody id="droptbl"><tr><td colspan="4" class="dim">none yet</td></tr></tbody></table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Audit log — hash-chained, append-only</h2>
+    <div class="scroll" id="audit"><span class="dim">waiting…</span></div>
+  </section>
+
+  <section>
+    <h2>Router — deterministic, no LLM</h2>
+    <textarea id="prompt" rows="3" placeholder="Draft an approval note for replacing the PSV-4402 spring"></textarea>
+    <div style="display:flex; gap:8px; align-items:center; margin:8px 0">
+      <input id="attach" placeholder="attachments, e.g. titleblock.png" style="flex:1">
+      <button class="plain" onclick="doRoute()">Route</button>
+    </div>
+    <div id="decision" class="dim">no decision yet</div>
+    <div class="scroll" style="max-height:150px"><table id="scoretbl"></table></div>
+  </section>
+
+  <section>
+    <h2>Registry — <span id="profile" class="dim">…</span></h2>
+    <p><button class="plain" onclick="reloadRegistry()">↻ Reload registry</button>
+       <span id="reloadmsg" class="dim"></span></p>
+    <div class="scroll">
+      <table><thead><tr><th>id</th><th>ref</th><th>dev</th><th>VRAM</th><th>routes</th></tr></thead>
+      <tbody id="modeltbl"></tbody></table>
+    </div>
+    <div id="rejected"></div>
+  </section>
+
+
+  <section style="grid-column:1/-1">
+    <h2>Agent — plan trace, human gate
+      <span id="backend" class="dim" style="text-transform:none; letter-spacing:0">…</span></h2>
+    <textarea id="task" rows="2" placeholder="Read inbox/UT-2024-114-V-2301.md and draft an approval note for the recommendations"></textarea>
+    <div style="display:flex; gap:8px; align-items:center; margin:8px 0">
+      <button class="go" onclick="runAgent()" id="runbtn">▶ Run</button>
+      <span id="agentstat" class="dim">idle</span>
+      <span style="margin-left:auto" class="dim" id="budget"></span>
+    </div>
+    <div id="agentroute" class="dim"></div>
+    <div class="scroll" id="trace" style="max-height:420px; margin-top:8px"></div>
+  </section>
+
+  <section style="grid-column:1/-1; min-height:0">
+    <h2>Firewall ruleset — verbatim</h2>
+    <pre id="rules">loading…</pre>
+  </section>
+
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function render(m) {
+  $('drops').textContent = m.total_drops;
+  $('drops').className = 'big ' + (m.total_drops > 0 ? 'ok' : 'dim');
+  $('mon').textContent = m.monitor_ok
+    ? 'watching Windows Firewall drop log'
+    : 'monitor unavailable — ' + m.monitor_note;
+  $('mon').className = m.monitor_ok ? 'dim' : 'warn';
+
+  if (m.new_drops.length) {
+    const tb = $('droptbl');
+    if (tb.querySelector('.dim')) tb.innerHTML = '';
+    for (const d of m.new_drops) {
+      const tr = tb.insertRow(0);
+      tr.className = 'flash';
+      tr.innerHTML = `<td>${d.ts}</td><td>${d.proto}</td><td>${d.dst}</td><td>${d.dport}</td>`;
+    }
+    while (tb.rows.length > 40) tb.deleteRow(-1);
+  }
+
+  $('audit').innerHTML = m.audit.slice().reverse().map(r =>
+    `<div class="rec ${r.kind === 'egress_attempt' ? 'egress' : ''}">`
+    + `<b>#${r.seq}</b> ${r.kind} `
+    + `<span class="dim">${r.ts.slice(11, 19)} · ${r.hash.slice(0, 8)}</span><br>`
+    + `<span class="dim">${esc(JSON.stringify(r.payload))}</span></div>`
+  ).join('');
+}
+
+const esc = s => s.replace(/[<&]/g, c => c === '<' ? '&lt;' : '&amp;');
+
+function connect() {
+  const ws = new WebSocket(`ws://${location.host}/ws/sovereignty`);
+  ws.onmessage = e => render(JSON.parse(e.data));
+  ws.onclose = () => { $('mon').textContent = 'disconnected — retrying'; setTimeout(connect, 2000); };
+}
+connect();
+
+async function fire() {
+  $('result').textContent = 'attempting…';
+  $('result').className = 'warn';
+  const r = await (await fetch('/api/egress-test', {method: 'POST'})).json();
+  const p = r.payload;
+  $('result').className = p.contained ? 'ok' : 'bad';
+  $('result').textContent = p.contained
+    ? `BLOCKED at ${p.stage} after ${p.elapsed_s}s — ${p.error}`
+    : `!! CONTAINMENT FAILED — reached ${p.resolved}`;
+}
+
+async function checkChain() {
+  const r = await (await fetch('/api/audit/verify')).json();
+  $('chain').className = r.ok ? 'ok' : 'bad';
+  $('chain').textContent = r.ok ? 'chain: intact' : `chain: BROKEN at seq ${r.broken_at}`;
+}
+checkChain();
+
+fetch('/api/firewall/rules').then(r => r.text()).then(t => $('rules').textContent = t);
+
+// --- router + registry ------------------------------------------------------
+
+async function doRoute() {
+  const text = $('prompt').value.trim();
+  if (!text) return;
+  const attachments = $('attach').value.split(',').map(s => s.trim()).filter(Boolean);
+  $('decision').textContent = 'routing…';
+  const d = await (await fetch('/api/route', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({text, attachments})
+  })).json();
+
+  // The reason string IS the explanation shown during a model swap (AGENTS.md 4.2.3).
+  $('decision').className = 'ok';
+  $('decision').innerHTML = `<b>${esc(d.model_id)}</b>`
+    + (d.swap_required ? ' <span class="warn">[swap]</span>' : '')
+    + `<br><span class="dim">${esc(d.reason)}</span>`;
+
+  const ranked = Object.entries(d.scores).sort((a, b) => b[1] - a[1]);
+  const top = ranked[0][1] || 1;
+  $('scoretbl').innerHTML = ranked.map(([k, v]) =>
+    `<tr><td style="width:9em">${k}</td><td style="width:4em">${v.toFixed(3)}</td>`
+    + `<td><div style="height:8px;width:${Math.max(1, 100 * v / top)}%;`
+    + `background:${k === d.task_type ? 'var(--ok)' : 'var(--line)'}"></div></td></tr>`
+  ).join('');
+}
+
+function renderRegistry(s) {
+  $('profile').textContent = `profile ${s.profile}, budget ${s.budget_gb} GB, fallback ${s.fallback}`;
+  $('modeltbl').innerHTML = s.models.map(m =>
+    `<tr><td>${esc(m.id)}</td><td class="dim">${esc(m.ref)}</td><td>${m.device}</td>`
+    + `<td>${m.vram_gb}</td><td class="dim">${esc(m.routes.join(' '))}</td></tr>`
+  ).join('');
+  $('rejected').innerHTML = s.rejected.length
+    ? '<h2 style="margin-top:12px">Rejected</h2>' + s.rejected.map(r =>
+        `<div class="rec egress">${esc(r.model_id)} — ${esc(r.reason)}</div>`).join('')
+    : '';
+}
+
+async function reloadRegistry() {
+  $('reloadmsg').textContent = 'reloading…';
+  const r = await (await fetch('/api/registry/reload', {method: 'POST'})).json();
+  $('reloadmsg').className = r.ok ? 'ok' : 'bad';
+  $('reloadmsg').textContent = r.ok
+    ? `${r.accepted.length} accepted, ${r.rejected.length} rejected`
+    : `keeping previous registry — ${r.error}`;
+  if (r.snapshot) renderRegistry(r.snapshot);
+}
+
+fetch('/api/registry').then(r => r.json()).then(renderRegistry);
+
+// --- agent (legs 4 and 5) ---------------------------------------------------
+// One websocket per run. The channel is bidirectional because the human gate
+// (AGENTS.md 2.4) suspends the loop until the reviewer answers on it.
+
+let agentWs = null;
+
+fetch('/api/backend').then(r => r.json()).then(b => {
+  $('backend').className = b.ok ? 'ok' : 'bad';
+  $('backend').textContent = b.ok ? `ollama up — ${b.note}` : `ollama down — ${b.note}`;
+});
+
+function addStep(cls, html) {
+  const div = document.createElement('div');
+  div.className = 'step ' + cls;
+  div.innerHTML = html;
+  $('trace').appendChild(div);
+  $('trace').scrollTop = $('trace').scrollHeight;
+  return div;
+}
+
+function runAgent() {
+  const text = $('task').value.trim();
+  if (!text || (agentWs && agentWs.readyState === WebSocket.OPEN)) return;
+  $('trace').innerHTML = '';
+  $('agentroute').textContent = '';
+  $('budget').textContent = '';
+  $('agentstat').textContent = 'connecting…';
+  $('agentstat').className = 'warn';
+  $('runbtn').disabled = true;
+
+  const ws = new WebSocket(`ws://${location.host}/ws/agent`);
+  agentWs = ws;
+  ws.onopen = () => {
+    $('agentstat').textContent = 'running';
+    ws.send(JSON.stringify({text, attachments: []}));
+  };
+  ws.onmessage = e => onAgentEvent(JSON.parse(e.data));
+  ws.onclose = () => {
+    $('runbtn').disabled = false;
+    if ($('agentstat').textContent === 'running') $('agentstat').textContent = 'disconnected';
+  };
+}
+
+function onAgentEvent(ev) {
+  const d = ev.data;
+  if (ev.type === 'route') {
+    // Rendered before the first token is requested, so the 2-5 s model load
+    // reads as an explanation rather than a stall (AGENTS.md 4.2.3).
+    $('agentroute').className = 'ok';
+    $('agentroute').innerHTML = `<b>${esc(d.model_id)}</b>`
+      + (d.swap_required ? ' <span class="warn">[loading — swap]</span>'
+                         : ' <span class="dim">[loading]</span>')
+      + `<br><span class="dim">${esc(d.reason)}</span>`;
+    return;
+  }
+
+  if (ev.type === 'approval_request') {
+    const div = addStep('gate',
+      `<b>step ${d.n}</b> <span class="tag">${esc(d.tool)}</span> `
+      + `<span class="warn">awaiting human approval</span>`
+      + `<div class="dim">${esc(d.thought)}</div>`
+      + `<div class="obs">${esc(JSON.stringify(d.args, null, 1))}</div>`
+      + `<p style="margin:8px 0 0"><button class="go" data-yes>✓ Approve</button> `
+      + `<button data-no>✕ Reject</button></p>`);
+    $('agentstat').textContent = 'waiting for approval';
+    const answer = ok => {
+      agentWs.send(JSON.stringify({approve: ok}));
+      div.querySelector('p').innerHTML =
+        ok ? '<span class="ok">approved</span>' : '<span class="bad">rejected</span>';
+      $('agentstat').textContent = 'running';
+    };
+    div.querySelector('[data-yes]').onclick = () => answer(true);
+    div.querySelector('[data-no]').onclick = () => answer(false);
+    return;
+  }
+
+  if (ev.type === 'step' || ev.type === 'denied') {
+    const links = (d.artifacts || []).map(a =>
+      `<a href="/api/artifact?path=${encodeURIComponent(a)}">${esc(a)}</a>`).join(' ');
+    addStep(ev.type === 'denied' ? 'deny' : '',
+      `<b>step ${d.n}</b> <span class="tag">${esc(d.tool || '—')}</span> `
+      + (d.repaired ? '<span class="warn tag">repaired</span> ' : '')
+      + `<span class="dim">${d.tokens_used} tok</span>`
+      + `<div class="dim">${esc(d.thought)}</div>`
+      + `<div class="obs">${esc(d.observation || '')}</div>`
+      + (links ? `<div>📄 ${links}</div>` : ''));
+    return;
+  }
+
+  if (ev.type === 'final') {
+    addStep('done', `<b>answer</b><div class="obs">${esc(d.answer)}</div>`);
+    $('agentstat').className = d.halted ? 'warn' : 'ok';
+    $('agentstat').textContent = d.halted ? 'halted' : 'done';
+    $('budget').textContent = `${d.tokens_used} / 20000 tokens · ${d.steps ?? ''} steps`;
+    return;
+  }
+
+  if (ev.type === 'error') {
+    addStep('deny', `<b class="bad">error</b><div class="obs">${esc(d.error)}</div>`);
+    $('agentstat').className = 'bad';
+    $('agentstat').textContent = 'failed';
+  }
+}
+
+</script>
+</body>
+</html>

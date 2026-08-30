@@ -1,0 +1,176 @@
+{"prompt": "Plan the steps for the CDU overhead line inspection during the upcoming shutdown", "task_type": "plan"}
+{"prompt": "Lay out the sequence of activities to close out the MOC for the VDU vacuum ejector change", "task_type": "plan"}
+{"prompt": "Break down the work needed to prepare the API 653 external inspection package for Tank 12", "task_type": "plan"}
+{"prompt": "Outline how we get from field UT readings to a signed recommendation for V-2301", "task_type": "plan"}
+{"prompt": "Give me a step by step approach for the corrosion under insulation survey on the SRU lines", "task_type": "plan"}
+{"prompt": "What is the order of activities to finish the PSV testing campaign before turnaround", "task_type": "plan"}
+{"prompt": "Draw up a plan to digitise the last five years of inspection records for the HGU", "task_type": "plan"}
+{"prompt": "Help me organise the tasks for commissioning the new hydrogen compressor lube oil skid", "task_type": "plan"}
+{"prompt": "Structure the workflow for raising and closing a management of change request", "task_type": "plan"}
+{"prompt": "Sketch out the stages of a risk based inspection study on the crude preheat train", "task_type": "plan"}
+{"prompt": "Plan how to cover all CDU piping circuits within the two week shutdown window", "task_type": "plan"}
+{"prompt": "What steps should we follow before taking 10-P-101A out of service", "task_type": "plan"}
+{"prompt": "Lay out a roadmap for moving our inspection records off paper", "task_type": "plan"}
+{"prompt": "Give me a checklist of steps for closing the outstanding API 570 recommendations", "task_type": "plan"}
+{"prompt": "Outline the stages of the tender process for the third party inspection contract", "task_type": "plan"}
+{"prompt": "Plan the shutdown activities for the FCC regenerator internals inspection", "task_type": "plan"}
+{"prompt": "What is the minimum required thickness for a 6 inch schedule 40 carbon steel line per API 570", "task_type": "qa"}
+{"prompt": "How often does API 510 require internal inspection of a pressure vessel in clean service", "task_type": "qa"}
+{"prompt": "Does our SOP allow DPI instead of MPI on austenitic stainless welds", "task_type": "qa"}
+{"prompt": "Who signs off a work permit for confined space entry in the FCC unit", "task_type": "qa"}
+{"prompt": "What does API 653 say about settlement measurement intervals for storage tanks", "task_type": "qa"}
+{"prompt": "Explain what a corrosion monitoring location is and how we choose one", "task_type": "qa"}
+{"prompt": "Is a hydrotest required after a weld repair on a class 300 flange", "task_type": "qa"}
+{"prompt": "What is the difference between retirement thickness and minimum alert thickness in our procedure", "task_type": "qa"}
+{"prompt": "Which NDT method should be used to look for hydrogen induced cracking in the HGU", "task_type": "qa"}
+{"prompt": "Tell me what the vendor manual recommends as the overhaul interval for the crude charge pump", "task_type": "qa"}
+{"prompt": "When must a relief valve be pulled for bench testing under our procedure", "task_type": "qa"}
+{"prompt": "Why do we insulate the vacuum transfer line differently from the rest of the unit", "task_type": "qa"}
+{"prompt": "What are the acceptance criteria for pitting depth on a tank floor plate", "task_type": "qa"}
+{"prompt": "Does the code permit an on stream inspection in place of internal inspection here", "task_type": "qa"}
+{"prompt": "Explain the difference between API 570 and API 574 in plain terms", "task_type": "qa"}
+{"prompt": "According to our SOP who is authorised to approve an inspection deferral", "task_type": "qa"}
+{"prompt": "Summarise this forty page vendor inspection report into half a page", "task_type": "summarize"}
+{"prompt": "Summarise the attached turnaround close out report for the DGM", "task_type": "summarize"}
+{"prompt": "Give me the key points from the attached third party API 570 audit", "task_type": "summarize"}
+{"prompt": "Condense the last three inspection reports for V-2301 into a short brief", "task_type": "summarize"}
+{"prompt": "Shorten this turnaround close out report to only the findings that need action", "task_type": "summarize"}
+{"prompt": "Boil the corrosion study down to five bullet points for the morning meeting", "task_type": "summarize"}
+{"prompt": "Write a brief overview of what happened in the SRU during the last shutdown", "task_type": "summarize"}
+{"prompt": "Cut this tender technical specification down to the clauses that affect inspection", "task_type": "summarize"}
+{"prompt": "Recap the main observations from the CUI survey document", "task_type": "summarize"}
+{"prompt": "Give a short digest of this vendor correspondence thread about the compressor delivery", "task_type": "summarize"}
+{"prompt": "Reduce the attached SOP to a one paragraph description of its scope", "task_type": "summarize"}
+{"prompt": "Summarise the findings of the RBI study in a page", "task_type": "summarize"}
+{"prompt": "Give me the highlights of this API 653 tank inspection report", "task_type": "summarize"}
+{"prompt": "Condense these vendor quotations into a short comparison paragraph", "task_type": "summarize"}
+{"prompt": "Provide a brief abstract of the failure investigation report", "task_type": "summarize"}
+{"prompt": "Sum up what the last five years of thickness surveys tell us about this circuit", "task_type": "summarize"}
+{"prompt": "Draft an approval note for replacing the spring on PSV-4402", "task_type": "approval_note"}
+{"prompt": "Draft an approval note for the weld repair on the V-2301 shell", "task_type": "approval_note"}
+{"prompt": "Prepare a note seeking sign off to extend the inspection interval on Tank 12 by two years", "task_type": "approval_note"}
+{"prompt": "Write up an approval note for the MOC to reroute the VDU overhead vent line", "task_type": "approval_note"}
+{"prompt": "I need a note for the GM signature approving the weld repair on V-2301", "task_type": "approval_note"}
+{"prompt": "Draft the internal note requesting approval for emergency procurement of the replacement bundle", "task_type": "approval_note"}
+{"prompt": "Prepare an approval note recommending we derate the CDU overhead line to 12 bar", "task_type": "approval_note"}
+{"prompt": "Write a note to management seeking concurrence on deferring the FCC catalyst change", "task_type": "approval_note"}
+{"prompt": "Draft a sign off note for the revised corrosion monitoring plan for the HGU", "task_type": "approval_note"}
+{"prompt": "Compose an approval note for engaging a third party for the Tank 12 inspection", "task_type": "approval_note"}
+{"prompt": "Prepare a note for approval to take 10-P-101A out of service for overhaul", "task_type": "approval_note"}
+{"prompt": "Draft a note seeking sanction for the additional scaffolding cost", "task_type": "approval_note"}
+{"prompt": "Write an approval note recommending the inspection deferral for the SRU condenser", "task_type": "approval_note"}
+{"prompt": "Prepare the note for the committee seeking approval of the revised RBI plan", "task_type": "approval_note"}
+{"prompt": "Draft a memo for management approval of the emergency bundle replacement", "task_type": "approval_note"}
+{"prompt": "Write up the note requesting sign off on the revised inspection interval", "task_type": "approval_note"}
+{"prompt": "Write a python script to compute corrosion rate from two thickness readings and the interval", "task_type": "code_write"}
+{"prompt": "Write a script that reads a csv of UT readings and flags anything below retirement thickness", "task_type": "code_write"}
+{"prompt": "Code something to parse equipment tags out of a folder of text files", "task_type": "code_write"}
+{"prompt": "Write a small program to calculate remaining life for a list of CMLs", "task_type": "code_write"}
+{"prompt": "Build a script that converts our inspection csv into the format the RBI tool expects", "task_type": "code_write"}
+{"prompt": "I need python that plots the thickness trend over time for one CML", "task_type": "code_write"}
+{"prompt": "Write code to batch rename scanned report files by equipment tag and date", "task_type": "code_write"}
+{"prompt": "Generate a script that checks a directory of pdfs and lists the ones missing a tag number", "task_type": "code_write"}
+{"prompt": "Write a function that computes minimum required thickness per API 570 for a given pipe", "task_type": "code_write"}
+{"prompt": "Create a script to compare two revisions of the equipment list and show what changed", "task_type": "code_write"}
+{"prompt": "Automate the extraction of due dates from our inspection csv with a python script", "task_type": "code_write"}
+{"prompt": "Write me a program that merges the monthly UT files into one dataset", "task_type": "code_write"}
+{"prompt": "Code a utility to validate equipment tag formats across our records", "task_type": "code_write"}
+{"prompt": "Write a python function that returns the next inspection date given the last one", "task_type": "code_write"}
+{"prompt": "Build me a small script to count findings by severity in the report export", "task_type": "code_write"}
+{"prompt": "Generate python code to read the thickness workbook and write a summary csv", "task_type": "code_write"}
+{"prompt": "This script throws a KeyError on the thickness column, fix it", "task_type": "code_fix"}
+{"prompt": "Fix this script, it throws a KeyError on the thickness column", "task_type": "code_fix"}
+{"prompt": "My corrosion rate function returns negative values sometimes, what is wrong with the code", "task_type": "code_fix"}
+{"prompt": "The csv parser breaks when the tag has a slash in it, patch the script", "task_type": "code_fix"}
+{"prompt": "Debug this code, it crashes on empty inspection records", "task_type": "code_fix"}
+{"prompt": "Fix the off by one error in my remaining life loop", "task_type": "code_fix"}
+{"prompt": "This script worked last month and now throws an encoding error on the scanned filenames", "task_type": "code_fix"}
+{"prompt": "The output workbook is empty even though the program runs without error, find the bug", "task_type": "code_fix"}
+{"prompt": "Repair this function, the date parsing fails on reports from before 2019", "task_type": "code_fix"}
+{"prompt": "My script hangs on large report folders, sort out the problem", "task_type": "code_fix"}
+{"prompt": "Correct the unit conversion in this thickness code, the numbers come out ten times too big", "task_type": "code_fix"}
+{"prompt": "Here is the traceback, tell me what is wrong with my script", "task_type": "code_fix"}
+{"prompt": "Debug why my python program skips the last row of every file", "task_type": "code_fix"}
+{"prompt": "Fix the exception this code raises when the tag column is missing", "task_type": "code_fix"}
+{"prompt": "My script gives the wrong corrosion rate, find the mistake in the code", "task_type": "code_fix"}
+{"prompt": "This function returns None instead of the thickness value, repair it", "task_type": "code_fix"}
+{"prompt": "Extract the findings table from this scanned inspection report", "task_type": "scan_understanding"}
+{"prompt": "Extract the equipment tag and inspection date out of the attached scan", "task_type": "scan_understanding"}
+{"prompt": "Read this scanned API 570 report and give me the thickness readings as a table", "task_type": "scan_understanding"}
+{"prompt": "What does the attached scanned work permit say about the validity period", "task_type": "scan_understanding"}
+{"prompt": "Digitise the recommendation section of this scanned report", "task_type": "scan_understanding"}
+{"prompt": "Get me the inspector name and the method used from this scanned document", "task_type": "scan_understanding"}
+{"prompt": "Convert the attached scanned vendor certificate into structured fields", "task_type": "scan_understanding"}
+{"prompt": "Read the scanned MOC form and list what is changing", "task_type": "scan_understanding"}
+{"prompt": "Extract the next due date from this scanned inspection record", "task_type": "scan_understanding"}
+{"prompt": "Turn the table on page three of this scanned report into a proper table", "task_type": "scan_understanding"}
+{"prompt": "OCR this scanned report and give me the text", "task_type": "scan_understanding"}
+{"prompt": "Pull the structured fields out of this scanned inspection sheet", "task_type": "scan_understanding"}
+{"prompt": "Read the printed text on this scanned test certificate", "task_type": "scan_understanding"}
+{"prompt": "Digitise this scanned thickness survey into rows I can use", "task_type": "scan_understanding"}
+{"prompt": "Extract the header details from the scanned inspection form", "task_type": "scan_understanding"}
+{"prompt": "What is printed in the recommendation box of this scanned report", "task_type": "scan_understanding"}
+{"prompt": "What line number connects V-2301 to the overhead condenser on this P&ID", "task_type": "drawing_qa"}
+{"prompt": "Read the title block on this drawing and tell me the revision and date", "task_type": "drawing_qa"}
+{"prompt": "Which valves are shown upstream of PSV-4402 in the attached P&ID", "task_type": "drawing_qa"}
+{"prompt": "What is the drawing number and sheet number on this isometric", "task_type": "drawing_qa"}
+{"prompt": "On this P&ID what service is the line going into the crude preheat exchanger", "task_type": "drawing_qa"}
+{"prompt": "Identify the equipment tags visible in this section of the drawing", "task_type": "drawing_qa"}
+{"prompt": "What does the title block say about who approved this drawing", "task_type": "drawing_qa"}
+{"prompt": "Tell me the pipe class marked on this line in the attached drawing", "task_type": "drawing_qa"}
+{"prompt": "From this P&ID which unit does the vent header discharge to", "task_type": "drawing_qa"}
+{"prompt": "Check the drawing and tell me whether there is a spectacle blind on this line", "task_type": "drawing_qa"}
+{"prompt": "On the isometric what is the pipe size between the two flanges", "task_type": "drawing_qa"}
+{"prompt": "What revision is this P&ID and when was it last updated", "task_type": "drawing_qa"}
+{"prompt": "Trace the line from the drum outlet on this P&ID and tell me where it goes", "task_type": "drawing_qa"}
+{"prompt": "Which drawing sheet continues this line off the right hand edge", "task_type": "drawing_qa"}
+{"prompt": "What are the design conditions noted on this drawing", "task_type": "drawing_qa"}
+{"prompt": "Look at the P&ID and list the instruments on the overhead line", "task_type": "drawing_qa"}
+{"prompt": "Read the inspector handwritten remarks at the bottom of this field note", "task_type": "handwriting"}
+{"prompt": "Transcribe the handwritten thickness readings from this field sheet", "task_type": "handwriting"}
+{"prompt": "What does the handwritten note in the margin say", "task_type": "handwriting"}
+{"prompt": "Decipher the handwritten observations on this inspection card", "task_type": "handwriting"}
+{"prompt": "Convert this handwritten log book page into text", "task_type": "handwriting"}
+{"prompt": "The inspector wrote his findings by hand, extract what he wrote", "task_type": "handwriting"}
+{"prompt": "Read the handwritten signature block and date on this permit", "task_type": "handwriting"}
+{"prompt": "Type up the handwritten comments on the attached shift handover sheet", "task_type": "handwriting"}
+{"prompt": "Get the handwritten CML numbers off this field survey sheet", "task_type": "handwriting"}
+{"prompt": "What is written by hand next to the tag number in this photo", "task_type": "handwriting"}
+{"prompt": "Transcribe the handwriting on this field inspection slip", "task_type": "handwriting"}
+{"prompt": "The remarks column is filled in by hand, read it out for me", "task_type": "handwriting"}
+{"prompt": "Read the scribbled note the inspector left on the drawing", "task_type": "handwriting"}
+{"prompt": "Make out what is handwritten in the observations box", "task_type": "handwriting"}
+{"prompt": "Convert the hand written readings on this sheet into a table", "task_type": "handwriting"}
+{"prompt": "His handwriting is hard to read, tell me what this says", "task_type": "handwriting"}
+{"prompt": "Calculate the remaining life of V-2301 given 12.4 mm current, 9.5 mm retirement and 0.18 mm per year", "task_type": "calc"}
+{"prompt": "Calculate the corrosion rate if thickness went from 14.2 mm to 12.8 mm over six years", "task_type": "calc"}
+{"prompt": "Work out the corrosion rate from 14.2 mm down to 12.8 mm across six years", "task_type": "calc"}
+{"prompt": "Compute the minimum required thickness for 150 psi design on an 8 inch line", "task_type": "calc"}
+{"prompt": "How many years until this CML hits retirement thickness at 0.2 mm per year", "task_type": "calc"}
+{"prompt": "Find the next inspection due date at half the remaining life", "task_type": "calc"}
+{"prompt": "Calculate the MAWP for this shell given the measured thickness of 11.2 mm", "task_type": "calc"}
+{"prompt": "Work out the hydrotest pressure at 1.3 times design for this vessel", "task_type": "calc"}
+{"prompt": "Compute the average and the worst case corrosion rate across these five readings", "task_type": "calc"}
+{"prompt": "Determine the required relief area for this fire case scenario", "task_type": "calc"}
+{"prompt": "Calculate the volume held between the two gauge readings on the tank", "task_type": "calc"}
+{"prompt": "What is the remaining life if the current thickness is 10.1 mm and the limit is 8 mm", "task_type": "calc"}
+{"prompt": "Work out how much wall we have lost since the 2019 survey", "task_type": "calc"}
+{"prompt": "Compute the corrosion allowance left on this circuit", "task_type": "calc"}
+{"prompt": "Calculate the short term and long term corrosion rates from these numbers", "task_type": "calc"}
+{"prompt": "Determine the retirement date at the measured wall loss rate", "task_type": "calc"}
+{"prompt": "Build a workbook tracking UT thickness readings for all CDU overhead CMLs", "task_type": "spreadsheet"}
+{"prompt": "Make me a sheet of equipment due for inspection in the next quarter", "task_type": "spreadsheet"}
+{"prompt": "Create a tabular tracker listing every PSV with its last test date and next due date", "task_type": "spreadsheet"}
+{"prompt": "Put these thickness readings into a workbook with a column for corrosion rate", "task_type": "spreadsheet"}
+{"prompt": "Generate a workbook summarising the turnaround inspection scope", "task_type": "spreadsheet"}
+{"prompt": "I want a tabular listing of all open recommendations by unit", "task_type": "spreadsheet"}
+{"prompt": "Export the tank inspection schedule as a workbook with one row per tank", "task_type": "spreadsheet"}
+{"prompt": "Prepare a tracker sheet for the MOC items pending approval", "task_type": "spreadsheet"}
+{"prompt": "Build a table comparing budgeted versus actual inspection man hours by unit", "task_type": "spreadsheet"}
+{"prompt": "Make a sheet of vendor quotes received for the replacement tube bundle", "task_type": "spreadsheet"}
+{"prompt": "Create a register of all pressure vessels with columns for next due date", "task_type": "spreadsheet"}
+{"prompt": "Put the CML data into rows and columns I can filter", "task_type": "spreadsheet"}
+{"prompt": "Build me a tracker with one row per finding and a status column", "task_type": "spreadsheet"}
+{"prompt": "Make a tabular summary of thickness readings by circuit", "task_type": "spreadsheet"}
+{"prompt": "Prepare a workbook with separate tabs for each unit", "task_type": "spreadsheet"}
+{"prompt": "Create a sheet listing equipment tags against their inspection intervals", "task_type": "spreadsheet"}

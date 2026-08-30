@@ -1,0 +1,62 @@
+[project]
+name = "sovereign-workbench"
+version = "0.1.0"
+description = "Air-gapped agentic AI workbench — SIH 2026 PS 26117 (MRPL)"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "pyyaml>=6.0",
+    "python-docx>=1.1",
+    "sympy>=1.13",
+    # core/embed.py imports numpy at module scope, and core/routing/classifier.py
+    # imports embed at module scope, so the app does not start without it.
+    # The encoder weights are optional (the router falls back to the lexical
+    # scorer); numpy itself is not. torch/transformers stay lazy imports.
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "mypy>=1.13", "types-PyYAML>=6.0"]
+# Build-time only (AGENTS.md §3): corpus curation and fine-tuning. Never
+# imported by core/, tools/ or backends/, so a demo install does not need them.
+curate = ["pypdf>=5.0", "cryptography>=3.1", "kaggle>=1.7",
+          # finetune/scrape.py. The [fetchers] extra pulls curl_cffi, without
+          # which scrapling.fetchers fails to import at all.
+          "scrapling[fetchers]>=0.4"]
+
+[project.scripts]
+audit = "core.audit:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["core", "core.routing", "sovereignty", "backends", "tools", "finetune"]
+
+[tool.mypy]
+strict = true
+# finetune/ is build-time code, but it is the largest module in the repo
+# (~2,900 lines) and was excluded here, so "mypy strict, clean" was a claim
+# about two thirds of the codebase. It is checked now.
+files = ["core", "sovereignty", "backends", "tools", "finetune"]
+
+[[tool.mypy.overrides]]
+module = "docx.*"          # python-docx ships no py.typed
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "sympy.*"         # sympy ships no py.typed marker either
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# The training stack: no py.typed markers, and these are build-time only.
+module = ["torch.*", "transformers.*", "peft.*", "bitsandbytes.*",
+          "datasets.*", "kaggle.*", "kagglesdk.*", "pypdf.*", "numpy.*",
+          "huggingface_hub.*", "safetensors.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

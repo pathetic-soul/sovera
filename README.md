@@ -279,7 +279,7 @@ in §6, neither of which is in legs 4–5. Tracked as an open question.
 | `sovereignty/firewall.ps1` | the egress control, shown verbatim in the UI |
 | `sovereignty/verify.ps1` | pre-demo assertions |
 | `core/registry.py` | loads/validates/hot-reloads `models.yaml`, enforces the VRAM budget |
-| `core/classifier.py` | deterministic task_type + modality detection |
+| `core/routing/` | deterministic task_type + modality detection |
 | `core/router.py` | `RouteDecision` with a human-readable rationale |
 | `config/routing_exemplars.jsonl` | 176 hand-labelled refinery prompts, 11 task types |
 | `web/index.html` | the panel — vanilla JS, no dependencies |
@@ -317,6 +317,8 @@ Two things worth settling first:
 - The **grounding gap** in leg 5 above. It is the difference between a demo
   that impresses and one that gets a wrong thickness figure questioned on
   stage.
-#   s o v e r a  
- #   s o v e r a  
+#   s o v e r a 
+ 
+ #   s o v e r a 
+ 
  

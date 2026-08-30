@@ -1,0 +1,7 @@
+# Scaling story only — not implemented, not measured. AGENTS.md §5.
+id: 120gb
+vram_budget_gb: 110.0
+note: >
+  Server class (H100 80 GB, or 2x A6000). A gpt-oss-120b class model stays
+  resident; swap_required goes to false for every route and the swap-masking
+  UI in §4.2.3 becomes dead code. Same registry, same router, no code change.

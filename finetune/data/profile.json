@@ -1,0 +1,35 @@
+{
+  "composition": {
+    "inspection_derive": 416,
+    "interval": 260,
+    "lookup": 286,
+    "unknown": 208,
+    "clarify": 156,
+    "repair": 208,
+    "multi_doc": 208,
+    "deliverable": 260,
+    "direct": 130,
+    "calc_only": 286,
+    "financial": 260,
+    "finqa": 136
+  },
+  "traces": 2814,
+  "unique_user_prompts": 1699,
+  "distinct_tool_sets": 689,
+  "first_action": {
+    "fs_read": 2106,
+    "calc": 422,
+    "<answer>": 286
+  },
+  "assistant_turns": {
+    "1": 286,
+    "2": 916,
+    "3": 1404,
+    "4": 208
+  },
+  "tool_calls": {
+    "fs_read": 2522,
+    "calc": 1566,
+    "doc_write": 260
+  }
+}

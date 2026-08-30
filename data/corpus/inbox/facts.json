@@ -1,0 +1,5451 @@
+[
+  {
+    "doc": "inbox/UT-2023-100-V-2331.md",
+    "tag": "V-2331",
+    "unit": "CCR",
+    "code": "API 510",
+    "inspection_date": "2023-07-18",
+    "previous_date": "2017-09-03",
+    "interval_years": 5.87,
+    "t_min": 8.7,
+    "nominal_mm": 12.0,
+    "design_pressure_barg": 8.0,
+    "design_temp_c": 160,
+    "material": "SA-516 Gr.70",
+    "inspector": "N. Rao",
+    "governing_grid": "S9",
+    "governing_current": 9.2,
+    "governing_previous": 10.4,
+    "governing_loss": 1.2,
+    "corrosion_rate_mm_yr": 0.2044,
+    "remaining_life_years": 2.4462,
+    "next_interval_years": 1.2231,
+    "max_loss_mm": 1.9,
+    "max_loss_grid": "S10",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 11.4,
+        "current": 10.8,
+        "loss": 0.6,
+        "rate": 0.1022,
+        "remaining_life": 20.5479
+      },
+      "S2": {
+        "previous": 11.8,
+        "current": 11.0,
+        "loss": 0.8,
+        "rate": 0.1363,
+        "remaining_life": 16.8745
+      },
+      "S3": {
+        "previous": 11.8,
+        "current": 11.4,
+        "loss": 0.4,
+        "rate": 0.0681,
+        "remaining_life": 39.6476
+      },
+      "S4": {
+        "previous": 11.5,
+        "current": 11.1,
+        "loss": 0.4,
+        "rate": 0.0681,
+        "remaining_life": 35.2423
+      },
+      "S5": {
+        "previous": 11.6,
+        "current": 11.2,
+        "loss": 0.4,
+        "rate": 0.0681,
+        "remaining_life": 36.7107
+      },
+      "S6": {
+        "previous": 11.6,
+        "current": 10.8,
+        "loss": 0.8,
+        "rate": 0.1363,
+        "remaining_life": 15.4072
+      },
+      "S7": {
+        "previous": 11.4,
+        "current": 10.9,
+        "loss": 0.5,
+        "rate": 0.0852,
+        "remaining_life": 25.8216
+      },
+      "S8": {
+        "previous": 11.0,
+        "current": 10.0,
+        "loss": 1.0,
+        "rate": 0.1704,
+        "remaining_life": 7.6291
+      },
+      "S9": {
+        "previous": 10.4,
+        "current": 9.2,
+        "loss": 1.2,
+        "rate": 0.2044,
+        "remaining_life": 2.4462
+      },
+      "S10": {
+        "previous": 11.1,
+        "current": 9.2,
+        "loss": 1.9,
+        "rate": 0.3237,
+        "remaining_life": 1.5446
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-101-T-4588.md",
+    "tag": "T-4588",
+    "unit": "CCR",
+    "code": "API 653",
+    "inspection_date": "2026-10-15",
+    "previous_date": "2018-11-13",
+    "interval_years": 7.92,
+    "t_min": 4.3,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 13.6,
+    "design_temp_c": 365,
+    "material": "SA-283 Gr.C",
+    "inspector": "S. Kulkarni",
+    "governing_grid": "S4",
+    "governing_current": 7.4,
+    "governing_previous": 7.6,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0253,
+    "remaining_life_years": 122.5296,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 7.8,
+        "current": 7.7,
+        "loss": 0.1,
+        "rate": 0.0126,
+        "remaining_life": 269.8413
+      },
+      "S2": {
+        "previous": 8.0,
+        "current": 7.8,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 138.3399
+      },
+      "S3": {
+        "previous": 8.0,
+        "current": 7.9,
+        "loss": 0.1,
+        "rate": 0.0126,
+        "remaining_life": 285.7143
+      },
+      "S4": {
+        "previous": 7.6,
+        "current": 7.4,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 122.5296
+      },
+      "S5": {
+        "previous": 7.8,
+        "current": 7.6,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 130.4348
+      },
+      "S6": {
+        "previous": 7.9,
+        "current": 7.7,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 134.3874
+      },
+      "S7": {
+        "previous": 7.6,
+        "current": 7.5,
+        "loss": 0.1,
+        "rate": 0.0126,
+        "remaining_life": 253.9683
+      },
+      "S8": {
+        "previous": 7.9,
+        "current": 7.7,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 134.3874
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-102-D-1111.md",
+    "tag": "D-1111",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2023-02-19",
+    "previous_date": "2018-11-23",
+    "interval_years": 4.24,
+    "t_min": 10.3,
+    "nominal_mm": 14.0,
+    "design_pressure_barg": 23.9,
+    "design_temp_c": 285,
+    "material": "SA-516 Gr.70",
+    "inspector": "S. Kulkarni",
+    "governing_grid": "S3",
+    "governing_current": 13.3,
+    "governing_previous": 13.4,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0236,
+    "remaining_life_years": 127.1186,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 13.5,
+        "current": 13.4,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 131.3559
+      },
+      "S2": {
+        "previous": 13.9,
+        "current": 13.7,
+        "loss": 0.2,
+        "rate": 0.0472,
+        "remaining_life": 72.0339
+      },
+      "S3": {
+        "previous": 13.4,
+        "current": 13.3,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 127.1186
+      },
+      "S4": {
+        "previous": 13.5,
+        "current": 13.4,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 131.3559
+      },
+      "S5": {
+        "previous": 13.6,
+        "current": 13.4,
+        "loss": 0.2,
+        "rate": 0.0472,
+        "remaining_life": 65.678
+      },
+      "S6": {
+        "previous": 13.9,
+        "current": 13.7,
+        "loss": 0.2,
+        "rate": 0.0472,
+        "remaining_life": 72.0339
+      },
+      "S7": {
+        "previous": 13.5,
+        "current": 13.3,
+        "loss": 0.2,
+        "rate": 0.0472,
+        "remaining_life": 63.5593
+      },
+      "S8": {
+        "previous": 13.7,
+        "current": 13.5,
+        "loss": 0.2,
+        "rate": 0.0472,
+        "remaining_life": 67.7966
+      },
+      "S9": {
+        "previous": 14.0,
+        "current": 13.8,
+        "loss": 0.2,
+        "rate": 0.0472,
+        "remaining_life": 74.1525
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-103-L-2285.md",
+    "tag": "L-2285",
+    "unit": "DHDT",
+    "code": "API 570",
+    "inspection_date": "2025-01-02",
+    "previous_date": "2016-10-20",
+    "interval_years": 8.2,
+    "t_min": 6.8,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 13.1,
+    "design_temp_c": 240,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "N. Rao",
+    "governing_grid": "S7",
+    "governing_current": 7.8,
+    "governing_previous": 9.9,
+    "governing_loss": 2.1,
+    "corrosion_rate_mm_yr": 0.2561,
+    "remaining_life_years": 3.9047,
+    "next_interval_years": 1.9524,
+    "max_loss_mm": 2.3,
+    "max_loss_grid": "S8",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 10.8,
+        "current": 10.3,
+        "loss": 0.5,
+        "rate": 0.061,
+        "remaining_life": 57.377
+      },
+      "S2": {
+        "previous": 11.0,
+        "current": 10.3,
+        "loss": 0.7,
+        "rate": 0.0854,
+        "remaining_life": 40.9836
+      },
+      "S3": {
+        "previous": 10.6,
+        "current": 10.3,
+        "loss": 0.3,
+        "rate": 0.0366,
+        "remaining_life": 95.6284
+      },
+      "S4": {
+        "previous": 10.8,
+        "current": 10.3,
+        "loss": 0.5,
+        "rate": 0.061,
+        "remaining_life": 57.377
+      },
+      "S5": {
+        "previous": 10.5,
+        "current": 9.9,
+        "loss": 0.6,
+        "rate": 0.0732,
+        "remaining_life": 42.3497
+      },
+      "S6": {
+        "previous": 10.4,
+        "current": 10.0,
+        "loss": 0.4,
+        "rate": 0.0488,
+        "remaining_life": 65.5738
+      },
+      "S7": {
+        "previous": 9.9,
+        "current": 7.8,
+        "loss": 2.1,
+        "rate": 0.2561,
+        "remaining_life": 3.9047
+      },
+      "S8": {
+        "previous": 10.2,
+        "current": 7.9,
+        "loss": 2.3,
+        "rate": 0.2805,
+        "remaining_life": 3.9216
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-104-E-3721.md",
+    "tag": "E-3721",
+    "unit": "FCC",
+    "code": "API 510",
+    "inspection_date": "2023-12-19",
+    "previous_date": "2016-08-18",
+    "interval_years": 7.33,
+    "t_min": 7.0,
+    "nominal_mm": 10.0,
+    "design_pressure_barg": 23.5,
+    "design_temp_c": 180,
+    "material": "SA-179",
+    "inspector": "P. Shetty",
+    "governing_grid": "S7",
+    "governing_current": 9.4,
+    "governing_previous": 9.6,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0273,
+    "remaining_life_years": 87.9121,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S4",
+    "grid_count": 7,
+    "per_grid": {
+      "S1": {
+        "previous": 9.7,
+        "current": 9.6,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 191.1765
+      },
+      "S2": {
+        "previous": 9.6,
+        "current": 9.5,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 183.8235
+      },
+      "S3": {
+        "previous": 9.7,
+        "current": 9.6,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 191.1765
+      },
+      "S4": {
+        "previous": 9.9,
+        "current": 9.7,
+        "loss": 0.2,
+        "rate": 0.0273,
+        "remaining_life": 98.9011
+      },
+      "S5": {
+        "previous": 10.0,
+        "current": 9.8,
+        "loss": 0.2,
+        "rate": 0.0273,
+        "remaining_life": 102.5641
+      },
+      "S6": {
+        "previous": 9.7,
+        "current": 9.5,
+        "loss": 0.2,
+        "rate": 0.0273,
+        "remaining_life": 91.5751
+      },
+      "S7": {
+        "previous": 9.6,
+        "current": 9.4,
+        "loss": 0.2,
+        "rate": 0.0273,
+        "remaining_life": 87.9121
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-105-T-4316.md",
+    "tag": "T-4316",
+    "unit": "VDU",
+    "code": "API 653",
+    "inspection_date": "2025-05-24",
+    "previous_date": "2018-04-27",
+    "interval_years": 7.07,
+    "t_min": 4.1,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 12.9,
+    "design_temp_c": 295,
+    "material": "SA-283 Gr.C",
+    "inspector": "P. Shetty",
+    "governing_grid": "S11",
+    "governing_current": 4.5,
+    "governing_previous": 6.5,
+    "governing_loss": 2.0,
+    "corrosion_rate_mm_yr": 0.2829,
+    "remaining_life_years": 1.4139,
+    "next_interval_years": 0.7069,
+    "max_loss_mm": 2.0,
+    "max_loss_grid": "S11",
+    "grid_count": 12,
+    "per_grid": {
+      "S1": {
+        "previous": 7.6,
+        "current": 7.1,
+        "loss": 0.5,
+        "rate": 0.0707,
+        "remaining_life": 42.4328
+      },
+      "S2": {
+        "previous": 7.5,
+        "current": 7.0,
+        "loss": 0.5,
+        "rate": 0.0707,
+        "remaining_life": 41.0184
+      },
+      "S3": {
+        "previous": 7.6,
+        "current": 7.0,
+        "loss": 0.6,
+        "rate": 0.0849,
+        "remaining_life": 34.1578
+      },
+      "S4": {
+        "previous": 7.6,
+        "current": 7.2,
+        "loss": 0.4,
+        "rate": 0.0566,
+        "remaining_life": 54.7703
+      },
+      "S5": {
+        "previous": 7.7,
+        "current": 7.4,
+        "loss": 0.3,
+        "rate": 0.0424,
+        "remaining_life": 77.8302
+      },
+      "S6": {
+        "previous": 7.7,
+        "current": 7.1,
+        "loss": 0.6,
+        "rate": 0.0849,
+        "remaining_life": 35.3357
+      },
+      "S7": {
+        "previous": 7.4,
+        "current": 7.0,
+        "loss": 0.4,
+        "rate": 0.0566,
+        "remaining_life": 51.2367
+      },
+      "S8": {
+        "previous": 7.6,
+        "current": 7.2,
+        "loss": 0.4,
+        "rate": 0.0566,
+        "remaining_life": 54.7703
+      },
+      "S9": {
+        "previous": 7.8,
+        "current": 7.1,
+        "loss": 0.7,
+        "rate": 0.099,
+        "remaining_life": 30.303
+      },
+      "S10": {
+        "previous": 7.1,
+        "current": 5.8,
+        "loss": 1.3,
+        "rate": 0.1839,
+        "remaining_life": 9.2442
+      },
+      "S11": {
+        "previous": 6.5,
+        "current": 4.5,
+        "loss": 2.0,
+        "rate": 0.2829,
+        "remaining_life": 1.4139
+      },
+      "S12": {
+        "previous": 7.2,
+        "current": 5.3,
+        "loss": 1.9,
+        "rate": 0.2687,
+        "remaining_life": 4.4659
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-106-T-2758.md",
+    "tag": "T-2758",
+    "unit": "HGU",
+    "code": "API 653",
+    "inspection_date": "2026-10-19",
+    "previous_date": "2019-09-12",
+    "interval_years": 7.1,
+    "t_min": 4.1,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 10.5,
+    "design_temp_c": 325,
+    "material": "SA-283 Gr.C",
+    "inspector": "N. Rao",
+    "governing_grid": "S10",
+    "governing_current": 4.9,
+    "governing_previous": 6.8,
+    "governing_loss": 1.9,
+    "corrosion_rate_mm_yr": 0.2676,
+    "remaining_life_years": 2.9895,
+    "next_interval_years": 1.4948,
+    "max_loss_mm": 1.9,
+    "max_loss_grid": "S10",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 7.5,
+        "current": 7.1,
+        "loss": 0.4,
+        "rate": 0.0563,
+        "remaining_life": 53.286
+      },
+      "S2": {
+        "previous": 7.5,
+        "current": 6.9,
+        "loss": 0.6,
+        "rate": 0.0845,
+        "remaining_life": 33.1361
+      },
+      "S3": {
+        "previous": 7.8,
+        "current": 7.2,
+        "loss": 0.6,
+        "rate": 0.0845,
+        "remaining_life": 36.6864
+      },
+      "S4": {
+        "previous": 7.9,
+        "current": 7.3,
+        "loss": 0.6,
+        "rate": 0.0845,
+        "remaining_life": 37.8698
+      },
+      "S5": {
+        "previous": 7.9,
+        "current": 7.1,
+        "loss": 0.8,
+        "rate": 0.1127,
+        "remaining_life": 26.6193
+      },
+      "S6": {
+        "previous": 7.8,
+        "current": 6.9,
+        "loss": 0.9,
+        "rate": 0.1268,
+        "remaining_life": 22.082
+      },
+      "S7": {
+        "previous": 7.6,
+        "current": 7.0,
+        "loss": 0.6,
+        "rate": 0.0845,
+        "remaining_life": 34.3195
+      },
+      "S8": {
+        "previous": 7.6,
+        "current": 6.8,
+        "loss": 0.8,
+        "rate": 0.1127,
+        "remaining_life": 23.9574
+      },
+      "S9": {
+        "previous": 7.9,
+        "current": 7.2,
+        "loss": 0.7,
+        "rate": 0.0986,
+        "remaining_life": 31.4402
+      },
+      "S10": {
+        "previous": 6.8,
+        "current": 4.9,
+        "loss": 1.9,
+        "rate": 0.2676,
+        "remaining_life": 2.9895
+      },
+      "S11": {
+        "previous": 6.7,
+        "current": 4.9,
+        "loss": 1.8,
+        "rate": 0.2535,
+        "remaining_life": 3.1558
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-107-C-4240.md",
+    "tag": "C-4240",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2025-01-09",
+    "previous_date": "2020-12-18",
+    "interval_years": 4.06,
+    "t_min": 12.2,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 8.2,
+    "design_temp_c": 165,
+    "material": "SA-516 Gr.70",
+    "inspector": "M. Pai",
+    "governing_grid": "S11",
+    "governing_current": 13.5,
+    "governing_previous": 14.6,
+    "governing_loss": 1.1,
+    "corrosion_rate_mm_yr": 0.2709,
+    "remaining_life_years": 4.7988,
+    "next_interval_years": 2.3994,
+    "max_loss_mm": 1.1,
+    "max_loss_grid": "S11",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 15.7,
+        "current": 15.2,
+        "loss": 0.5,
+        "rate": 0.1232,
+        "remaining_life": 24.3506
+      },
+      "S2": {
+        "previous": 15.5,
+        "current": 15.0,
+        "loss": 0.5,
+        "rate": 0.1232,
+        "remaining_life": 22.7273
+      },
+      "S3": {
+        "previous": 15.8,
+        "current": 15.4,
+        "loss": 0.4,
+        "rate": 0.0985,
+        "remaining_life": 32.4873
+      },
+      "S4": {
+        "previous": 15.9,
+        "current": 15.5,
+        "loss": 0.4,
+        "rate": 0.0985,
+        "remaining_life": 33.5025
+      },
+      "S5": {
+        "previous": 15.9,
+        "current": 15.3,
+        "loss": 0.6,
+        "rate": 0.1478,
+        "remaining_life": 20.9743
+      },
+      "S6": {
+        "previous": 15.6,
+        "current": 15.2,
+        "loss": 0.4,
+        "rate": 0.0985,
+        "remaining_life": 30.4569
+      },
+      "S7": {
+        "previous": 15.7,
+        "current": 15.4,
+        "loss": 0.3,
+        "rate": 0.0739,
+        "remaining_life": 43.3018
+      },
+      "S8": {
+        "previous": 15.6,
+        "current": 15.3,
+        "loss": 0.3,
+        "rate": 0.0739,
+        "remaining_life": 41.9486
+      },
+      "S9": {
+        "previous": 15.9,
+        "current": 15.5,
+        "loss": 0.4,
+        "rate": 0.0985,
+        "remaining_life": 33.5025
+      },
+      "S10": {
+        "previous": 15.2,
+        "current": 14.4,
+        "loss": 0.8,
+        "rate": 0.197,
+        "remaining_life": 11.1675
+      },
+      "S11": {
+        "previous": 14.6,
+        "current": 13.5,
+        "loss": 1.1,
+        "rate": 0.2709,
+        "remaining_life": 4.7988
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-108-C-3294.md",
+    "tag": "C-3294",
+    "unit": "SRU",
+    "code": "API 510",
+    "inspection_date": "2023-07-13",
+    "previous_date": "2017-07-15",
+    "interval_years": 5.99,
+    "t_min": 12.4,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 9.0,
+    "design_temp_c": 235,
+    "material": "SA-516 Gr.70",
+    "inspector": "V. Hegde",
+    "governing_grid": "S6",
+    "governing_current": 15.4,
+    "governing_previous": 15.5,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0167,
+    "remaining_life_years": 179.6407,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 15.9,
+        "current": 15.7,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 98.8024
+      },
+      "S2": {
+        "previous": 16.0,
+        "current": 15.8,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 101.7964
+      },
+      "S3": {
+        "previous": 15.7,
+        "current": 15.5,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 92.8144
+      },
+      "S4": {
+        "previous": 15.7,
+        "current": 15.6,
+        "loss": 0.1,
+        "rate": 0.0167,
+        "remaining_life": 191.6168
+      },
+      "S5": {
+        "previous": 15.7,
+        "current": 15.5,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 92.8144
+      },
+      "S6": {
+        "previous": 15.5,
+        "current": 15.4,
+        "loss": 0.1,
+        "rate": 0.0167,
+        "remaining_life": 179.6407
+      },
+      "S7": {
+        "previous": 15.6,
+        "current": 15.5,
+        "loss": 0.1,
+        "rate": 0.0167,
+        "remaining_life": 185.6287
+      },
+      "S8": {
+        "previous": 15.6,
+        "current": 15.4,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 89.8204
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-109-L-4274.md",
+    "tag": "L-4274",
+    "unit": "HGU",
+    "code": "API 570",
+    "inspection_date": "2024-06-10",
+    "previous_date": "2016-07-13",
+    "interval_years": 7.91,
+    "t_min": 7.2,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 10.6,
+    "design_temp_c": 325,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "D. Kamath",
+    "governing_grid": "S2",
+    "governing_current": 10.2,
+    "governing_previous": 10.4,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0253,
+    "remaining_life_years": 118.5771,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 11.0,
+        "current": 10.8,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 142.2925
+      },
+      "S2": {
+        "previous": 10.4,
+        "current": 10.2,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 118.5771
+      },
+      "S3": {
+        "previous": 10.8,
+        "current": 10.7,
+        "loss": 0.1,
+        "rate": 0.0126,
+        "remaining_life": 277.7778
+      },
+      "S4": {
+        "previous": 10.8,
+        "current": 10.6,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 134.3874
+      },
+      "S5": {
+        "previous": 10.5,
+        "current": 10.3,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 122.5296
+      },
+      "S6": {
+        "previous": 10.9,
+        "current": 10.7,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 138.3399
+      },
+      "S7": {
+        "previous": 10.5,
+        "current": 10.3,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 122.5296
+      },
+      "S8": {
+        "previous": 10.5,
+        "current": 10.4,
+        "loss": 0.1,
+        "rate": 0.0126,
+        "remaining_life": 253.9683
+      },
+      "S9": {
+        "previous": 10.7,
+        "current": 10.6,
+        "loss": 0.1,
+        "rate": 0.0126,
+        "remaining_life": 269.8413
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-110-V-2644.md",
+    "tag": "V-2644",
+    "unit": "SRU",
+    "code": "API 510",
+    "inspection_date": "2025-09-12",
+    "previous_date": "2017-12-18",
+    "interval_years": 7.73,
+    "t_min": 7.8,
+    "nominal_mm": 12.0,
+    "design_pressure_barg": 8.7,
+    "design_temp_c": 255,
+    "material": "SA-516 Gr.70",
+    "inspector": "S. Kulkarni",
+    "governing_grid": "S9",
+    "governing_current": 11.4,
+    "governing_previous": 11.5,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0129,
+    "remaining_life_years": 279.0698,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 11.7,
+        "current": 11.5,
+        "loss": 0.2,
+        "rate": 0.0259,
+        "remaining_life": 142.8571
+      },
+      "S2": {
+        "previous": 11.7,
+        "current": 11.6,
+        "loss": 0.1,
+        "rate": 0.0129,
+        "remaining_life": 294.5736
+      },
+      "S3": {
+        "previous": 11.9,
+        "current": 11.7,
+        "loss": 0.2,
+        "rate": 0.0259,
+        "remaining_life": 150.5792
+      },
+      "S4": {
+        "previous": 11.7,
+        "current": 11.5,
+        "loss": 0.2,
+        "rate": 0.0259,
+        "remaining_life": 142.8571
+      },
+      "S5": {
+        "previous": 11.9,
+        "current": 11.7,
+        "loss": 0.2,
+        "rate": 0.0259,
+        "remaining_life": 150.5792
+      },
+      "S6": {
+        "previous": 11.7,
+        "current": 11.5,
+        "loss": 0.2,
+        "rate": 0.0259,
+        "remaining_life": 142.8571
+      },
+      "S7": {
+        "previous": 11.7,
+        "current": 11.6,
+        "loss": 0.1,
+        "rate": 0.0129,
+        "remaining_life": 294.5736
+      },
+      "S8": {
+        "previous": 11.9,
+        "current": 11.7,
+        "loss": 0.2,
+        "rate": 0.0259,
+        "remaining_life": 150.5792
+      },
+      "S9": {
+        "previous": 11.5,
+        "current": 11.4,
+        "loss": 0.1,
+        "rate": 0.0129,
+        "remaining_life": 279.0698
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-111-V-2322.md",
+    "tag": "V-2322",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2024-01-10",
+    "previous_date": "2020-02-26",
+    "interval_years": 3.87,
+    "t_min": 7.8,
+    "nominal_mm": 12.0,
+    "design_pressure_barg": 14.8,
+    "design_temp_c": 185,
+    "material": "SA-516 Gr.70",
+    "inspector": "D. Kamath",
+    "governing_grid": "S11",
+    "governing_current": 9.4,
+    "governing_previous": 10.6,
+    "governing_loss": 1.2,
+    "corrosion_rate_mm_yr": 0.3101,
+    "remaining_life_years": 5.1596,
+    "next_interval_years": 2.5798,
+    "max_loss_mm": 1.2,
+    "max_loss_grid": "S11",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 11.6,
+        "current": 10.8,
+        "loss": 0.8,
+        "rate": 0.2067,
+        "remaining_life": 14.5138
+      },
+      "S2": {
+        "previous": 11.8,
+        "current": 11.1,
+        "loss": 0.7,
+        "rate": 0.1809,
+        "remaining_life": 18.2421
+      },
+      "S3": {
+        "previous": 11.4,
+        "current": 10.5,
+        "loss": 0.9,
+        "rate": 0.2326,
+        "remaining_life": 11.6079
+      },
+      "S4": {
+        "previous": 11.9,
+        "current": 11.3,
+        "loss": 0.6,
+        "rate": 0.155,
+        "remaining_life": 22.5806
+      },
+      "S5": {
+        "previous": 11.5,
+        "current": 10.9,
+        "loss": 0.6,
+        "rate": 0.155,
+        "remaining_life": 20.0
+      },
+      "S6": {
+        "previous": 11.7,
+        "current": 11.2,
+        "loss": 0.5,
+        "rate": 0.1292,
+        "remaining_life": 26.3158
+      },
+      "S7": {
+        "previous": 11.5,
+        "current": 10.6,
+        "loss": 0.9,
+        "rate": 0.2326,
+        "remaining_life": 12.0378
+      },
+      "S8": {
+        "previous": 12.0,
+        "current": 11.2,
+        "loss": 0.8,
+        "rate": 0.2067,
+        "remaining_life": 16.449
+      },
+      "S9": {
+        "previous": 11.9,
+        "current": 11.4,
+        "loss": 0.5,
+        "rate": 0.1292,
+        "remaining_life": 27.8638
+      },
+      "S10": {
+        "previous": 10.7,
+        "current": 9.7,
+        "loss": 1.0,
+        "rate": 0.2584,
+        "remaining_life": 7.3529
+      },
+      "S11": {
+        "previous": 10.6,
+        "current": 9.4,
+        "loss": 1.2,
+        "rate": 0.3101,
+        "remaining_life": 5.1596
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-112-D-2349.md",
+    "tag": "D-2349",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2024-02-20",
+    "previous_date": "2018-07-06",
+    "interval_years": 5.63,
+    "t_min": 9.7,
+    "nominal_mm": 14.0,
+    "design_pressure_barg": 11.2,
+    "design_temp_c": 150,
+    "material": "SA-516 Gr.70",
+    "inspector": "D. Kamath",
+    "governing_grid": "S9",
+    "governing_current": 10.4,
+    "governing_previous": 12.6,
+    "governing_loss": 2.2,
+    "corrosion_rate_mm_yr": 0.3908,
+    "remaining_life_years": 1.7912,
+    "next_interval_years": 0.8956,
+    "max_loss_mm": 2.2,
+    "max_loss_grid": "S9",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 14.0,
+        "current": 13.6,
+        "loss": 0.4,
+        "rate": 0.071,
+        "remaining_life": 54.9296
+      },
+      "S2": {
+        "previous": 13.9,
+        "current": 13.3,
+        "loss": 0.6,
+        "rate": 0.1066,
+        "remaining_life": 33.7711
+      },
+      "S3": {
+        "previous": 13.8,
+        "current": 13.0,
+        "loss": 0.8,
+        "rate": 0.1421,
+        "remaining_life": 23.2231
+      },
+      "S4": {
+        "previous": 13.9,
+        "current": 13.4,
+        "loss": 0.5,
+        "rate": 0.0888,
+        "remaining_life": 41.6667
+      },
+      "S5": {
+        "previous": 13.7,
+        "current": 13.1,
+        "loss": 0.6,
+        "rate": 0.1066,
+        "remaining_life": 31.8949
+      },
+      "S6": {
+        "previous": 14.0,
+        "current": 13.5,
+        "loss": 0.5,
+        "rate": 0.0888,
+        "remaining_life": 42.7928
+      },
+      "S7": {
+        "previous": 13.7,
+        "current": 13.2,
+        "loss": 0.5,
+        "rate": 0.0888,
+        "remaining_life": 39.4144
+      },
+      "S8": {
+        "previous": 14.0,
+        "current": 13.3,
+        "loss": 0.7,
+        "rate": 0.1243,
+        "remaining_life": 28.9622
+      },
+      "S9": {
+        "previous": 12.6,
+        "current": 10.4,
+        "loss": 2.2,
+        "rate": 0.3908,
+        "remaining_life": 1.7912
+      },
+      "S10": {
+        "previous": 12.6,
+        "current": 10.8,
+        "loss": 1.8,
+        "rate": 0.3197,
+        "remaining_life": 3.4407
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-113-L-1516.md",
+    "tag": "L-1516",
+    "unit": "SRU",
+    "code": "API 570",
+    "inspection_date": "2023-11-22",
+    "previous_date": "2016-07-04",
+    "interval_years": 7.38,
+    "t_min": 6.8,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 6.0,
+    "design_temp_c": 340,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "M. Pai",
+    "governing_grid": "S8",
+    "governing_current": 8.8,
+    "governing_previous": 10.1,
+    "governing_loss": 1.3,
+    "corrosion_rate_mm_yr": 0.1762,
+    "remaining_life_years": 11.3507,
+    "next_interval_years": 5.6753,
+    "max_loss_mm": 1.3,
+    "max_loss_grid": "S8",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 10.8,
+        "current": 10.4,
+        "loss": 0.4,
+        "rate": 0.0542,
+        "remaining_life": 66.4207
+      },
+      "S2": {
+        "previous": 10.5,
+        "current": 9.8,
+        "loss": 0.7,
+        "rate": 0.0949,
+        "remaining_life": 31.6122
+      },
+      "S3": {
+        "previous": 10.7,
+        "current": 9.8,
+        "loss": 0.9,
+        "rate": 0.122,
+        "remaining_life": 24.5902
+      },
+      "S4": {
+        "previous": 10.7,
+        "current": 9.9,
+        "loss": 0.8,
+        "rate": 0.1084,
+        "remaining_life": 28.5978
+      },
+      "S5": {
+        "previous": 10.9,
+        "current": 10.1,
+        "loss": 0.8,
+        "rate": 0.1084,
+        "remaining_life": 30.4428
+      },
+      "S6": {
+        "previous": 10.6,
+        "current": 10.0,
+        "loss": 0.6,
+        "rate": 0.0813,
+        "remaining_life": 39.3604
+      },
+      "S7": {
+        "previous": 10.2,
+        "current": 9.1,
+        "loss": 1.1,
+        "rate": 0.1491,
+        "remaining_life": 15.4259
+      },
+      "S8": {
+        "previous": 10.1,
+        "current": 8.8,
+        "loss": 1.3,
+        "rate": 0.1762,
+        "remaining_life": 11.3507
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-114-T-1385.md",
+    "tag": "T-1385",
+    "unit": "DHDT",
+    "code": "API 653",
+    "inspection_date": "2025-01-24",
+    "previous_date": "2020-06-13",
+    "interval_years": 4.62,
+    "t_min": 4.2,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 14.0,
+    "design_temp_c": 165,
+    "material": "SA-283 Gr.C",
+    "inspector": "D. Kamath",
+    "governing_grid": "S8",
+    "governing_current": 5.5,
+    "governing_previous": 6.5,
+    "governing_loss": 1.0,
+    "corrosion_rate_mm_yr": 0.2165,
+    "remaining_life_years": 6.0046,
+    "next_interval_years": 3.0023,
+    "max_loss_mm": 1.0,
+    "max_loss_grid": "S8",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 7.8,
+        "current": 7.1,
+        "loss": 0.7,
+        "rate": 0.1515,
+        "remaining_life": 19.1419
+      },
+      "S2": {
+        "previous": 7.6,
+        "current": 7.0,
+        "loss": 0.6,
+        "rate": 0.1299,
+        "remaining_life": 21.555
+      },
+      "S3": {
+        "previous": 7.9,
+        "current": 7.1,
+        "loss": 0.8,
+        "rate": 0.1732,
+        "remaining_life": 16.7436
+      },
+      "S4": {
+        "previous": 7.7,
+        "current": 7.3,
+        "loss": 0.4,
+        "rate": 0.0866,
+        "remaining_life": 35.7968
+      },
+      "S5": {
+        "previous": 7.7,
+        "current": 6.8,
+        "loss": 0.9,
+        "rate": 0.1948,
+        "remaining_life": 13.347
+      },
+      "S6": {
+        "previous": 7.6,
+        "current": 7.1,
+        "loss": 0.5,
+        "rate": 0.1082,
+        "remaining_life": 26.8022
+      },
+      "S7": {
+        "previous": 7.9,
+        "current": 7.0,
+        "loss": 0.9,
+        "rate": 0.1948,
+        "remaining_life": 14.3737
+      },
+      "S8": {
+        "previous": 6.5,
+        "current": 5.5,
+        "loss": 1.0,
+        "rate": 0.2165,
+        "remaining_life": 6.0046
+      },
+      "S9": {
+        "previous": 6.8,
+        "current": 5.8,
+        "loss": 1.0,
+        "rate": 0.2165,
+        "remaining_life": 7.3903
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-115-17-P-274A.md",
+    "tag": "17-P-274A",
+    "unit": "FCC",
+    "code": "API 570",
+    "inspection_date": "2025-05-20",
+    "previous_date": "2019-08-07",
+    "interval_years": 5.79,
+    "t_min": 5.4,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 8.8,
+    "design_temp_c": 345,
+    "material": "API 5L X52",
+    "inspector": "A. Menon",
+    "governing_grid": "S9",
+    "governing_current": 6.9,
+    "governing_previous": 8.0,
+    "governing_loss": 1.1,
+    "corrosion_rate_mm_yr": 0.19,
+    "remaining_life_years": 7.8947,
+    "next_interval_years": 3.9474,
+    "max_loss_mm": 1.1,
+    "max_loss_grid": "S9",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.0,
+        "current": 8.7,
+        "loss": 0.3,
+        "rate": 0.0518,
+        "remaining_life": 63.7066
+      },
+      "S2": {
+        "previous": 9.0,
+        "current": 8.3,
+        "loss": 0.7,
+        "rate": 0.1209,
+        "remaining_life": 23.9868
+      },
+      "S3": {
+        "previous": 9.2,
+        "current": 8.9,
+        "loss": 0.3,
+        "rate": 0.0518,
+        "remaining_life": 67.5676
+      },
+      "S4": {
+        "previous": 9.3,
+        "current": 8.6,
+        "loss": 0.7,
+        "rate": 0.1209,
+        "remaining_life": 26.4682
+      },
+      "S5": {
+        "previous": 9.4,
+        "current": 8.9,
+        "loss": 0.5,
+        "rate": 0.0864,
+        "remaining_life": 40.5093
+      },
+      "S6": {
+        "previous": 9.2,
+        "current": 8.7,
+        "loss": 0.5,
+        "rate": 0.0864,
+        "remaining_life": 38.1944
+      },
+      "S7": {
+        "previous": 9.4,
+        "current": 9.0,
+        "loss": 0.4,
+        "rate": 0.0691,
+        "remaining_life": 52.0984
+      },
+      "S8": {
+        "previous": 8.4,
+        "current": 7.6,
+        "loss": 0.8,
+        "rate": 0.1382,
+        "remaining_life": 15.919
+      },
+      "S9": {
+        "previous": 8.0,
+        "current": 6.9,
+        "loss": 1.1,
+        "rate": 0.19,
+        "remaining_life": 7.8947
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-116-C-3418.md",
+    "tag": "C-3418",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2023-10-25",
+    "previous_date": "2016-10-05",
+    "interval_years": 7.05,
+    "t_min": 11.9,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 20.0,
+    "design_temp_c": 350,
+    "material": "SA-516 Gr.70",
+    "inspector": "V. Hegde",
+    "governing_grid": "S7",
+    "governing_current": 15.3,
+    "governing_previous": 15.4,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0142,
+    "remaining_life_years": 239.4366,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S3",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 15.8,
+        "current": 15.7,
+        "loss": 0.1,
+        "rate": 0.0142,
+        "remaining_life": 267.6056
+      },
+      "S2": {
+        "previous": 15.7,
+        "current": 15.6,
+        "loss": 0.1,
+        "rate": 0.0142,
+        "remaining_life": 260.5634
+      },
+      "S3": {
+        "previous": 15.7,
+        "current": 15.5,
+        "loss": 0.2,
+        "rate": 0.0284,
+        "remaining_life": 126.7606
+      },
+      "S4": {
+        "previous": 15.8,
+        "current": 15.7,
+        "loss": 0.1,
+        "rate": 0.0142,
+        "remaining_life": 267.6056
+      },
+      "S5": {
+        "previous": 15.6,
+        "current": 15.4,
+        "loss": 0.2,
+        "rate": 0.0284,
+        "remaining_life": 123.2394
+      },
+      "S6": {
+        "previous": 15.6,
+        "current": 15.4,
+        "loss": 0.2,
+        "rate": 0.0284,
+        "remaining_life": 123.2394
+      },
+      "S7": {
+        "previous": 15.4,
+        "current": 15.3,
+        "loss": 0.1,
+        "rate": 0.0142,
+        "remaining_life": 239.4366
+      },
+      "S8": {
+        "previous": 15.7,
+        "current": 15.6,
+        "loss": 0.1,
+        "rate": 0.0142,
+        "remaining_life": 260.5634
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-117-34-P-190A.md",
+    "tag": "34-P-190A",
+    "unit": "HGU",
+    "code": "API 570",
+    "inspection_date": "2026-10-24",
+    "previous_date": "2018-12-30",
+    "interval_years": 7.82,
+    "t_min": 6.2,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 17.4,
+    "design_temp_c": 290,
+    "material": "API 5L X52",
+    "inspector": "R. Bhat",
+    "governing_grid": "S10",
+    "governing_current": 6.7,
+    "governing_previous": 8.5,
+    "governing_loss": 1.8,
+    "corrosion_rate_mm_yr": 0.2302,
+    "remaining_life_years": 2.172,
+    "next_interval_years": 1.086,
+    "max_loss_mm": 1.8,
+    "max_loss_grid": "S10",
+    "grid_count": 13,
+    "per_grid": {
+      "S1": {
+        "previous": 8.9,
+        "current": 8.5,
+        "loss": 0.4,
+        "rate": 0.0512,
+        "remaining_life": 44.9219
+      },
+      "S2": {
+        "previous": 9.4,
+        "current": 9.0,
+        "loss": 0.4,
+        "rate": 0.0512,
+        "remaining_life": 54.6875
+      },
+      "S3": {
+        "previous": 9.4,
+        "current": 8.6,
+        "loss": 0.8,
+        "rate": 0.1023,
+        "remaining_life": 23.4604
+      },
+      "S4": {
+        "previous": 9.4,
+        "current": 8.6,
+        "loss": 0.8,
+        "rate": 0.1023,
+        "remaining_life": 23.4604
+      },
+      "S5": {
+        "previous": 9.3,
+        "current": 8.7,
+        "loss": 0.6,
+        "rate": 0.0767,
+        "remaining_life": 32.5945
+      },
+      "S6": {
+        "previous": 9.2,
+        "current": 8.5,
+        "loss": 0.7,
+        "rate": 0.0895,
+        "remaining_life": 25.6983
+      },
+      "S7": {
+        "previous": 9.1,
+        "current": 8.7,
+        "loss": 0.4,
+        "rate": 0.0512,
+        "remaining_life": 48.8281
+      },
+      "S8": {
+        "previous": 9.5,
+        "current": 8.6,
+        "loss": 0.9,
+        "rate": 0.1151,
+        "remaining_life": 20.8514
+      },
+      "S9": {
+        "previous": 8.9,
+        "current": 8.2,
+        "loss": 0.7,
+        "rate": 0.0895,
+        "remaining_life": 22.3464
+      },
+      "S10": {
+        "previous": 8.5,
+        "current": 6.7,
+        "loss": 1.8,
+        "rate": 0.2302,
+        "remaining_life": 2.172
+      },
+      "S11": {
+        "previous": 8.1,
+        "current": 7.4,
+        "loss": 0.7,
+        "rate": 0.0895,
+        "remaining_life": 13.4078
+      },
+      "S12": {
+        "previous": 8.1,
+        "current": 7.4,
+        "loss": 0.7,
+        "rate": 0.0895,
+        "remaining_life": 13.4078
+      },
+      "S13": {
+        "previous": 8.2,
+        "current": 7.0,
+        "loss": 1.2,
+        "rate": 0.1535,
+        "remaining_life": 5.2117
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-118-T-4298.md",
+    "tag": "T-4298",
+    "unit": "VDU",
+    "code": "API 653",
+    "inspection_date": "2025-10-22",
+    "previous_date": "2021-08-20",
+    "interval_years": 4.17,
+    "t_min": 4.4,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 9.2,
+    "design_temp_c": 180,
+    "material": "SA-283 Gr.C",
+    "inspector": "P. Shetty",
+    "governing_grid": "S11",
+    "governing_current": 4.9,
+    "governing_previous": 6.9,
+    "governing_loss": 2.0,
+    "corrosion_rate_mm_yr": 0.4796,
+    "remaining_life_years": 1.0425,
+    "next_interval_years": 0.5212,
+    "max_loss_mm": 2.0,
+    "max_loss_grid": "S11",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 7.9,
+        "current": 7.3,
+        "loss": 0.6,
+        "rate": 0.1439,
+        "remaining_life": 20.1529
+      },
+      "S2": {
+        "previous": 7.8,
+        "current": 6.9,
+        "loss": 0.9,
+        "rate": 0.2158,
+        "remaining_life": 11.5848
+      },
+      "S3": {
+        "previous": 7.6,
+        "current": 7.0,
+        "loss": 0.6,
+        "rate": 0.1439,
+        "remaining_life": 18.0681
+      },
+      "S4": {
+        "previous": 7.4,
+        "current": 6.8,
+        "loss": 0.6,
+        "rate": 0.1439,
+        "remaining_life": 16.6782
+      },
+      "S5": {
+        "previous": 7.5,
+        "current": 6.7,
+        "loss": 0.8,
+        "rate": 0.1918,
+        "remaining_life": 11.9917
+      },
+      "S6": {
+        "previous": 7.6,
+        "current": 6.9,
+        "loss": 0.7,
+        "rate": 0.1679,
+        "remaining_life": 14.8898
+      },
+      "S7": {
+        "previous": 7.7,
+        "current": 6.9,
+        "loss": 0.8,
+        "rate": 0.1918,
+        "remaining_life": 13.0344
+      },
+      "S8": {
+        "previous": 7.8,
+        "current": 7.2,
+        "loss": 0.6,
+        "rate": 0.1439,
+        "remaining_life": 19.458
+      },
+      "S9": {
+        "previous": 7.9,
+        "current": 7.3,
+        "loss": 0.6,
+        "rate": 0.1439,
+        "remaining_life": 20.1529
+      },
+      "S10": {
+        "previous": 7.1,
+        "current": 5.6,
+        "loss": 1.5,
+        "rate": 0.3597,
+        "remaining_life": 3.3361
+      },
+      "S11": {
+        "previous": 6.9,
+        "current": 4.9,
+        "loss": 2.0,
+        "rate": 0.4796,
+        "remaining_life": 1.0425
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-119-D-1737.md",
+    "tag": "D-1737",
+    "unit": "CCR",
+    "code": "API 510",
+    "inspection_date": "2025-10-20",
+    "previous_date": "2020-10-19",
+    "interval_years": 5.0,
+    "t_min": 9.8,
+    "nominal_mm": 14.0,
+    "design_pressure_barg": 12.0,
+    "design_temp_c": 360,
+    "material": "SA-516 Gr.70",
+    "inspector": "M. Pai",
+    "governing_grid": "S10",
+    "governing_current": 11.5,
+    "governing_previous": 12.4,
+    "governing_loss": 0.9,
+    "corrosion_rate_mm_yr": 0.18,
+    "remaining_life_years": 9.4444,
+    "next_interval_years": 4.7222,
+    "max_loss_mm": 0.9,
+    "max_loss_grid": "S4",
+    "grid_count": 12,
+    "per_grid": {
+      "S1": {
+        "previous": 13.4,
+        "current": 12.6,
+        "loss": 0.8,
+        "rate": 0.16,
+        "remaining_life": 17.5
+      },
+      "S2": {
+        "previous": 13.5,
+        "current": 12.7,
+        "loss": 0.8,
+        "rate": 0.16,
+        "remaining_life": 18.125
+      },
+      "S3": {
+        "previous": 14.0,
+        "current": 13.5,
+        "loss": 0.5,
+        "rate": 0.1,
+        "remaining_life": 37.0
+      },
+      "S4": {
+        "previous": 13.5,
+        "current": 12.6,
+        "loss": 0.9,
+        "rate": 0.18,
+        "remaining_life": 15.5556
+      },
+      "S5": {
+        "previous": 13.4,
+        "current": 13.1,
+        "loss": 0.3,
+        "rate": 0.06,
+        "remaining_life": 55.0
+      },
+      "S6": {
+        "previous": 13.8,
+        "current": 12.9,
+        "loss": 0.9,
+        "rate": 0.18,
+        "remaining_life": 17.2222
+      },
+      "S7": {
+        "previous": 13.5,
+        "current": 12.9,
+        "loss": 0.6,
+        "rate": 0.12,
+        "remaining_life": 25.8333
+      },
+      "S8": {
+        "previous": 13.6,
+        "current": 13.0,
+        "loss": 0.6,
+        "rate": 0.12,
+        "remaining_life": 26.6667
+      },
+      "S9": {
+        "previous": 12.6,
+        "current": 11.8,
+        "loss": 0.8,
+        "rate": 0.16,
+        "remaining_life": 12.5
+      },
+      "S10": {
+        "previous": 12.4,
+        "current": 11.5,
+        "loss": 0.9,
+        "rate": 0.18,
+        "remaining_life": 9.4444
+      },
+      "S11": {
+        "previous": 12.9,
+        "current": 12.2,
+        "loss": 0.7,
+        "rate": 0.14,
+        "remaining_life": 17.1429
+      },
+      "S12": {
+        "previous": 12.6,
+        "current": 11.7,
+        "loss": 0.9,
+        "rate": 0.18,
+        "remaining_life": 10.5556
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-120-L-1923.md",
+    "tag": "L-1923",
+    "unit": "CDU",
+    "code": "API 570",
+    "inspection_date": "2023-08-05",
+    "previous_date": "2017-08-09",
+    "interval_years": 5.99,
+    "t_min": 6.9,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 15.9,
+    "design_temp_c": 245,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "V. Hegde",
+    "governing_grid": "S5",
+    "governing_current": 10.3,
+    "governing_previous": 10.4,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0167,
+    "remaining_life_years": 203.5928,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 7,
+    "per_grid": {
+      "S1": {
+        "previous": 10.5,
+        "current": 10.4,
+        "loss": 0.1,
+        "rate": 0.0167,
+        "remaining_life": 209.5808
+      },
+      "S2": {
+        "previous": 10.7,
+        "current": 10.5,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 107.7844
+      },
+      "S3": {
+        "previous": 10.5,
+        "current": 10.4,
+        "loss": 0.1,
+        "rate": 0.0167,
+        "remaining_life": 209.5808
+      },
+      "S4": {
+        "previous": 10.7,
+        "current": 10.5,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 107.7844
+      },
+      "S5": {
+        "previous": 10.4,
+        "current": 10.3,
+        "loss": 0.1,
+        "rate": 0.0167,
+        "remaining_life": 203.5928
+      },
+      "S6": {
+        "previous": 10.7,
+        "current": 10.6,
+        "loss": 0.1,
+        "rate": 0.0167,
+        "remaining_life": 221.5569
+      },
+      "S7": {
+        "previous": 10.7,
+        "current": 10.5,
+        "loss": 0.2,
+        "rate": 0.0334,
+        "remaining_life": 107.7844
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-121-L-2618.md",
+    "tag": "L-2618",
+    "unit": "HGU",
+    "code": "API 570",
+    "inspection_date": "2025-05-14",
+    "previous_date": "2019-10-14",
+    "interval_years": 5.58,
+    "t_min": 7.7,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 11.6,
+    "design_temp_c": 140,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "V. Hegde",
+    "governing_grid": "S9",
+    "governing_current": 10.3,
+    "governing_previous": 10.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0358,
+    "remaining_life_years": 72.6257,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 10.9,
+        "current": 10.8,
+        "loss": 0.1,
+        "rate": 0.0179,
+        "remaining_life": 173.1844
+      },
+      "S2": {
+        "previous": 10.8,
+        "current": 10.6,
+        "loss": 0.2,
+        "rate": 0.0358,
+        "remaining_life": 81.0056
+      },
+      "S3": {
+        "previous": 10.6,
+        "current": 10.5,
+        "loss": 0.1,
+        "rate": 0.0179,
+        "remaining_life": 156.4246
+      },
+      "S4": {
+        "previous": 10.9,
+        "current": 10.8,
+        "loss": 0.1,
+        "rate": 0.0179,
+        "remaining_life": 173.1844
+      },
+      "S5": {
+        "previous": 10.9,
+        "current": 10.7,
+        "loss": 0.2,
+        "rate": 0.0358,
+        "remaining_life": 83.7989
+      },
+      "S6": {
+        "previous": 10.5,
+        "current": 10.4,
+        "loss": 0.1,
+        "rate": 0.0179,
+        "remaining_life": 150.838
+      },
+      "S7": {
+        "previous": 10.9,
+        "current": 10.7,
+        "loss": 0.2,
+        "rate": 0.0358,
+        "remaining_life": 83.7989
+      },
+      "S8": {
+        "previous": 11.0,
+        "current": 10.8,
+        "loss": 0.2,
+        "rate": 0.0358,
+        "remaining_life": 86.5922
+      },
+      "S9": {
+        "previous": 10.5,
+        "current": 10.3,
+        "loss": 0.2,
+        "rate": 0.0358,
+        "remaining_life": 72.6257
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-122-23-P-298A.md",
+    "tag": "23-P-298A",
+    "unit": "DHDT",
+    "code": "API 570",
+    "inspection_date": "2026-05-16",
+    "previous_date": "2019-04-11",
+    "interval_years": 7.1,
+    "t_min": 5.8,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 7.9,
+    "design_temp_c": 150,
+    "material": "API 5L X52",
+    "inspector": "A. Menon",
+    "governing_grid": "S9",
+    "governing_current": 6.7,
+    "governing_previous": 8.0,
+    "governing_loss": 1.3,
+    "corrosion_rate_mm_yr": 0.1831,
+    "remaining_life_years": 4.9153,
+    "next_interval_years": 2.4577,
+    "max_loss_mm": 1.3,
+    "max_loss_grid": "S9",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 9.3,
+        "current": 8.5,
+        "loss": 0.8,
+        "rate": 0.1127,
+        "remaining_life": 23.9574
+      },
+      "S2": {
+        "previous": 9.1,
+        "current": 8.5,
+        "loss": 0.6,
+        "rate": 0.0845,
+        "remaining_life": 31.9527
+      },
+      "S3": {
+        "previous": 9.2,
+        "current": 8.8,
+        "loss": 0.4,
+        "rate": 0.0563,
+        "remaining_life": 53.286
+      },
+      "S4": {
+        "previous": 8.9,
+        "current": 8.2,
+        "loss": 0.7,
+        "rate": 0.0986,
+        "remaining_life": 24.3408
+      },
+      "S5": {
+        "previous": 8.9,
+        "current": 8.2,
+        "loss": 0.7,
+        "rate": 0.0986,
+        "remaining_life": 24.3408
+      },
+      "S6": {
+        "previous": 9.0,
+        "current": 8.6,
+        "loss": 0.4,
+        "rate": 0.0563,
+        "remaining_life": 49.7336
+      },
+      "S7": {
+        "previous": 9.1,
+        "current": 8.6,
+        "loss": 0.5,
+        "rate": 0.0704,
+        "remaining_life": 39.7727
+      },
+      "S8": {
+        "previous": 9.3,
+        "current": 9.0,
+        "loss": 0.3,
+        "rate": 0.0423,
+        "remaining_life": 75.6501
+      },
+      "S9": {
+        "previous": 8.0,
+        "current": 6.7,
+        "loss": 1.3,
+        "rate": 0.1831,
+        "remaining_life": 4.9153
+      },
+      "S10": {
+        "previous": 8.1,
+        "current": 6.8,
+        "loss": 1.3,
+        "rate": 0.1831,
+        "remaining_life": 5.4615
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-123-E-2094.md",
+    "tag": "E-2094",
+    "unit": "CDU",
+    "code": "API 510",
+    "inspection_date": "2025-10-25",
+    "previous_date": "2021-07-19",
+    "interval_years": 4.27,
+    "t_min": 6.4,
+    "nominal_mm": 10.0,
+    "design_pressure_barg": 17.8,
+    "design_temp_c": 220,
+    "material": "SA-179",
+    "inspector": "D. Kamath",
+    "governing_grid": "S11",
+    "governing_current": 7.1,
+    "governing_previous": 8.7,
+    "governing_loss": 1.6,
+    "corrosion_rate_mm_yr": 0.3747,
+    "remaining_life_years": 1.8682,
+    "next_interval_years": 0.9341,
+    "max_loss_mm": 1.6,
+    "max_loss_grid": "S11",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 9.6,
+        "current": 9.0,
+        "loss": 0.6,
+        "rate": 0.1405,
+        "remaining_life": 18.5053
+      },
+      "S2": {
+        "previous": 9.6,
+        "current": 9.2,
+        "loss": 0.4,
+        "rate": 0.0937,
+        "remaining_life": 29.8826
+      },
+      "S3": {
+        "previous": 9.8,
+        "current": 9.0,
+        "loss": 0.8,
+        "rate": 0.1874,
+        "remaining_life": 13.8741
+      },
+      "S4": {
+        "previous": 9.4,
+        "current": 8.8,
+        "loss": 0.6,
+        "rate": 0.1405,
+        "remaining_life": 17.0819
+      },
+      "S5": {
+        "previous": 9.5,
+        "current": 8.8,
+        "loss": 0.7,
+        "rate": 0.1639,
+        "remaining_life": 14.6431
+      },
+      "S6": {
+        "previous": 9.9,
+        "current": 9.4,
+        "loss": 0.5,
+        "rate": 0.1171,
+        "remaining_life": 25.6191
+      },
+      "S7": {
+        "previous": 9.9,
+        "current": 9.3,
+        "loss": 0.6,
+        "rate": 0.1405,
+        "remaining_life": 20.6406
+      },
+      "S8": {
+        "previous": 9.7,
+        "current": 9.3,
+        "loss": 0.4,
+        "rate": 0.0937,
+        "remaining_life": 30.9498
+      },
+      "S9": {
+        "previous": 8.5,
+        "current": 7.7,
+        "loss": 0.8,
+        "rate": 0.1874,
+        "remaining_life": 6.937
+      },
+      "S10": {
+        "previous": 9.0,
+        "current": 7.7,
+        "loss": 1.3,
+        "rate": 0.3044,
+        "remaining_life": 4.2707
+      },
+      "S11": {
+        "previous": 8.7,
+        "current": 7.1,
+        "loss": 1.6,
+        "rate": 0.3747,
+        "remaining_life": 1.8682
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-124-V-4533.md",
+    "tag": "V-4533",
+    "unit": "CDU",
+    "code": "API 510",
+    "inspection_date": "2026-04-08",
+    "previous_date": "2019-07-03",
+    "interval_years": 6.77,
+    "t_min": 7.7,
+    "nominal_mm": 12.0,
+    "design_pressure_barg": 12.9,
+    "design_temp_c": 340,
+    "material": "SA-516 Gr.70",
+    "inspector": "V. Hegde",
+    "governing_grid": "S10",
+    "governing_current": 8.9,
+    "governing_previous": 11.1,
+    "governing_loss": 2.2,
+    "corrosion_rate_mm_yr": 0.325,
+    "remaining_life_years": 3.6923,
+    "next_interval_years": 1.8461,
+    "max_loss_mm": 2.2,
+    "max_loss_grid": "S10",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 11.9,
+        "current": 11.6,
+        "loss": 0.3,
+        "rate": 0.0443,
+        "remaining_life": 88.0361
+      },
+      "S2": {
+        "previous": 11.7,
+        "current": 11.3,
+        "loss": 0.4,
+        "rate": 0.0591,
+        "remaining_life": 60.9137
+      },
+      "S3": {
+        "previous": 11.8,
+        "current": 11.0,
+        "loss": 0.8,
+        "rate": 0.1182,
+        "remaining_life": 27.9188
+      },
+      "S4": {
+        "previous": 12.0,
+        "current": 11.5,
+        "loss": 0.5,
+        "rate": 0.0739,
+        "remaining_life": 51.4208
+      },
+      "S5": {
+        "previous": 11.6,
+        "current": 10.8,
+        "loss": 0.8,
+        "rate": 0.1182,
+        "remaining_life": 26.2267
+      },
+      "S6": {
+        "previous": 12.0,
+        "current": 11.5,
+        "loss": 0.5,
+        "rate": 0.0739,
+        "remaining_life": 51.4208
+      },
+      "S7": {
+        "previous": 11.5,
+        "current": 11.0,
+        "loss": 0.5,
+        "rate": 0.0739,
+        "remaining_life": 44.6549
+      },
+      "S8": {
+        "previous": 12.0,
+        "current": 11.6,
+        "loss": 0.4,
+        "rate": 0.0591,
+        "remaining_life": 65.9898
+      },
+      "S9": {
+        "previous": 10.6,
+        "current": 9.0,
+        "loss": 1.6,
+        "rate": 0.2363,
+        "remaining_life": 5.5015
+      },
+      "S10": {
+        "previous": 11.1,
+        "current": 8.9,
+        "loss": 2.2,
+        "rate": 0.325,
+        "remaining_life": 3.6923
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-125-L-1784.md",
+    "tag": "L-1784",
+    "unit": "DHDT",
+    "code": "API 570",
+    "inspection_date": "2026-06-20",
+    "previous_date": "2020-05-16",
+    "interval_years": 6.09,
+    "t_min": 7.8,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 3.5,
+    "design_temp_c": 170,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "A. Menon",
+    "governing_grid": "S5",
+    "governing_current": 10.3,
+    "governing_previous": 10.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0328,
+    "remaining_life_years": 76.2195,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 6,
+    "per_grid": {
+      "S1": {
+        "previous": 11.0,
+        "current": 10.9,
+        "loss": 0.1,
+        "rate": 0.0164,
+        "remaining_life": 189.0244
+      },
+      "S2": {
+        "previous": 11.0,
+        "current": 10.8,
+        "loss": 0.2,
+        "rate": 0.0328,
+        "remaining_life": 91.4634
+      },
+      "S3": {
+        "previous": 10.8,
+        "current": 10.6,
+        "loss": 0.2,
+        "rate": 0.0328,
+        "remaining_life": 85.3659
+      },
+      "S4": {
+        "previous": 10.9,
+        "current": 10.7,
+        "loss": 0.2,
+        "rate": 0.0328,
+        "remaining_life": 88.4146
+      },
+      "S5": {
+        "previous": 10.5,
+        "current": 10.3,
+        "loss": 0.2,
+        "rate": 0.0328,
+        "remaining_life": 76.2195
+      },
+      "S6": {
+        "previous": 10.8,
+        "current": 10.7,
+        "loss": 0.1,
+        "rate": 0.0164,
+        "remaining_life": 176.8293
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-126-23-P-102B.md",
+    "tag": "23-P-102B",
+    "unit": "FCC",
+    "code": "API 570",
+    "inspection_date": "2025-09-18",
+    "previous_date": "2018-01-29",
+    "interval_years": 7.64,
+    "t_min": 5.4,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 16.8,
+    "design_temp_c": 260,
+    "material": "API 5L X52",
+    "inspector": "S. Kulkarni",
+    "governing_grid": "S11",
+    "governing_current": 5.8,
+    "governing_previous": 8.1,
+    "governing_loss": 2.3,
+    "corrosion_rate_mm_yr": 0.301,
+    "remaining_life_years": 1.3289,
+    "next_interval_years": 0.6644,
+    "max_loss_mm": 2.3,
+    "max_loss_grid": "S11",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 9.4,
+        "current": 8.8,
+        "loss": 0.6,
+        "rate": 0.0785,
+        "remaining_life": 43.3121
+      },
+      "S2": {
+        "previous": 9.2,
+        "current": 8.6,
+        "loss": 0.6,
+        "rate": 0.0785,
+        "remaining_life": 40.7643
+      },
+      "S3": {
+        "previous": 9.1,
+        "current": 8.3,
+        "loss": 0.8,
+        "rate": 0.1047,
+        "remaining_life": 27.6982
+      },
+      "S4": {
+        "previous": 9.0,
+        "current": 8.4,
+        "loss": 0.6,
+        "rate": 0.0785,
+        "remaining_life": 38.2166
+      },
+      "S5": {
+        "previous": 9.3,
+        "current": 8.5,
+        "loss": 0.8,
+        "rate": 0.1047,
+        "remaining_life": 29.6084
+      },
+      "S6": {
+        "previous": 9.0,
+        "current": 8.5,
+        "loss": 0.5,
+        "rate": 0.0654,
+        "remaining_life": 47.4006
+      },
+      "S7": {
+        "previous": 9.2,
+        "current": 8.8,
+        "loss": 0.4,
+        "rate": 0.0524,
+        "remaining_life": 64.8855
+      },
+      "S8": {
+        "previous": 9.1,
+        "current": 8.4,
+        "loss": 0.7,
+        "rate": 0.0916,
+        "remaining_life": 32.7511
+      },
+      "S9": {
+        "previous": 7.9,
+        "current": 6.0,
+        "loss": 1.9,
+        "rate": 0.2487,
+        "remaining_life": 2.4125
+      },
+      "S10": {
+        "previous": 8.7,
+        "current": 6.6,
+        "loss": 2.1,
+        "rate": 0.2749,
+        "remaining_life": 4.3652
+      },
+      "S11": {
+        "previous": 8.1,
+        "current": 5.8,
+        "loss": 2.3,
+        "rate": 0.301,
+        "remaining_life": 1.3289
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-127-E-2141.md",
+    "tag": "E-2141",
+    "unit": "CCR",
+    "code": "API 510",
+    "inspection_date": "2026-03-18",
+    "previous_date": "2020-04-28",
+    "interval_years": 5.89,
+    "t_min": 5.8,
+    "nominal_mm": 10.0,
+    "design_pressure_barg": 22.2,
+    "design_temp_c": 325,
+    "material": "SA-179",
+    "inspector": "R. Bhat",
+    "governing_grid": "S9",
+    "governing_current": 6.3,
+    "governing_previous": 8.4,
+    "governing_loss": 2.1,
+    "corrosion_rate_mm_yr": 0.3565,
+    "remaining_life_years": 1.4025,
+    "next_interval_years": 0.7013,
+    "max_loss_mm": 2.1,
+    "max_loss_grid": "S9",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.9,
+        "current": 9.3,
+        "loss": 0.6,
+        "rate": 0.1019,
+        "remaining_life": 34.3474
+      },
+      "S2": {
+        "previous": 9.9,
+        "current": 9.5,
+        "loss": 0.4,
+        "rate": 0.0679,
+        "remaining_life": 54.4919
+      },
+      "S3": {
+        "previous": 9.9,
+        "current": 9.6,
+        "loss": 0.3,
+        "rate": 0.0509,
+        "remaining_life": 74.6562
+      },
+      "S4": {
+        "previous": 9.6,
+        "current": 9.2,
+        "loss": 0.4,
+        "rate": 0.0679,
+        "remaining_life": 50.0736
+      },
+      "S5": {
+        "previous": 9.8,
+        "current": 9.1,
+        "loss": 0.7,
+        "rate": 0.1188,
+        "remaining_life": 27.7778
+      },
+      "S6": {
+        "previous": 10.0,
+        "current": 9.7,
+        "loss": 0.3,
+        "rate": 0.0509,
+        "remaining_life": 76.6208
+      },
+      "S7": {
+        "previous": 9.0,
+        "current": 7.0,
+        "loss": 2.0,
+        "rate": 0.3396,
+        "remaining_life": 3.5336
+      },
+      "S8": {
+        "previous": 8.7,
+        "current": 7.1,
+        "loss": 1.6,
+        "rate": 0.2716,
+        "remaining_life": 4.7865
+      },
+      "S9": {
+        "previous": 8.4,
+        "current": 6.3,
+        "loss": 2.1,
+        "rate": 0.3565,
+        "remaining_life": 1.4025
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-128-V-2110.md",
+    "tag": "V-2110",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2026-07-02",
+    "previous_date": "2022-06-14",
+    "interval_years": 4.05,
+    "t_min": 8.9,
+    "nominal_mm": 12.0,
+    "design_pressure_barg": 21.6,
+    "design_temp_c": 255,
+    "material": "SA-516 Gr.70",
+    "inspector": "R. Bhat",
+    "governing_grid": "S7",
+    "governing_current": 9.5,
+    "governing_previous": 11.0,
+    "governing_loss": 1.5,
+    "corrosion_rate_mm_yr": 0.3704,
+    "remaining_life_years": 1.6199,
+    "next_interval_years": 0.8099,
+    "max_loss_mm": 1.5,
+    "max_loss_grid": "S7",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 12.0,
+        "current": 11.7,
+        "loss": 0.3,
+        "rate": 0.0741,
+        "remaining_life": 37.7868
+      },
+      "S2": {
+        "previous": 11.4,
+        "current": 10.5,
+        "loss": 0.9,
+        "rate": 0.2222,
+        "remaining_life": 7.2007
+      },
+      "S3": {
+        "previous": 11.7,
+        "current": 11.2,
+        "loss": 0.5,
+        "rate": 0.1235,
+        "remaining_life": 18.6235
+      },
+      "S4": {
+        "previous": 11.5,
+        "current": 11.2,
+        "loss": 0.3,
+        "rate": 0.0741,
+        "remaining_life": 31.0391
+      },
+      "S5": {
+        "previous": 11.5,
+        "current": 11.1,
+        "loss": 0.4,
+        "rate": 0.0988,
+        "remaining_life": 22.2672
+      },
+      "S6": {
+        "previous": 11.5,
+        "current": 11.2,
+        "loss": 0.3,
+        "rate": 0.0741,
+        "remaining_life": 31.0391
+      },
+      "S7": {
+        "previous": 11.0,
+        "current": 9.5,
+        "loss": 1.5,
+        "rate": 0.3704,
+        "remaining_life": 1.6199
+      },
+      "S8": {
+        "previous": 10.7,
+        "current": 9.8,
+        "loss": 0.9,
+        "rate": 0.2222,
+        "remaining_life": 4.0504
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-129-C-2229.md",
+    "tag": "C-2229",
+    "unit": "FCC",
+    "code": "API 510",
+    "inspection_date": "2025-11-16",
+    "previous_date": "2021-02-13",
+    "interval_years": 4.76,
+    "t_min": 12.2,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 5.4,
+    "design_temp_c": 285,
+    "material": "SA-516 Gr.70",
+    "inspector": "A. Menon",
+    "governing_grid": "S1",
+    "governing_current": 15.2,
+    "governing_previous": 15.4,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.042,
+    "remaining_life_years": 71.4286,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 6,
+    "per_grid": {
+      "S1": {
+        "previous": 15.4,
+        "current": 15.2,
+        "loss": 0.2,
+        "rate": 0.042,
+        "remaining_life": 71.4286
+      },
+      "S2": {
+        "previous": 15.5,
+        "current": 15.3,
+        "loss": 0.2,
+        "rate": 0.042,
+        "remaining_life": 73.8095
+      },
+      "S3": {
+        "previous": 15.7,
+        "current": 15.6,
+        "loss": 0.1,
+        "rate": 0.021,
+        "remaining_life": 161.9048
+      },
+      "S4": {
+        "previous": 15.8,
+        "current": 15.6,
+        "loss": 0.2,
+        "rate": 0.042,
+        "remaining_life": 80.9524
+      },
+      "S5": {
+        "previous": 15.6,
+        "current": 15.5,
+        "loss": 0.1,
+        "rate": 0.021,
+        "remaining_life": 157.1429
+      },
+      "S6": {
+        "previous": 16.0,
+        "current": 15.9,
+        "loss": 0.1,
+        "rate": 0.021,
+        "remaining_life": 176.1905
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-130-36-P-396A.md",
+    "tag": "36-P-396A",
+    "unit": "HGU",
+    "code": "API 570",
+    "inspection_date": "2023-09-25",
+    "previous_date": "2016-06-23",
+    "interval_years": 7.26,
+    "t_min": 5.1,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 16.4,
+    "design_temp_c": 335,
+    "material": "API 5L X52",
+    "inspector": "M. Pai",
+    "governing_grid": "S4",
+    "governing_current": 8.8,
+    "governing_previous": 8.9,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0138,
+    "remaining_life_years": 268.1159,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 7,
+    "per_grid": {
+      "S1": {
+        "previous": 9.5,
+        "current": 9.3,
+        "loss": 0.2,
+        "rate": 0.0275,
+        "remaining_life": 152.7273
+      },
+      "S2": {
+        "previous": 9.4,
+        "current": 9.3,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 304.3478
+      },
+      "S3": {
+        "previous": 9.5,
+        "current": 9.4,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 311.5942
+      },
+      "S4": {
+        "previous": 8.9,
+        "current": 8.8,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 268.1159
+      },
+      "S5": {
+        "previous": 9.1,
+        "current": 9.0,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 282.6087
+      },
+      "S6": {
+        "previous": 9.4,
+        "current": 9.3,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 304.3478
+      },
+      "S7": {
+        "previous": 9.3,
+        "current": 9.2,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 297.1014
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-131-37-P-259A.md",
+    "tag": "37-P-259A",
+    "unit": "CDU",
+    "code": "API 570",
+    "inspection_date": "2026-12-15",
+    "previous_date": "2021-02-03",
+    "interval_years": 5.86,
+    "t_min": 6.0,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 12.7,
+    "design_temp_c": 160,
+    "material": "API 5L X52",
+    "inspector": "M. Pai",
+    "governing_grid": "S8",
+    "governing_current": 6.4,
+    "governing_previous": 8.1,
+    "governing_loss": 1.7,
+    "corrosion_rate_mm_yr": 0.2901,
+    "remaining_life_years": 1.3788,
+    "next_interval_years": 0.6894,
+    "max_loss_mm": 2.1,
+    "max_loss_grid": "S7",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 8.9,
+        "current": 8.2,
+        "loss": 0.7,
+        "rate": 0.1195,
+        "remaining_life": 18.41
+      },
+      "S2": {
+        "previous": 9.5,
+        "current": 8.8,
+        "loss": 0.7,
+        "rate": 0.1195,
+        "remaining_life": 23.431
+      },
+      "S3": {
+        "previous": 9.1,
+        "current": 8.4,
+        "loss": 0.7,
+        "rate": 0.1195,
+        "remaining_life": 20.0837
+      },
+      "S4": {
+        "previous": 9.0,
+        "current": 8.4,
+        "loss": 0.6,
+        "rate": 0.1024,
+        "remaining_life": 23.4375
+      },
+      "S5": {
+        "previous": 9.1,
+        "current": 8.2,
+        "loss": 0.9,
+        "rate": 0.1536,
+        "remaining_life": 14.3229
+      },
+      "S6": {
+        "previous": 9.0,
+        "current": 8.6,
+        "loss": 0.4,
+        "rate": 0.0683,
+        "remaining_life": 38.0673
+      },
+      "S7": {
+        "previous": 8.7,
+        "current": 6.6,
+        "loss": 2.1,
+        "rate": 0.3584,
+        "remaining_life": 1.6741
+      },
+      "S8": {
+        "previous": 8.1,
+        "current": 6.4,
+        "loss": 1.7,
+        "rate": 0.2901,
+        "remaining_life": 1.3788
+      },
+      "S9": {
+        "previous": 8.2,
+        "current": 6.7,
+        "loss": 1.5,
+        "rate": 0.256,
+        "remaining_life": 2.7344
+      },
+      "S10": {
+        "previous": 8.6,
+        "current": 6.9,
+        "loss": 1.7,
+        "rate": 0.2901,
+        "remaining_life": 3.1024
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-132-C-1782.md",
+    "tag": "C-1782",
+    "unit": "FCC",
+    "code": "API 510",
+    "inspection_date": "2026-03-11",
+    "previous_date": "2018-05-01",
+    "interval_years": 7.86,
+    "t_min": 11.8,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 19.2,
+    "design_temp_c": 155,
+    "material": "SA-516 Gr.70",
+    "inspector": "R. Bhat",
+    "governing_grid": "S1",
+    "governing_current": 15.4,
+    "governing_previous": 15.5,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0127,
+    "remaining_life_years": 283.4646,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S3",
+    "grid_count": 7,
+    "per_grid": {
+      "S1": {
+        "previous": 15.5,
+        "current": 15.4,
+        "loss": 0.1,
+        "rate": 0.0127,
+        "remaining_life": 283.4646
+      },
+      "S2": {
+        "previous": 15.7,
+        "current": 15.6,
+        "loss": 0.1,
+        "rate": 0.0127,
+        "remaining_life": 299.2126
+      },
+      "S3": {
+        "previous": 15.8,
+        "current": 15.6,
+        "loss": 0.2,
+        "rate": 0.0254,
+        "remaining_life": 149.6063
+      },
+      "S4": {
+        "previous": 15.6,
+        "current": 15.5,
+        "loss": 0.1,
+        "rate": 0.0127,
+        "remaining_life": 291.3386
+      },
+      "S5": {
+        "previous": 15.8,
+        "current": 15.7,
+        "loss": 0.1,
+        "rate": 0.0127,
+        "remaining_life": 307.0866
+      },
+      "S6": {
+        "previous": 15.6,
+        "current": 15.4,
+        "loss": 0.2,
+        "rate": 0.0254,
+        "remaining_life": 141.7323
+      },
+      "S7": {
+        "previous": 15.7,
+        "current": 15.5,
+        "loss": 0.2,
+        "rate": 0.0254,
+        "remaining_life": 145.6693
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-133-C-4044.md",
+    "tag": "C-4044",
+    "unit": "VDU",
+    "code": "API 510",
+    "inspection_date": "2024-07-01",
+    "previous_date": "2017-09-03",
+    "interval_years": 6.83,
+    "t_min": 11.9,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 3.6,
+    "design_temp_c": 305,
+    "material": "SA-516 Gr.70",
+    "inspector": "V. Hegde",
+    "governing_grid": "S11",
+    "governing_current": 12.5,
+    "governing_previous": 14.5,
+    "governing_loss": 2.0,
+    "corrosion_rate_mm_yr": 0.2928,
+    "remaining_life_years": 2.0492,
+    "next_interval_years": 1.0246,
+    "max_loss_mm": 2.0,
+    "max_loss_grid": "S11",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 15.8,
+        "current": 15.3,
+        "loss": 0.5,
+        "rate": 0.0732,
+        "remaining_life": 46.4481
+      },
+      "S2": {
+        "previous": 15.7,
+        "current": 15.3,
+        "loss": 0.4,
+        "rate": 0.0586,
+        "remaining_life": 58.0205
+      },
+      "S3": {
+        "previous": 15.9,
+        "current": 15.2,
+        "loss": 0.7,
+        "rate": 0.1025,
+        "remaining_life": 32.1951
+      },
+      "S4": {
+        "previous": 15.6,
+        "current": 14.9,
+        "loss": 0.7,
+        "rate": 0.1025,
+        "remaining_life": 29.2683
+      },
+      "S5": {
+        "previous": 15.6,
+        "current": 15.3,
+        "loss": 0.3,
+        "rate": 0.0439,
+        "remaining_life": 77.4487
+      },
+      "S6": {
+        "previous": 15.9,
+        "current": 15.5,
+        "loss": 0.4,
+        "rate": 0.0586,
+        "remaining_life": 61.4334
+      },
+      "S7": {
+        "previous": 15.8,
+        "current": 15.3,
+        "loss": 0.5,
+        "rate": 0.0732,
+        "remaining_life": 46.4481
+      },
+      "S8": {
+        "previous": 15.8,
+        "current": 15.4,
+        "loss": 0.4,
+        "rate": 0.0586,
+        "remaining_life": 59.727
+      },
+      "S9": {
+        "previous": 15.4,
+        "current": 14.5,
+        "loss": 0.9,
+        "rate": 0.1318,
+        "remaining_life": 19.7269
+      },
+      "S10": {
+        "previous": 14.5,
+        "current": 12.7,
+        "loss": 1.8,
+        "rate": 0.2635,
+        "remaining_life": 3.0361
+      },
+      "S11": {
+        "previous": 14.5,
+        "current": 12.5,
+        "loss": 2.0,
+        "rate": 0.2928,
+        "remaining_life": 2.0492
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-134-C-1500.md",
+    "tag": "C-1500",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2025-09-23",
+    "previous_date": "2017-12-13",
+    "interval_years": 7.78,
+    "t_min": 11.8,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 23.5,
+    "design_temp_c": 280,
+    "material": "SA-516 Gr.70",
+    "inspector": "A. Menon",
+    "governing_grid": "S6",
+    "governing_current": 15.3,
+    "governing_previous": 15.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0257,
+    "remaining_life_years": 136.1868,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S5",
+    "grid_count": 6,
+    "per_grid": {
+      "S1": {
+        "previous": 15.9,
+        "current": 15.8,
+        "loss": 0.1,
+        "rate": 0.0129,
+        "remaining_life": 310.0775
+      },
+      "S2": {
+        "previous": 15.5,
+        "current": 15.4,
+        "loss": 0.1,
+        "rate": 0.0129,
+        "remaining_life": 279.0698
+      },
+      "S3": {
+        "previous": 15.5,
+        "current": 15.4,
+        "loss": 0.1,
+        "rate": 0.0129,
+        "remaining_life": 279.0698
+      },
+      "S4": {
+        "previous": 15.5,
+        "current": 15.4,
+        "loss": 0.1,
+        "rate": 0.0129,
+        "remaining_life": 279.0698
+      },
+      "S5": {
+        "previous": 15.6,
+        "current": 15.4,
+        "loss": 0.2,
+        "rate": 0.0257,
+        "remaining_life": 140.0778
+      },
+      "S6": {
+        "previous": 15.5,
+        "current": 15.3,
+        "loss": 0.2,
+        "rate": 0.0257,
+        "remaining_life": 136.1868
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-135-T-1260.md",
+    "tag": "T-1260",
+    "unit": "CCR",
+    "code": "API 653",
+    "inspection_date": "2023-04-09",
+    "previous_date": "2017-02-18",
+    "interval_years": 6.14,
+    "t_min": 3.7,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 4.3,
+    "design_temp_c": 120,
+    "material": "SA-283 Gr.C",
+    "inspector": "V. Hegde",
+    "governing_grid": "S8",
+    "governing_current": 6.0,
+    "governing_previous": 7.1,
+    "governing_loss": 1.1,
+    "corrosion_rate_mm_yr": 0.1792,
+    "remaining_life_years": 12.8348,
+    "next_interval_years": 6.4174,
+    "max_loss_mm": 1.1,
+    "max_loss_grid": "S8",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 8.0,
+        "current": 7.2,
+        "loss": 0.8,
+        "rate": 0.1303,
+        "remaining_life": 26.8611
+      },
+      "S2": {
+        "previous": 7.4,
+        "current": 6.8,
+        "loss": 0.6,
+        "rate": 0.0977,
+        "remaining_life": 31.7298
+      },
+      "S3": {
+        "previous": 7.8,
+        "current": 7.2,
+        "loss": 0.6,
+        "rate": 0.0977,
+        "remaining_life": 35.824
+      },
+      "S4": {
+        "previous": 7.9,
+        "current": 7.3,
+        "loss": 0.6,
+        "rate": 0.0977,
+        "remaining_life": 36.8475
+      },
+      "S5": {
+        "previous": 7.4,
+        "current": 6.7,
+        "loss": 0.7,
+        "rate": 0.114,
+        "remaining_life": 26.3158
+      },
+      "S6": {
+        "previous": 7.5,
+        "current": 6.9,
+        "loss": 0.6,
+        "rate": 0.0977,
+        "remaining_life": 32.7533
+      },
+      "S7": {
+        "previous": 7.5,
+        "current": 7.0,
+        "loss": 0.5,
+        "rate": 0.0814,
+        "remaining_life": 40.5405
+      },
+      "S8": {
+        "previous": 7.1,
+        "current": 6.0,
+        "loss": 1.1,
+        "rate": 0.1792,
+        "remaining_life": 12.8348
+      },
+      "S9": {
+        "previous": 7.0,
+        "current": 6.0,
+        "loss": 1.0,
+        "rate": 0.1629,
+        "remaining_life": 14.1191
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-136-33-P-245A.md",
+    "tag": "33-P-245A",
+    "unit": "CDU",
+    "code": "API 570",
+    "inspection_date": "2025-02-06",
+    "previous_date": "2018-09-03",
+    "interval_years": 6.43,
+    "t_min": 5.7,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 8.9,
+    "design_temp_c": 280,
+    "material": "API 5L X52",
+    "inspector": "N. Rao",
+    "governing_grid": "S8",
+    "governing_current": 6.1,
+    "governing_previous": 8.1,
+    "governing_loss": 2.0,
+    "corrosion_rate_mm_yr": 0.311,
+    "remaining_life_years": 1.2862,
+    "next_interval_years": 0.6431,
+    "max_loss_mm": 2.0,
+    "max_loss_grid": "S8",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.2,
+        "current": 8.5,
+        "loss": 0.7,
+        "rate": 0.1089,
+        "remaining_life": 25.7117
+      },
+      "S2": {
+        "previous": 9.2,
+        "current": 8.6,
+        "loss": 0.6,
+        "rate": 0.0933,
+        "remaining_life": 31.0825
+      },
+      "S3": {
+        "previous": 9.4,
+        "current": 8.8,
+        "loss": 0.6,
+        "rate": 0.0933,
+        "remaining_life": 33.2262
+      },
+      "S4": {
+        "previous": 9.1,
+        "current": 8.3,
+        "loss": 0.8,
+        "rate": 0.1244,
+        "remaining_life": 20.9003
+      },
+      "S5": {
+        "previous": 9.5,
+        "current": 9.1,
+        "loss": 0.4,
+        "rate": 0.0622,
+        "remaining_life": 54.6624
+      },
+      "S6": {
+        "previous": 9.1,
+        "current": 8.4,
+        "loss": 0.7,
+        "rate": 0.1089,
+        "remaining_life": 24.7934
+      },
+      "S7": {
+        "previous": 9.2,
+        "current": 8.4,
+        "loss": 0.8,
+        "rate": 0.1244,
+        "remaining_life": 21.7042
+      },
+      "S8": {
+        "previous": 8.1,
+        "current": 6.1,
+        "loss": 2.0,
+        "rate": 0.311,
+        "remaining_life": 1.2862
+      },
+      "S9": {
+        "previous": 8.0,
+        "current": 6.4,
+        "loss": 1.6,
+        "rate": 0.2488,
+        "remaining_life": 2.8135
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-137-V-3462.md",
+    "tag": "V-3462",
+    "unit": "VDU",
+    "code": "API 510",
+    "inspection_date": "2023-12-12",
+    "previous_date": "2017-07-23",
+    "interval_years": 6.39,
+    "t_min": 7.9,
+    "nominal_mm": 12.0,
+    "design_pressure_barg": 19.9,
+    "design_temp_c": 250,
+    "material": "SA-516 Gr.70",
+    "inspector": "D. Kamath",
+    "governing_grid": "S9",
+    "governing_current": 9.1,
+    "governing_previous": 10.8,
+    "governing_loss": 1.7,
+    "corrosion_rate_mm_yr": 0.266,
+    "remaining_life_years": 4.5113,
+    "next_interval_years": 2.2557,
+    "max_loss_mm": 1.7,
+    "max_loss_grid": "S9",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 11.7,
+        "current": 11.2,
+        "loss": 0.5,
+        "rate": 0.0782,
+        "remaining_life": 42.1995
+      },
+      "S2": {
+        "previous": 11.9,
+        "current": 11.2,
+        "loss": 0.7,
+        "rate": 0.1095,
+        "remaining_life": 30.137
+      },
+      "S3": {
+        "previous": 11.8,
+        "current": 11.4,
+        "loss": 0.4,
+        "rate": 0.0626,
+        "remaining_life": 55.9105
+      },
+      "S4": {
+        "previous": 12.0,
+        "current": 11.6,
+        "loss": 0.4,
+        "rate": 0.0626,
+        "remaining_life": 59.1054
+      },
+      "S5": {
+        "previous": 11.5,
+        "current": 10.7,
+        "loss": 0.8,
+        "rate": 0.1252,
+        "remaining_life": 22.3642
+      },
+      "S6": {
+        "previous": 11.5,
+        "current": 11.1,
+        "loss": 0.4,
+        "rate": 0.0626,
+        "remaining_life": 51.1182
+      },
+      "S7": {
+        "previous": 11.5,
+        "current": 10.9,
+        "loss": 0.6,
+        "rate": 0.0939,
+        "remaining_life": 31.9489
+      },
+      "S8": {
+        "previous": 10.5,
+        "current": 9.3,
+        "loss": 1.2,
+        "rate": 0.1878,
+        "remaining_life": 7.4547
+      },
+      "S9": {
+        "previous": 10.8,
+        "current": 9.1,
+        "loss": 1.7,
+        "rate": 0.266,
+        "remaining_life": 4.5113
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-138-E-3347.md",
+    "tag": "E-3347",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2024-11-01",
+    "previous_date": "2019-05-11",
+    "interval_years": 5.48,
+    "t_min": 6.2,
+    "nominal_mm": 10.0,
+    "design_pressure_barg": 6.2,
+    "design_temp_c": 120,
+    "material": "SA-179",
+    "inspector": "R. Bhat",
+    "governing_grid": "S1",
+    "governing_current": 9.3,
+    "governing_previous": 9.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0365,
+    "remaining_life_years": 84.9315,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.5,
+        "current": 9.3,
+        "loss": 0.2,
+        "rate": 0.0365,
+        "remaining_life": 84.9315
+      },
+      "S2": {
+        "previous": 9.5,
+        "current": 9.3,
+        "loss": 0.2,
+        "rate": 0.0365,
+        "remaining_life": 84.9315
+      },
+      "S3": {
+        "previous": 9.5,
+        "current": 9.4,
+        "loss": 0.1,
+        "rate": 0.0182,
+        "remaining_life": 175.8242
+      },
+      "S4": {
+        "previous": 9.5,
+        "current": 9.3,
+        "loss": 0.2,
+        "rate": 0.0365,
+        "remaining_life": 84.9315
+      },
+      "S5": {
+        "previous": 9.6,
+        "current": 9.5,
+        "loss": 0.1,
+        "rate": 0.0182,
+        "remaining_life": 181.3187
+      },
+      "S6": {
+        "previous": 9.5,
+        "current": 9.4,
+        "loss": 0.1,
+        "rate": 0.0182,
+        "remaining_life": 175.8242
+      },
+      "S7": {
+        "previous": 10.0,
+        "current": 9.9,
+        "loss": 0.1,
+        "rate": 0.0182,
+        "remaining_life": 203.2967
+      },
+      "S8": {
+        "previous": 9.6,
+        "current": 9.5,
+        "loss": 0.1,
+        "rate": 0.0182,
+        "remaining_life": 181.3187
+      },
+      "S9": {
+        "previous": 9.7,
+        "current": 9.6,
+        "loss": 0.1,
+        "rate": 0.0182,
+        "remaining_life": 186.8132
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-139-C-4187.md",
+    "tag": "C-4187",
+    "unit": "HGU",
+    "code": "API 510",
+    "inspection_date": "2023-04-12",
+    "previous_date": "2017-02-03",
+    "interval_years": 6.18,
+    "t_min": 11.8,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 4.3,
+    "design_temp_c": 315,
+    "material": "SA-516 Gr.70",
+    "inspector": "D. Kamath",
+    "governing_grid": "S6",
+    "governing_current": 15.3,
+    "governing_previous": 15.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0324,
+    "remaining_life_years": 108.0247,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S3",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 15.9,
+        "current": 15.8,
+        "loss": 0.1,
+        "rate": 0.0162,
+        "remaining_life": 246.9136
+      },
+      "S2": {
+        "previous": 15.5,
+        "current": 15.4,
+        "loss": 0.1,
+        "rate": 0.0162,
+        "remaining_life": 222.2222
+      },
+      "S3": {
+        "previous": 15.6,
+        "current": 15.4,
+        "loss": 0.2,
+        "rate": 0.0324,
+        "remaining_life": 111.1111
+      },
+      "S4": {
+        "previous": 15.6,
+        "current": 15.4,
+        "loss": 0.2,
+        "rate": 0.0324,
+        "remaining_life": 111.1111
+      },
+      "S5": {
+        "previous": 15.7,
+        "current": 15.6,
+        "loss": 0.1,
+        "rate": 0.0162,
+        "remaining_life": 234.5679
+      },
+      "S6": {
+        "previous": 15.5,
+        "current": 15.3,
+        "loss": 0.2,
+        "rate": 0.0324,
+        "remaining_life": 108.0247
+      },
+      "S7": {
+        "previous": 15.8,
+        "current": 15.6,
+        "loss": 0.2,
+        "rate": 0.0324,
+        "remaining_life": 117.284
+      },
+      "S8": {
+        "previous": 15.4,
+        "current": 15.3,
+        "loss": 0.1,
+        "rate": 0.0162,
+        "remaining_life": 216.0494
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-140-C-2068.md",
+    "tag": "C-2068",
+    "unit": "CCR",
+    "code": "API 510",
+    "inspection_date": "2025-11-15",
+    "previous_date": "2020-02-04",
+    "interval_years": 5.78,
+    "t_min": 11.7,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 18.2,
+    "design_temp_c": 275,
+    "material": "SA-516 Gr.70",
+    "inspector": "M. Pai",
+    "governing_grid": "S8",
+    "governing_current": 12.7,
+    "governing_previous": 14.6,
+    "governing_loss": 1.9,
+    "corrosion_rate_mm_yr": 0.3287,
+    "remaining_life_years": 3.0423,
+    "next_interval_years": 1.5212,
+    "max_loss_mm": 2.1,
+    "max_loss_grid": "S9",
+    "grid_count": 11,
+    "per_grid": {
+      "S1": {
+        "previous": 15.8,
+        "current": 15.1,
+        "loss": 0.7,
+        "rate": 0.1211,
+        "remaining_life": 28.076
+      },
+      "S2": {
+        "previous": 15.6,
+        "current": 15.1,
+        "loss": 0.5,
+        "rate": 0.0865,
+        "remaining_life": 39.3064
+      },
+      "S3": {
+        "previous": 15.9,
+        "current": 15.0,
+        "loss": 0.9,
+        "rate": 0.1557,
+        "remaining_life": 21.1946
+      },
+      "S4": {
+        "previous": 15.9,
+        "current": 15.2,
+        "loss": 0.7,
+        "rate": 0.1211,
+        "remaining_life": 28.9017
+      },
+      "S5": {
+        "previous": 15.5,
+        "current": 14.6,
+        "loss": 0.9,
+        "rate": 0.1557,
+        "remaining_life": 18.6256
+      },
+      "S6": {
+        "previous": 15.5,
+        "current": 15.2,
+        "loss": 0.3,
+        "rate": 0.0519,
+        "remaining_life": 67.4374
+      },
+      "S7": {
+        "previous": 15.6,
+        "current": 15.0,
+        "loss": 0.6,
+        "rate": 0.1038,
+        "remaining_life": 31.7919
+      },
+      "S8": {
+        "previous": 14.6,
+        "current": 12.7,
+        "loss": 1.9,
+        "rate": 0.3287,
+        "remaining_life": 3.0423
+      },
+      "S9": {
+        "previous": 15.2,
+        "current": 13.1,
+        "loss": 2.1,
+        "rate": 0.3633,
+        "remaining_life": 3.8536
+      },
+      "S10": {
+        "previous": 15.1,
+        "current": 13.2,
+        "loss": 1.9,
+        "rate": 0.3287,
+        "remaining_life": 4.5634
+      },
+      "S11": {
+        "previous": 14.9,
+        "current": 13.2,
+        "loss": 1.7,
+        "rate": 0.2941,
+        "remaining_life": 5.1003
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-141-15-P-357B.md",
+    "tag": "15-P-357B",
+    "unit": "FCC",
+    "code": "API 570",
+    "inspection_date": "2024-09-15",
+    "previous_date": "2020-05-05",
+    "interval_years": 4.36,
+    "t_min": 5.9,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 9.7,
+    "design_temp_c": 340,
+    "material": "API 5L X52",
+    "inspector": "V. Hegde",
+    "governing_grid": "S8",
+    "governing_current": 6.3,
+    "governing_previous": 8.1,
+    "governing_loss": 1.8,
+    "corrosion_rate_mm_yr": 0.4128,
+    "remaining_life_years": 0.969,
+    "next_interval_years": 0.4845,
+    "max_loss_mm": 1.8,
+    "max_loss_grid": "S8",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 9.1,
+        "current": 8.5,
+        "loss": 0.6,
+        "rate": 0.1376,
+        "remaining_life": 18.8953
+      },
+      "S2": {
+        "previous": 9.2,
+        "current": 8.8,
+        "loss": 0.4,
+        "rate": 0.0917,
+        "remaining_life": 31.6249
+      },
+      "S3": {
+        "previous": 9.2,
+        "current": 8.6,
+        "loss": 0.6,
+        "rate": 0.1376,
+        "remaining_life": 19.6221
+      },
+      "S4": {
+        "previous": 9.0,
+        "current": 8.6,
+        "loss": 0.4,
+        "rate": 0.0917,
+        "remaining_life": 29.4438
+      },
+      "S5": {
+        "previous": 9.1,
+        "current": 8.3,
+        "loss": 0.8,
+        "rate": 0.1835,
+        "remaining_life": 13.079
+      },
+      "S6": {
+        "previous": 9.1,
+        "current": 8.6,
+        "loss": 0.5,
+        "rate": 0.1147,
+        "remaining_life": 23.5397
+      },
+      "S7": {
+        "previous": 8.1,
+        "current": 6.8,
+        "loss": 1.3,
+        "rate": 0.2982,
+        "remaining_life": 3.0181
+      },
+      "S8": {
+        "previous": 8.1,
+        "current": 6.3,
+        "loss": 1.8,
+        "rate": 0.4128,
+        "remaining_life": 0.969
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-142-D-3958.md",
+    "tag": "D-3958",
+    "unit": "CCR",
+    "code": "API 510",
+    "inspection_date": "2026-08-20",
+    "previous_date": "2019-05-26",
+    "interval_years": 7.24,
+    "t_min": 10.8,
+    "nominal_mm": 14.0,
+    "design_pressure_barg": 6.3,
+    "design_temp_c": 370,
+    "material": "SA-516 Gr.70",
+    "inspector": "M. Pai",
+    "governing_grid": "S2",
+    "governing_current": 13.3,
+    "governing_previous": 13.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0276,
+    "remaining_life_years": 90.5797,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 13.6,
+        "current": 13.4,
+        "loss": 0.2,
+        "rate": 0.0276,
+        "remaining_life": 94.2029
+      },
+      "S2": {
+        "previous": 13.5,
+        "current": 13.3,
+        "loss": 0.2,
+        "rate": 0.0276,
+        "remaining_life": 90.5797
+      },
+      "S3": {
+        "previous": 13.6,
+        "current": 13.5,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 195.6522
+      },
+      "S4": {
+        "previous": 13.9,
+        "current": 13.7,
+        "loss": 0.2,
+        "rate": 0.0276,
+        "remaining_life": 105.0725
+      },
+      "S5": {
+        "previous": 14.0,
+        "current": 13.8,
+        "loss": 0.2,
+        "rate": 0.0276,
+        "remaining_life": 108.6957
+      },
+      "S6": {
+        "previous": 13.7,
+        "current": 13.6,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 202.8986
+      },
+      "S7": {
+        "previous": 13.9,
+        "current": 13.7,
+        "loss": 0.2,
+        "rate": 0.0276,
+        "remaining_life": 105.0725
+      },
+      "S8": {
+        "previous": 13.8,
+        "current": 13.7,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 210.1449
+      },
+      "S9": {
+        "previous": 13.6,
+        "current": 13.4,
+        "loss": 0.2,
+        "rate": 0.0276,
+        "remaining_life": 94.2029
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-143-E-3713.md",
+    "tag": "E-3713",
+    "unit": "CDU",
+    "code": "API 510",
+    "inspection_date": "2024-01-14",
+    "previous_date": "2015-11-04",
+    "interval_years": 8.19,
+    "t_min": 6.6,
+    "nominal_mm": 10.0,
+    "design_pressure_barg": 11.3,
+    "design_temp_c": 180,
+    "material": "SA-179",
+    "inspector": "S. Kulkarni",
+    "governing_grid": "S5",
+    "governing_current": 9.2,
+    "governing_previous": 9.4,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0244,
+    "remaining_life_years": 106.5574,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.6,
+        "current": 9.4,
+        "loss": 0.2,
+        "rate": 0.0244,
+        "remaining_life": 114.7541
+      },
+      "S2": {
+        "previous": 9.9,
+        "current": 9.8,
+        "loss": 0.1,
+        "rate": 0.0122,
+        "remaining_life": 262.2951
+      },
+      "S3": {
+        "previous": 9.8,
+        "current": 9.7,
+        "loss": 0.1,
+        "rate": 0.0122,
+        "remaining_life": 254.0984
+      },
+      "S4": {
+        "previous": 9.6,
+        "current": 9.5,
+        "loss": 0.1,
+        "rate": 0.0122,
+        "remaining_life": 237.7049
+      },
+      "S5": {
+        "previous": 9.4,
+        "current": 9.2,
+        "loss": 0.2,
+        "rate": 0.0244,
+        "remaining_life": 106.5574
+      },
+      "S6": {
+        "previous": 9.5,
+        "current": 9.4,
+        "loss": 0.1,
+        "rate": 0.0122,
+        "remaining_life": 229.5082
+      },
+      "S7": {
+        "previous": 9.7,
+        "current": 9.5,
+        "loss": 0.2,
+        "rate": 0.0244,
+        "remaining_life": 118.8525
+      },
+      "S8": {
+        "previous": 10.0,
+        "current": 9.8,
+        "loss": 0.2,
+        "rate": 0.0244,
+        "remaining_life": 131.1475
+      },
+      "S9": {
+        "previous": 10.0,
+        "current": 9.8,
+        "loss": 0.2,
+        "rate": 0.0244,
+        "remaining_life": 131.1475
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-144-T-2662.md",
+    "tag": "T-2662",
+    "unit": "CCR",
+    "code": "API 653",
+    "inspection_date": "2023-01-11",
+    "previous_date": "2018-01-26",
+    "interval_years": 4.96,
+    "t_min": 5.0,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 22.8,
+    "design_temp_c": 180,
+    "material": "SA-283 Gr.C",
+    "inspector": "A. Menon",
+    "governing_grid": "S1",
+    "governing_current": 7.2,
+    "governing_previous": 7.4,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0403,
+    "remaining_life_years": 54.5906,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 7.4,
+        "current": 7.2,
+        "loss": 0.2,
+        "rate": 0.0403,
+        "remaining_life": 54.5906
+      },
+      "S2": {
+        "previous": 7.9,
+        "current": 7.8,
+        "loss": 0.1,
+        "rate": 0.0202,
+        "remaining_life": 138.6139
+      },
+      "S3": {
+        "previous": 7.8,
+        "current": 7.6,
+        "loss": 0.2,
+        "rate": 0.0403,
+        "remaining_life": 64.5161
+      },
+      "S4": {
+        "previous": 7.8,
+        "current": 7.6,
+        "loss": 0.2,
+        "rate": 0.0403,
+        "remaining_life": 64.5161
+      },
+      "S5": {
+        "previous": 7.6,
+        "current": 7.4,
+        "loss": 0.2,
+        "rate": 0.0403,
+        "remaining_life": 59.5533
+      },
+      "S6": {
+        "previous": 7.9,
+        "current": 7.8,
+        "loss": 0.1,
+        "rate": 0.0202,
+        "remaining_life": 138.6139
+      },
+      "S7": {
+        "previous": 7.8,
+        "current": 7.6,
+        "loss": 0.2,
+        "rate": 0.0403,
+        "remaining_life": 64.5161
+      },
+      "S8": {
+        "previous": 7.6,
+        "current": 7.4,
+        "loss": 0.2,
+        "rate": 0.0403,
+        "remaining_life": 59.5533
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-145-15-P-168A.md",
+    "tag": "15-P-168A",
+    "unit": "FCC",
+    "code": "API 570",
+    "inspection_date": "2023-06-27",
+    "previous_date": "2016-12-28",
+    "interval_years": 6.49,
+    "t_min": 6.1,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 22.5,
+    "design_temp_c": 220,
+    "material": "API 5L X52",
+    "inspector": "M. Pai",
+    "governing_grid": "S3",
+    "governing_current": 8.8,
+    "governing_previous": 8.9,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0154,
+    "remaining_life_years": 175.3247,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 7,
+    "per_grid": {
+      "S1": {
+        "previous": 9.0,
+        "current": 8.9,
+        "loss": 0.1,
+        "rate": 0.0154,
+        "remaining_life": 181.8182
+      },
+      "S2": {
+        "previous": 9.5,
+        "current": 9.3,
+        "loss": 0.2,
+        "rate": 0.0308,
+        "remaining_life": 103.8961
+      },
+      "S3": {
+        "previous": 8.9,
+        "current": 8.8,
+        "loss": 0.1,
+        "rate": 0.0154,
+        "remaining_life": 175.3247
+      },
+      "S4": {
+        "previous": 9.3,
+        "current": 9.2,
+        "loss": 0.1,
+        "rate": 0.0154,
+        "remaining_life": 201.2987
+      },
+      "S5": {
+        "previous": 9.5,
+        "current": 9.4,
+        "loss": 0.1,
+        "rate": 0.0154,
+        "remaining_life": 214.2857
+      },
+      "S6": {
+        "previous": 9.2,
+        "current": 9.1,
+        "loss": 0.1,
+        "rate": 0.0154,
+        "remaining_life": 194.8052
+      },
+      "S7": {
+        "previous": 9.2,
+        "current": 9.1,
+        "loss": 0.1,
+        "rate": 0.0154,
+        "remaining_life": 194.8052
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-146-C-2085.md",
+    "tag": "C-2085",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2025-11-02",
+    "previous_date": "2021-12-12",
+    "interval_years": 3.89,
+    "t_min": 12.6,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 19.9,
+    "design_temp_c": 285,
+    "material": "SA-516 Gr.70",
+    "inspector": "N. Rao",
+    "governing_grid": "S11",
+    "governing_current": 13.1,
+    "governing_previous": 14.5,
+    "governing_loss": 1.4,
+    "corrosion_rate_mm_yr": 0.3599,
+    "remaining_life_years": 1.3893,
+    "next_interval_years": 0.6946,
+    "max_loss_mm": 1.4,
+    "max_loss_grid": "S11",
+    "grid_count": 12,
+    "per_grid": {
+      "S1": {
+        "previous": 15.6,
+        "current": 14.8,
+        "loss": 0.8,
+        "rate": 0.2057,
+        "remaining_life": 10.6952
+      },
+      "S2": {
+        "previous": 15.4,
+        "current": 14.9,
+        "loss": 0.5,
+        "rate": 0.1285,
+        "remaining_life": 17.8988
+      },
+      "S3": {
+        "previous": 15.5,
+        "current": 15.1,
+        "loss": 0.4,
+        "rate": 0.1028,
+        "remaining_life": 24.3191
+      },
+      "S4": {
+        "previous": 15.9,
+        "current": 15.1,
+        "loss": 0.8,
+        "rate": 0.2057,
+        "remaining_life": 12.1536
+      },
+      "S5": {
+        "previous": 15.8,
+        "current": 15.0,
+        "loss": 0.8,
+        "rate": 0.2057,
+        "remaining_life": 11.6675
+      },
+      "S6": {
+        "previous": 15.4,
+        "current": 14.7,
+        "loss": 0.7,
+        "rate": 0.1799,
+        "remaining_life": 11.6732
+      },
+      "S7": {
+        "previous": 15.9,
+        "current": 15.0,
+        "loss": 0.9,
+        "rate": 0.2314,
+        "remaining_life": 10.3717
+      },
+      "S8": {
+        "previous": 15.4,
+        "current": 14.7,
+        "loss": 0.7,
+        "rate": 0.1799,
+        "remaining_life": 11.6732
+      },
+      "S9": {
+        "previous": 14.6,
+        "current": 13.9,
+        "loss": 0.7,
+        "rate": 0.1799,
+        "remaining_life": 7.2262
+      },
+      "S10": {
+        "previous": 14.7,
+        "current": 13.6,
+        "loss": 1.1,
+        "rate": 0.2828,
+        "remaining_life": 3.5361
+      },
+      "S11": {
+        "previous": 14.5,
+        "current": 13.1,
+        "loss": 1.4,
+        "rate": 0.3599,
+        "remaining_life": 1.3893
+      },
+      "S12": {
+        "previous": 14.7,
+        "current": 14.0,
+        "loss": 0.7,
+        "rate": 0.1799,
+        "remaining_life": 7.7821
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-147-T-1306.md",
+    "tag": "T-1306",
+    "unit": "VDU",
+    "code": "API 653",
+    "inspection_date": "2023-07-07",
+    "previous_date": "2016-07-11",
+    "interval_years": 6.99,
+    "t_min": 4.2,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 5.9,
+    "design_temp_c": 305,
+    "material": "SA-283 Gr.C",
+    "inspector": "V. Hegde",
+    "governing_grid": "S8",
+    "governing_current": 4.8,
+    "governing_previous": 6.4,
+    "governing_loss": 1.6,
+    "corrosion_rate_mm_yr": 0.2289,
+    "remaining_life_years": 2.6212,
+    "next_interval_years": 1.3106,
+    "max_loss_mm": 2.2,
+    "max_loss_grid": "S10",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 7.4,
+        "current": 6.6,
+        "loss": 0.8,
+        "rate": 0.1144,
+        "remaining_life": 20.979
+      },
+      "S2": {
+        "previous": 7.7,
+        "current": 7.3,
+        "loss": 0.4,
+        "rate": 0.0572,
+        "remaining_life": 54.1958
+      },
+      "S3": {
+        "previous": 7.7,
+        "current": 7.0,
+        "loss": 0.7,
+        "rate": 0.1001,
+        "remaining_life": 27.972
+      },
+      "S4": {
+        "previous": 8.0,
+        "current": 7.1,
+        "loss": 0.9,
+        "rate": 0.1288,
+        "remaining_life": 22.5155
+      },
+      "S5": {
+        "previous": 7.6,
+        "current": 7.1,
+        "loss": 0.5,
+        "rate": 0.0715,
+        "remaining_life": 40.5594
+      },
+      "S6": {
+        "previous": 7.5,
+        "current": 6.7,
+        "loss": 0.8,
+        "rate": 0.1144,
+        "remaining_life": 21.8531
+      },
+      "S7": {
+        "previous": 6.5,
+        "current": 5.0,
+        "loss": 1.5,
+        "rate": 0.2146,
+        "remaining_life": 3.7279
+      },
+      "S8": {
+        "previous": 6.4,
+        "current": 4.8,
+        "loss": 1.6,
+        "rate": 0.2289,
+        "remaining_life": 2.6212
+      },
+      "S9": {
+        "previous": 7.1,
+        "current": 5.4,
+        "loss": 1.7,
+        "rate": 0.2432,
+        "remaining_life": 4.9342
+      },
+      "S10": {
+        "previous": 7.1,
+        "current": 4.9,
+        "loss": 2.2,
+        "rate": 0.3147,
+        "remaining_life": 2.2243
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-148-27-P-177B.md",
+    "tag": "27-P-177B",
+    "unit": "DHDT",
+    "code": "API 570",
+    "inspection_date": "2026-02-25",
+    "previous_date": "2021-12-02",
+    "interval_years": 4.23,
+    "t_min": 6.2,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 4.6,
+    "design_temp_c": 180,
+    "material": "API 5L X52",
+    "inspector": "V. Hegde",
+    "governing_grid": "S4",
+    "governing_current": 8.7,
+    "governing_previous": 8.9,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0473,
+    "remaining_life_years": 52.8541,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.1,
+        "current": 9.0,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 118.6441
+      },
+      "S2": {
+        "previous": 9.3,
+        "current": 9.1,
+        "loss": 0.2,
+        "rate": 0.0473,
+        "remaining_life": 61.3108
+      },
+      "S3": {
+        "previous": 9.5,
+        "current": 9.4,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 135.5932
+      },
+      "S4": {
+        "previous": 8.9,
+        "current": 8.7,
+        "loss": 0.2,
+        "rate": 0.0473,
+        "remaining_life": 52.8541
+      },
+      "S5": {
+        "previous": 9.2,
+        "current": 9.1,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 122.8814
+      },
+      "S6": {
+        "previous": 9.4,
+        "current": 9.2,
+        "loss": 0.2,
+        "rate": 0.0473,
+        "remaining_life": 63.4249
+      },
+      "S7": {
+        "previous": 9.2,
+        "current": 9.1,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 122.8814
+      },
+      "S8": {
+        "previous": 9.1,
+        "current": 9.0,
+        "loss": 0.1,
+        "rate": 0.0236,
+        "remaining_life": 118.6441
+      },
+      "S9": {
+        "previous": 9.3,
+        "current": 9.1,
+        "loss": 0.2,
+        "rate": 0.0473,
+        "remaining_life": 61.3108
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-149-L-4813.md",
+    "tag": "L-4813",
+    "unit": "CDU",
+    "code": "API 570",
+    "inspection_date": "2024-06-28",
+    "previous_date": "2016-10-04",
+    "interval_years": 7.73,
+    "t_min": 7.4,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 21.2,
+    "design_temp_c": 325,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "D. Kamath",
+    "governing_grid": "S10",
+    "governing_current": 8.0,
+    "governing_previous": 10.1,
+    "governing_loss": 2.1,
+    "corrosion_rate_mm_yr": 0.2717,
+    "remaining_life_years": 2.2083,
+    "next_interval_years": 1.1041,
+    "max_loss_mm": 2.1,
+    "max_loss_grid": "S10",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 10.7,
+        "current": 10.2,
+        "loss": 0.5,
+        "rate": 0.0647,
+        "remaining_life": 43.2767
+      },
+      "S2": {
+        "previous": 10.6,
+        "current": 10.3,
+        "loss": 0.3,
+        "rate": 0.0388,
+        "remaining_life": 74.7423
+      },
+      "S3": {
+        "previous": 10.5,
+        "current": 9.8,
+        "loss": 0.7,
+        "rate": 0.0906,
+        "remaining_life": 26.4901
+      },
+      "S4": {
+        "previous": 10.8,
+        "current": 10.3,
+        "loss": 0.5,
+        "rate": 0.0647,
+        "remaining_life": 44.8223
+      },
+      "S5": {
+        "previous": 10.8,
+        "current": 10.1,
+        "loss": 0.7,
+        "rate": 0.0906,
+        "remaining_life": 29.8013
+      },
+      "S6": {
+        "previous": 11.0,
+        "current": 10.6,
+        "loss": 0.4,
+        "rate": 0.0517,
+        "remaining_life": 61.8956
+      },
+      "S7": {
+        "previous": 10.7,
+        "current": 9.8,
+        "loss": 0.9,
+        "rate": 0.1164,
+        "remaining_life": 20.6186
+      },
+      "S8": {
+        "previous": 10.7,
+        "current": 10.1,
+        "loss": 0.6,
+        "rate": 0.0776,
+        "remaining_life": 34.7938
+      },
+      "S9": {
+        "previous": 9.9,
+        "current": 8.5,
+        "loss": 1.4,
+        "rate": 0.1811,
+        "remaining_life": 6.074
+      },
+      "S10": {
+        "previous": 10.1,
+        "current": 8.0,
+        "loss": 2.1,
+        "rate": 0.2717,
+        "remaining_life": 2.2083
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-150-29-P-147A.md",
+    "tag": "29-P-147A",
+    "unit": "DHDT",
+    "code": "API 570",
+    "inspection_date": "2024-11-08",
+    "previous_date": "2017-12-17",
+    "interval_years": 6.89,
+    "t_min": 6.0,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 5.6,
+    "design_temp_c": 240,
+    "material": "API 5L X52",
+    "inspector": "S. Kulkarni",
+    "governing_grid": "S3",
+    "governing_current": 8.8,
+    "governing_previous": 9.0,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.029,
+    "remaining_life_years": 96.5517,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.1,
+        "current": 8.9,
+        "loss": 0.2,
+        "rate": 0.029,
+        "remaining_life": 100.0
+      },
+      "S2": {
+        "previous": 9.4,
+        "current": 9.3,
+        "loss": 0.1,
+        "rate": 0.0145,
+        "remaining_life": 227.5862
+      },
+      "S3": {
+        "previous": 9.0,
+        "current": 8.8,
+        "loss": 0.2,
+        "rate": 0.029,
+        "remaining_life": 96.5517
+      },
+      "S4": {
+        "previous": 9.0,
+        "current": 8.8,
+        "loss": 0.2,
+        "rate": 0.029,
+        "remaining_life": 96.5517
+      },
+      "S5": {
+        "previous": 9.4,
+        "current": 9.3,
+        "loss": 0.1,
+        "rate": 0.0145,
+        "remaining_life": 227.5862
+      },
+      "S6": {
+        "previous": 9.4,
+        "current": 9.3,
+        "loss": 0.1,
+        "rate": 0.0145,
+        "remaining_life": 227.5862
+      },
+      "S7": {
+        "previous": 9.1,
+        "current": 9.0,
+        "loss": 0.1,
+        "rate": 0.0145,
+        "remaining_life": 206.8966
+      },
+      "S8": {
+        "previous": 9.3,
+        "current": 9.2,
+        "loss": 0.1,
+        "rate": 0.0145,
+        "remaining_life": 220.6897
+      },
+      "S9": {
+        "previous": 9.0,
+        "current": 8.8,
+        "loss": 0.2,
+        "rate": 0.029,
+        "remaining_life": 96.5517
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2026-151-D-4323.md",
+    "tag": "D-4323",
+    "unit": "CCR",
+    "code": "API 510",
+    "inspection_date": "2026-12-13",
+    "previous_date": "2019-04-16",
+    "interval_years": 7.66,
+    "t_min": 10.4,
+    "nominal_mm": 14.0,
+    "design_pressure_barg": 19.7,
+    "design_temp_c": 335,
+    "material": "SA-516 Gr.70",
+    "inspector": "D. Kamath",
+    "governing_grid": "S4",
+    "governing_current": 13.3,
+    "governing_previous": 13.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0261,
+    "remaining_life_years": 111.1111,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S4",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 13.9,
+        "current": 13.8,
+        "loss": 0.1,
+        "rate": 0.0131,
+        "remaining_life": 259.542
+      },
+      "S2": {
+        "previous": 13.5,
+        "current": 13.4,
+        "loss": 0.1,
+        "rate": 0.0131,
+        "remaining_life": 229.0076
+      },
+      "S3": {
+        "previous": 13.7,
+        "current": 13.6,
+        "loss": 0.1,
+        "rate": 0.0131,
+        "remaining_life": 244.2748
+      },
+      "S4": {
+        "previous": 13.5,
+        "current": 13.3,
+        "loss": 0.2,
+        "rate": 0.0261,
+        "remaining_life": 111.1111
+      },
+      "S5": {
+        "previous": 13.5,
+        "current": 13.4,
+        "loss": 0.1,
+        "rate": 0.0131,
+        "remaining_life": 229.0076
+      },
+      "S6": {
+        "previous": 13.6,
+        "current": 13.4,
+        "loss": 0.2,
+        "rate": 0.0261,
+        "remaining_life": 114.9425
+      },
+      "S7": {
+        "previous": 14.0,
+        "current": 13.9,
+        "loss": 0.1,
+        "rate": 0.0131,
+        "remaining_life": 267.1756
+      },
+      "S8": {
+        "previous": 13.6,
+        "current": 13.5,
+        "loss": 0.1,
+        "rate": 0.0131,
+        "remaining_life": 236.6412
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-152-L-3301.md",
+    "tag": "L-3301",
+    "unit": "VDU",
+    "code": "API 570",
+    "inspection_date": "2024-06-26",
+    "previous_date": "2016-07-31",
+    "interval_years": 7.9,
+    "t_min": 7.5,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 17.6,
+    "design_temp_c": 305,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "M. Pai",
+    "governing_grid": "S7",
+    "governing_current": 10.3,
+    "governing_previous": 10.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0253,
+    "remaining_life_years": 110.6719,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S1",
+    "grid_count": 7,
+    "per_grid": {
+      "S1": {
+        "previous": 10.7,
+        "current": 10.5,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 118.5771
+      },
+      "S2": {
+        "previous": 10.8,
+        "current": 10.7,
+        "loss": 0.1,
+        "rate": 0.0127,
+        "remaining_life": 251.9685
+      },
+      "S3": {
+        "previous": 10.6,
+        "current": 10.5,
+        "loss": 0.1,
+        "rate": 0.0127,
+        "remaining_life": 236.2205
+      },
+      "S4": {
+        "previous": 10.7,
+        "current": 10.5,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 118.5771
+      },
+      "S5": {
+        "previous": 10.6,
+        "current": 10.4,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 114.6245
+      },
+      "S6": {
+        "previous": 10.8,
+        "current": 10.7,
+        "loss": 0.1,
+        "rate": 0.0127,
+        "remaining_life": 251.9685
+      },
+      "S7": {
+        "previous": 10.5,
+        "current": 10.3,
+        "loss": 0.2,
+        "rate": 0.0253,
+        "remaining_life": 110.6719
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-153-11-P-372A.md",
+    "tag": "11-P-372A",
+    "unit": "FCC",
+    "code": "API 570",
+    "inspection_date": "2023-10-18",
+    "previous_date": "2016-01-13",
+    "interval_years": 7.76,
+    "t_min": 5.0,
+    "nominal_mm": 9.5,
+    "design_pressure_barg": 15.8,
+    "design_temp_c": 300,
+    "material": "API 5L X52",
+    "inspector": "M. Pai",
+    "governing_grid": "S8",
+    "governing_current": 7.4,
+    "governing_previous": 8.3,
+    "governing_loss": 0.9,
+    "corrosion_rate_mm_yr": 0.116,
+    "remaining_life_years": 20.6897,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.9,
+    "max_loss_grid": "S4",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 9.1,
+        "current": 8.6,
+        "loss": 0.5,
+        "rate": 0.0644,
+        "remaining_life": 55.9006
+      },
+      "S2": {
+        "previous": 9.1,
+        "current": 8.6,
+        "loss": 0.5,
+        "rate": 0.0644,
+        "remaining_life": 55.9006
+      },
+      "S3": {
+        "previous": 9.2,
+        "current": 8.8,
+        "loss": 0.4,
+        "rate": 0.0515,
+        "remaining_life": 73.7864
+      },
+      "S4": {
+        "previous": 9.3,
+        "current": 8.4,
+        "loss": 0.9,
+        "rate": 0.116,
+        "remaining_life": 29.3103
+      },
+      "S5": {
+        "previous": 9.4,
+        "current": 8.5,
+        "loss": 0.9,
+        "rate": 0.116,
+        "remaining_life": 30.1724
+      },
+      "S6": {
+        "previous": 9.0,
+        "current": 8.1,
+        "loss": 0.9,
+        "rate": 0.116,
+        "remaining_life": 26.7241
+      },
+      "S7": {
+        "previous": 9.1,
+        "current": 8.7,
+        "loss": 0.4,
+        "rate": 0.0515,
+        "remaining_life": 71.8447
+      },
+      "S8": {
+        "previous": 8.3,
+        "current": 7.4,
+        "loss": 0.9,
+        "rate": 0.116,
+        "remaining_life": 20.6897
+      },
+      "S9": {
+        "previous": 8.2,
+        "current": 7.4,
+        "loss": 0.8,
+        "rate": 0.1031,
+        "remaining_life": 23.2784
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-154-E-1773.md",
+    "tag": "E-1773",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2023-11-03",
+    "previous_date": "2016-07-10",
+    "interval_years": 7.32,
+    "t_min": 6.0,
+    "nominal_mm": 10.0,
+    "design_pressure_barg": 6.5,
+    "design_temp_c": 330,
+    "material": "SA-179",
+    "inspector": "A. Menon",
+    "governing_grid": "S10",
+    "governing_current": 7.5,
+    "governing_previous": 8.6,
+    "governing_loss": 1.1,
+    "corrosion_rate_mm_yr": 0.1503,
+    "remaining_life_years": 9.98,
+    "next_interval_years": 4.99,
+    "max_loss_mm": 1.2,
+    "max_loss_grid": "S8",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 9.6,
+        "current": 8.7,
+        "loss": 0.9,
+        "rate": 0.123,
+        "remaining_life": 21.9512
+      },
+      "S2": {
+        "previous": 9.7,
+        "current": 8.9,
+        "loss": 0.8,
+        "rate": 0.1093,
+        "remaining_life": 26.5325
+      },
+      "S3": {
+        "previous": 10.0,
+        "current": 9.4,
+        "loss": 0.6,
+        "rate": 0.082,
+        "remaining_life": 41.4634
+      },
+      "S4": {
+        "previous": 9.7,
+        "current": 9.3,
+        "loss": 0.4,
+        "rate": 0.0546,
+        "remaining_life": 60.4396
+      },
+      "S5": {
+        "previous": 9.8,
+        "current": 9.5,
+        "loss": 0.3,
+        "rate": 0.041,
+        "remaining_life": 85.3659
+      },
+      "S6": {
+        "previous": 9.9,
+        "current": 9.3,
+        "loss": 0.6,
+        "rate": 0.082,
+        "remaining_life": 40.2439
+      },
+      "S7": {
+        "previous": 9.2,
+        "current": 8.2,
+        "loss": 1.0,
+        "rate": 0.1366,
+        "remaining_life": 16.1054
+      },
+      "S8": {
+        "previous": 9.0,
+        "current": 7.8,
+        "loss": 1.2,
+        "rate": 0.1639,
+        "remaining_life": 10.9823
+      },
+      "S9": {
+        "previous": 9.2,
+        "current": 8.3,
+        "loss": 0.9,
+        "rate": 0.123,
+        "remaining_life": 18.6992
+      },
+      "S10": {
+        "previous": 8.6,
+        "current": 7.5,
+        "loss": 1.1,
+        "rate": 0.1503,
+        "remaining_life": 9.98
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-155-T-2419.md",
+    "tag": "T-2419",
+    "unit": "CDU",
+    "code": "API 653",
+    "inspection_date": "2025-09-13",
+    "previous_date": "2018-06-10",
+    "interval_years": 7.26,
+    "t_min": 4.6,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 8.6,
+    "design_temp_c": 185,
+    "material": "SA-283 Gr.C",
+    "inspector": "D. Kamath",
+    "governing_grid": "S3",
+    "governing_current": 7.3,
+    "governing_previous": 7.4,
+    "governing_loss": 0.1,
+    "corrosion_rate_mm_yr": 0.0138,
+    "remaining_life_years": 195.6522,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S2",
+    "grid_count": 9,
+    "per_grid": {
+      "S1": {
+        "previous": 7.5,
+        "current": 7.4,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 202.8986
+      },
+      "S2": {
+        "previous": 7.6,
+        "current": 7.4,
+        "loss": 0.2,
+        "rate": 0.0275,
+        "remaining_life": 101.8182
+      },
+      "S3": {
+        "previous": 7.4,
+        "current": 7.3,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 195.6522
+      },
+      "S4": {
+        "previous": 7.8,
+        "current": 7.7,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 224.6377
+      },
+      "S5": {
+        "previous": 7.6,
+        "current": 7.5,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 210.1449
+      },
+      "S6": {
+        "previous": 7.7,
+        "current": 7.5,
+        "loss": 0.2,
+        "rate": 0.0275,
+        "remaining_life": 105.4545
+      },
+      "S7": {
+        "previous": 7.6,
+        "current": 7.5,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 210.1449
+      },
+      "S8": {
+        "previous": 7.7,
+        "current": 7.6,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 217.3913
+      },
+      "S9": {
+        "previous": 7.7,
+        "current": 7.6,
+        "loss": 0.1,
+        "rate": 0.0138,
+        "remaining_life": 217.3913
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2024-156-L-4590.md",
+    "tag": "L-4590",
+    "unit": "DHDT",
+    "code": "API 570",
+    "inspection_date": "2024-06-26",
+    "previous_date": "2019-05-13",
+    "interval_years": 5.12,
+    "t_min": 7.6,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 21.2,
+    "design_temp_c": 295,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "N. Rao",
+    "governing_grid": "S10",
+    "governing_current": 8.8,
+    "governing_previous": 9.7,
+    "governing_loss": 0.9,
+    "corrosion_rate_mm_yr": 0.1758,
+    "remaining_life_years": 6.8259,
+    "next_interval_years": 3.4129,
+    "max_loss_mm": 0.9,
+    "max_loss_grid": "S10",
+    "grid_count": 10,
+    "per_grid": {
+      "S1": {
+        "previous": 10.6,
+        "current": 9.9,
+        "loss": 0.7,
+        "rate": 0.1367,
+        "remaining_life": 16.8252
+      },
+      "S2": {
+        "previous": 11.0,
+        "current": 10.3,
+        "loss": 0.7,
+        "rate": 0.1367,
+        "remaining_life": 19.7513
+      },
+      "S3": {
+        "previous": 10.7,
+        "current": 10.1,
+        "loss": 0.6,
+        "rate": 0.1172,
+        "remaining_life": 21.3311
+      },
+      "S4": {
+        "previous": 10.6,
+        "current": 10.1,
+        "loss": 0.5,
+        "rate": 0.0977,
+        "remaining_life": 25.5885
+      },
+      "S5": {
+        "previous": 10.7,
+        "current": 10.2,
+        "loss": 0.5,
+        "rate": 0.0977,
+        "remaining_life": 26.6121
+      },
+      "S6": {
+        "previous": 10.8,
+        "current": 10.2,
+        "loss": 0.6,
+        "rate": 0.1172,
+        "remaining_life": 22.1843
+      },
+      "S7": {
+        "previous": 10.8,
+        "current": 10.2,
+        "loss": 0.6,
+        "rate": 0.1172,
+        "remaining_life": 22.1843
+      },
+      "S8": {
+        "previous": 10.4,
+        "current": 9.9,
+        "loss": 0.5,
+        "rate": 0.0977,
+        "remaining_life": 23.5415
+      },
+      "S9": {
+        "previous": 9.8,
+        "current": 9.0,
+        "loss": 0.8,
+        "rate": 0.1562,
+        "remaining_life": 8.9629
+      },
+      "S10": {
+        "previous": 9.7,
+        "current": 8.8,
+        "loss": 0.9,
+        "rate": 0.1758,
+        "remaining_life": 6.8259
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2023-157-T-1462.md",
+    "tag": "T-1462",
+    "unit": "CCR",
+    "code": "API 653",
+    "inspection_date": "2023-12-22",
+    "previous_date": "2019-03-17",
+    "interval_years": 4.77,
+    "t_min": 4.2,
+    "nominal_mm": 8.0,
+    "design_pressure_barg": 8.5,
+    "design_temp_c": 220,
+    "material": "SA-283 Gr.C",
+    "inspector": "N. Rao",
+    "governing_grid": "S9",
+    "governing_current": 5.5,
+    "governing_previous": 6.6,
+    "governing_loss": 1.1,
+    "corrosion_rate_mm_yr": 0.2306,
+    "remaining_life_years": 5.6375,
+    "next_interval_years": 2.8188,
+    "max_loss_mm": 1.1,
+    "max_loss_grid": "S9",
+    "grid_count": 12,
+    "per_grid": {
+      "S1": {
+        "previous": 8.0,
+        "current": 7.3,
+        "loss": 0.7,
+        "rate": 0.1468,
+        "remaining_life": 21.1172
+      },
+      "S2": {
+        "previous": 7.5,
+        "current": 7.1,
+        "loss": 0.4,
+        "rate": 0.0839,
+        "remaining_life": 34.565
+      },
+      "S3": {
+        "previous": 7.8,
+        "current": 6.9,
+        "loss": 0.9,
+        "rate": 0.1887,
+        "remaining_life": 14.3084
+      },
+      "S4": {
+        "previous": 7.5,
+        "current": 6.6,
+        "loss": 0.9,
+        "rate": 0.1887,
+        "remaining_life": 12.7186
+      },
+      "S5": {
+        "previous": 7.8,
+        "current": 7.2,
+        "loss": 0.6,
+        "rate": 0.1258,
+        "remaining_life": 23.8474
+      },
+      "S6": {
+        "previous": 7.5,
+        "current": 7.2,
+        "loss": 0.3,
+        "rate": 0.0629,
+        "remaining_life": 47.6948
+      },
+      "S7": {
+        "previous": 7.7,
+        "current": 7.1,
+        "loss": 0.6,
+        "rate": 0.1258,
+        "remaining_life": 23.0525
+      },
+      "S8": {
+        "previous": 7.9,
+        "current": 7.2,
+        "loss": 0.7,
+        "rate": 0.1468,
+        "remaining_life": 20.436
+      },
+      "S9": {
+        "previous": 6.6,
+        "current": 5.5,
+        "loss": 1.1,
+        "rate": 0.2306,
+        "remaining_life": 5.6375
+      },
+      "S10": {
+        "previous": 6.7,
+        "current": 6.0,
+        "loss": 0.7,
+        "rate": 0.1468,
+        "remaining_life": 12.2616
+      },
+      "S11": {
+        "previous": 6.6,
+        "current": 5.8,
+        "loss": 0.8,
+        "rate": 0.1677,
+        "remaining_life": 9.5408
+      },
+      "S12": {
+        "previous": 7.2,
+        "current": 6.1,
+        "loss": 1.1,
+        "rate": 0.2306,
+        "remaining_life": 8.2394
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-158-C-3399.md",
+    "tag": "C-3399",
+    "unit": "DHDT",
+    "code": "API 510",
+    "inspection_date": "2025-03-04",
+    "previous_date": "2017-10-28",
+    "interval_years": 7.35,
+    "t_min": 12.7,
+    "nominal_mm": 16.0,
+    "design_pressure_barg": 16.4,
+    "design_temp_c": 340,
+    "material": "SA-516 Gr.70",
+    "inspector": "A. Menon",
+    "governing_grid": "S6",
+    "governing_current": 15.3,
+    "governing_previous": 15.5,
+    "governing_loss": 0.2,
+    "corrosion_rate_mm_yr": 0.0272,
+    "remaining_life_years": 95.5882,
+    "next_interval_years": 10.0,
+    "max_loss_mm": 0.2,
+    "max_loss_grid": "S6",
+    "grid_count": 7,
+    "per_grid": {
+      "S1": {
+        "previous": 16.0,
+        "current": 15.9,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 235.2941
+      },
+      "S2": {
+        "previous": 15.8,
+        "current": 15.7,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 220.5882
+      },
+      "S3": {
+        "previous": 15.9,
+        "current": 15.8,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 227.9412
+      },
+      "S4": {
+        "previous": 15.9,
+        "current": 15.8,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 227.9412
+      },
+      "S5": {
+        "previous": 15.6,
+        "current": 15.5,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 205.8824
+      },
+      "S6": {
+        "previous": 15.5,
+        "current": 15.3,
+        "loss": 0.2,
+        "rate": 0.0272,
+        "remaining_life": 95.5882
+      },
+      "S7": {
+        "previous": 15.9,
+        "current": 15.8,
+        "loss": 0.1,
+        "rate": 0.0136,
+        "remaining_life": 227.9412
+      }
+    }
+  },
+  {
+    "doc": "inbox/UT-2025-159-L-2393.md",
+    "tag": "L-2393",
+    "unit": "SRU",
+    "code": "API 570",
+    "inspection_date": "2025-07-28",
+    "previous_date": "2018-03-03",
+    "interval_years": 7.4,
+    "t_min": 7.2,
+    "nominal_mm": 11.0,
+    "design_pressure_barg": 15.1,
+    "design_temp_c": 270,
+    "material": "ASTM A106 Gr.B",
+    "inspector": "P. Shetty",
+    "governing_grid": "S8",
+    "governing_current": 8.6,
+    "governing_previous": 9.7,
+    "governing_loss": 1.1,
+    "corrosion_rate_mm_yr": 0.1486,
+    "remaining_life_years": 9.4213,
+    "next_interval_years": 4.7107,
+    "max_loss_mm": 1.1,
+    "max_loss_grid": "S8",
+    "grid_count": 8,
+    "per_grid": {
+      "S1": {
+        "previous": 10.5,
+        "current": 9.7,
+        "loss": 0.8,
+        "rate": 0.1081,
+        "remaining_life": 23.1267
+      },
+      "S2": {
+        "previous": 11.0,
+        "current": 10.5,
+        "loss": 0.5,
+        "rate": 0.0676,
+        "remaining_life": 48.8166
+      },
+      "S3": {
+        "previous": 10.4,
+        "current": 10.0,
+        "loss": 0.4,
+        "rate": 0.0541,
+        "remaining_life": 51.756
+      },
+      "S4": {
+        "previous": 10.9,
+        "current": 10.1,
+        "loss": 0.8,
+        "rate": 0.1081,
+        "remaining_life": 26.827
+      },
+      "S5": {
+        "previous": 10.9,
+        "current": 10.4,
+        "loss": 0.5,
+        "rate": 0.0676,
+        "remaining_life": 47.3373
+      },
+      "S6": {
+        "previous": 10.8,
+        "current": 10.0,
+        "loss": 0.8,
+        "rate": 0.1081,
+        "remaining_life": 25.9019
+      },
+      "S7": {
+        "previous": 9.7,
+        "current": 8.7,
+        "loss": 1.0,
+        "rate": 0.1351,
+        "remaining_life": 11.1029
+      },
+      "S8": {
+        "previous": 9.7,
+        "current": 8.6,
+        "loss": 1.1,
+        "rate": 0.1486,
+        "remaining_life": 9.4213
+      }
+    }
+  }
+]

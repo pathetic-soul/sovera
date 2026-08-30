@@ -1,0 +1,222 @@
+{
+  "_provenance": "Reconstructed 2026-08-30 from evidence that exists in the repo: the leg-completion record in AGENTS.md §14, the open-question log in §16, file modification times, and gates.py output. Nothing here is estimated or back-filled. The unit of delivery is one demo leg (§14), not an abstract story point, because legs are what the charter commits to and what can be verified as done. Sprint 2 is a forward commitment and its completed_points is 0 until the sprint closes.",
+  "team_info": {
+    "name": "Sovereign Workbench",
+    "size": 1,
+    "scrum_master": "unassigned",
+    "product_owner": "unassigned",
+    "_note": "Solo build. Ceremony and psychological-safety dimensions are not applicable and are left unscored rather than filled with defaults."
+  },
+  "sprints": [
+    {
+      "sprint_number": 1,
+      "sprint_name": "Containment and the agent loop",
+      "start_date": "2026-08-24",
+      "end_date": "2026-08-29",
+      "planned_points": 8,
+      "completed_points": 5,
+      "added_points": 2,
+      "removed_points": 0,
+      "carry_over_points": 3,
+      "team_capacity": 6,
+      "working_days": 6,
+      "team_size": 1,
+      "_scope_change_note": "added_points covers two items not in the original §14 leg list: tools/calc.py (built in response to the leg-5 grounding gap) and the finetune/ QLoRA track, which AGENTS.md §3 had listed as a non-goal and which was overridden deliberately.",
+      "stories": [
+        {
+          "id": "LEG-1",
+          "title": "Sovereignty panel, red button, hash-chained audit log",
+          "points": 1,
+          "status": "completed",
+          "created_date": "2026-08-24",
+          "completed_date": "2026-08-26",
+          "blocked_days": 0,
+          "priority": "high"
+        },
+        {
+          "id": "LEG-2",
+          "title": "Model registry and deterministic router",
+          "points": 1,
+          "status": "completed",
+          "created_date": "2026-08-24",
+          "completed_date": "2026-08-26",
+          "blocked_days": 0,
+          "priority": "high",
+          "_note": "Delivered but its §13 accuracy gate is failing at 80.3% against 90%."
+        },
+        {
+          "id": "LEG-3",
+          "title": "Live model addition without a restart",
+          "points": 1,
+          "status": "completed",
+          "created_date": "2026-08-26",
+          "completed_date": "2026-08-26",
+          "blocked_days": 0,
+          "priority": "high"
+        },
+        {
+          "id": "LEG-4",
+          "title": "Agent loop, three tools, .docx deliverable",
+          "points": 1,
+          "status": "completed",
+          "created_date": "2026-08-26",
+          "completed_date": "2026-08-27",
+          "blocked_days": 0,
+          "priority": "high"
+        },
+        {
+          "id": "LEG-5",
+          "title": "Coding task in a network-less container",
+          "points": 1,
+          "status": "completed",
+          "created_date": "2026-08-27",
+          "completed_date": "2026-08-27",
+          "blocked_days": 1,
+          "priority": "high",
+          "_note": "Blocked one day by the tabular-grounding defect found during this leg."
+        },
+        {
+          "id": "LEG-6",
+          "title": "Multimodal: handwriting and drawing title blocks",
+          "points": 1,
+          "status": "not_started",
+          "created_date": "2026-08-24",
+          "blocked_days": 0,
+          "priority": "medium"
+        },
+        {
+          "id": "LEG-7",
+          "title": "Ingest and hybrid retrieval over 10-15 documents",
+          "points": 1,
+          "status": "not_started",
+          "created_date": "2026-08-24",
+          "blocked_days": 0,
+          "priority": "low"
+        },
+        {
+          "id": "LEG-8",
+          "title": "Cable pull",
+          "points": 1,
+          "status": "not_started",
+          "created_date": "2026-08-24",
+          "blocked_days": 0,
+          "priority": "medium"
+        },
+        {
+          "id": "ADD-1",
+          "title": "tools/calc.py, unplanned, closes the arithmetic gap",
+          "points": 1,
+          "status": "completed",
+          "created_date": "2026-08-26",
+          "completed_date": "2026-08-26",
+          "blocked_days": 0,
+          "priority": "high",
+          "_note": "Measured 1/8 to 7/8 correct on the same task. Scope addition, not a leg."
+        },
+        {
+          "id": "ADD-2",
+          "title": "finetune/ QLoRA track, charter non-goal overridden",
+          "points": 1,
+          "status": "completed",
+          "created_date": "2026-08-26",
+          "completed_date": "2026-08-28",
+          "blocked_days": 0,
+          "priority": "low",
+          "_note": "Delivered a negative result: the adapter scored 0/8 and was not registered. Kept and published."
+        }
+      ],
+      "blockers": [
+        {
+          "id": "BLK-1",
+          "description": "Router accuracy below the §13 gate. 80.3% against 90%.",
+          "opened_date": "2026-08-24",
+          "resolved_date": null,
+          "severity": "high",
+          "_note": "Open since project start. Partially advanced by the dense encoder, 75.8% to 80.3%."
+        },
+        {
+          "id": "BLK-2",
+          "description": "Model arithmetic wrong on tabular inspection data.",
+          "opened_date": "2026-08-26",
+          "resolved_date": "2026-08-26",
+          "severity": "high",
+          "_note": "Resolved same day by tools/calc.py after the adapter approach failed."
+        },
+        {
+          "id": "BLK-3",
+          "description": "gates.py router gate threw AttributeError and reported SKIP, leaving the one failing headline metric unmeasured by its own runner.",
+          "opened_date": "2026-08-28",
+          "resolved_date": "2026-08-29",
+          "severity": "medium"
+        },
+        {
+          "id": "BLK-4",
+          "description": "Per-model VRAM figures unmeasured for coder and driver. Blocks §5.",
+          "opened_date": "2026-08-24",
+          "resolved_date": null,
+          "severity": "medium"
+        }
+      ],
+      "ceremonies": {}
+    }
+  ],
+  "retrospectives": [
+    {
+      "sprint_number": 1,
+      "went_well": [
+        "Measured before building. The fine-tuning hypothesis was tested and rejected before hours were spent on it.",
+        "Held-out discipline held. The router blend weight was tuned on the training split alone and held-out scored once, at the end.",
+        "A negative result was kept and published rather than buried.",
+        "gates.py turned eight hand-checked acceptance criteria into one runnable command, and refuses to let SKIP count as PASS."
+      ],
+      "to_improve": [
+        "Zero commits across the whole sprint. Every deliverable exists in exactly one place.",
+        "The golden path has never been run end to end against its own 6-minute gate.",
+        "Documentation drifted from measurement: AGENTS.md §16 still records the pre-encoder router number, and the README carried a stale test count for days.",
+        "The gate runner itself went unverified, so a broken gate reported SKIP for an unknown period."
+      ],
+      "action_items": [
+        {
+          "id": "AI-1",
+          "description": "Commit the repository and push to a private remote.",
+          "owner": "unassigned",
+          "priority": "high",
+          "status": "open",
+          "created_sprint": 1
+        },
+        {
+          "id": "AI-2",
+          "description": "Dress-rehearse the golden path on a stopwatch, firewall armed.",
+          "owner": "unassigned",
+          "priority": "high",
+          "status": "open",
+          "created_sprint": 1
+        },
+        {
+          "id": "AI-3",
+          "description": "Expand router exemplars for the code_write vs calc confusion.",
+          "owner": "unassigned",
+          "priority": "high",
+          "status": "open",
+          "created_sprint": 1
+        },
+        {
+          "id": "AI-4",
+          "description": "Refresh AGENTS.md §16 so the charter matches gates.py output.",
+          "owner": "unassigned",
+          "priority": "medium",
+          "status": "open",
+          "created_sprint": 1
+        },
+        {
+          "id": "AI-5",
+          "description": "Measure coder and driver VRAM with ollama ps.",
+          "owner": "unassigned",
+          "priority": "medium",
+          "status": "open",
+          "created_sprint": 1
+        }
+      ]
+    }
+  ]
+}

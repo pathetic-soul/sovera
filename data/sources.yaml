@@ -1,0 +1,140 @@
+# Every external source this project trains on, with its licence.
+#
+# AGENTS.md §2.1 forbids fetching anything at demo time; §3 puts data curation
+# at build time. This file is the record of what came from where, so a reviewer
+# can audit provenance without reading the build scripts.
+#
+# `publishable` governs what may be pushed to Kaggle or shipped in the repo.
+# Per the curation brief: train locally on anything useful, publish only what
+# is permissively licensed. finetune/provenance.py enforces this — a source
+# with publishable: false is refused by the push path, not by anyone's memory.
+#
+# `status: rejected` sources are kept here deliberately. A dataset that was
+# examined and thrown out is evidence of curation; deleting the record would
+# make it look like it was never considered.
+
+version: 1
+
+sources:
+
+  # ---------------------------------------------------------------- accepted
+
+  - id: finqa
+    kind: reasoning-programs
+    origin: https://github.com/czyssrs/FinQA
+    local: data/external/finqa/
+    licence: MIT (code) / research use, cite Chen et al. 2021
+    publishable: false          # redistribute the ref, never the corpus
+    status: accepted
+    rows: 6251
+    why: >
+      Expert-annotated multi-step numeric programs over real S&P filing tables,
+      each with gold_inds naming the exact source row. Structurally the same
+      task as "corrosion rate from a UT table": locate cells, compose a
+      derivation, cite the row. Supplies reasoning shape, not domain.
+
+  - id: mrpl_filings
+    kind: documents
+    origin: https://www.mrpl.co.in/en  (SEBI-mandated public disclosures)
+    local: data/external/mrpl_pdfs/
+    licence: public company disclosure, published in national press
+    publishable: false          # public, but not ours to redistribute as a dataset
+    status: accepted
+    rows: 48                    # 37 with a text layer, 11 image-only
+    why: >
+      The only real documents in the corpus. Quarterly and annual results with
+      genuine MRPL identity, segment tables and period-over-period figures.
+      The 11 image-only PDFs are retained on purpose: they are real scanned PSU
+      documents, which is exactly the input AGENTS.md §14 leg 6 needs.
+    caveat: >
+      The text layer is OCR output and it mangles decimal separators
+      ("28.785 92" for 28,785.92). finetune/corpus_filings.py repairs this and
+      then PROVES the repair against each statement's own arithmetic
+      identities. Any table that fails its own checksums is dropped, not fixed
+      by hand.
+
+  - id: authored_inspection
+    kind: documents
+    origin: authored for this project against API 510 / 570 / 653
+    local: data/corpus/inbox/
+    licence: ours
+    publishable: true
+    status: accepted
+    why: >
+      No public corpus of refinery inspection reports exists — see the rejected
+      entries below, which is what a search for one actually turns up. These
+      are authored with internally consistent tags, dates, readings and
+      code references, and every derived figure is checked in code.
+
+  - id: oisd_public
+    kind: documents
+    origin: https://www.oisd.gov.in  (scraped, finetune/scrape.py)
+    local: data/external/scraped/oisd/
+    licence: Government of India publication (GODL-India)
+    publishable: false
+    status: accepted
+    rows: 3
+    why: >
+      Oil Industry Safety Directorate — the Indian regulator governing refinery
+      safety practice. Yielded the OISD First Information Report format for
+      major incidents: a real regulatory reporting form, and the most on-domain
+      document in the corpus that we did not author ourselves.
+    caveat: >
+      Thin yield, and deliberately so. OISD SELLS its standards, so the
+      standards themselves are excluded on the same grounds as API 510 —
+      finetune/scrape.py refuses any URL matching purchase/cart/login. The host
+      also began refusing connections partway through collection, and the
+      fail-closed robots.txt check then blocked further attempts rather than
+      pushing through. Collection was stopped there.
+
+  # ---------------------------------------------------------------- rejected
+
+  - id: kaggle_pipeline_mit
+    kind: tabular
+    origin: kaggle://muhammadwaqas023/predictive-maintenance-oil-and-gas-pipeline-data
+    licence: MIT
+    publishable: true
+    status: rejected
+    why: >
+      Fabricated, and physically impossible in 37% of rows. 370/1000 pair a
+      non-ferrous material with a carbon-steel specification — "Fiberglass /
+      API 5L X52" (53 rows), "PVC / ASTM A106 Grade B" (44 rows). 119 rows have
+      Thickness_Loss >= Thickness, several still labelled "Moderate".
+      Material_Loss_Percent reconciles in 1000/1000 rows, which is the tell:
+      the numbers were computed from two random columns and the materials and
+      grades attached afterwards. Numerically clean, physically false — the
+      worst possible failure mode in front of refinery engineers.
+
+  - id: kaggle_pipeline_cc0
+    kind: tabular
+    origin: kaggle://muhammadwaqas023/pipeline-dataset-in-oil-and-gas-sector
+    licence: CC0
+    publishable: true
+    status: rejected
+    why: >
+      620/1000 rows have nominal Pipe_Size < Diameter, which is geometrically
+      impossible. 322 rows rate Copper/Aluminum/PVC above 100 bar. The material
+      list (Copper, Cast Iron, Aluminum, PVC) is not O&G pipeline material.
+
+  - id: kaggle_equipment_anomaly
+    kind: tabular
+    origin: kaggle://equipment anomaly data
+    local: data/external/equipment/
+    licence: unclear
+    publishable: false
+    status: rejected
+    why: >
+      Simulated sensor telemetry — values carry 16 significant figures and
+      location is Atlanta/Chicago. Not refinery, not real, no document surface.
+
+  - id: kaggle_3w
+    kind: timeseries
+    origin: kaggle://afrniomelo/3w-dataset
+    licence: CC BY 4.0
+    publishable: true
+    status: deferred
+    why: >
+      Genuinely real — Petrobras offshore well events, 1.8 GB of parquet.
+      Real industrial O&G, but time-series telemetry with no document surface,
+      and nothing in legs 4-7 reads a well sensor stream. Recorded as a source
+      worth revisiting rather than downloaded for its own sake.

@@ -1,0 +1,88 @@
+"""Chain integrity and guard behaviour. The only two things in leg 1 that can be
+silently wrong: a chain that verifies when it shouldn't, and a guard that lets a
+packet out."""
+
+from __future__ import annotations
+
+import json
+import socket
+from pathlib import Path
+
+import pytest
+
+from core.audit import AuditLog
+from core.net_guard import EgressBlocked, _is_local, install_guard
+
+
+def test_chain_verifies_and_resumes(tmp_path: Path) -> None:
+    log = AuditLog(tmp_path / "a.jsonl", "s1")
+    log.append("tool_call", {"tool": "fs_read"})
+    log.append("file_read", {"path": "workspace/x.txt"})
+    assert log.verify() == (True, None)
+
+    reopened = AuditLog(tmp_path / "a.jsonl", "s1")
+    rec = reopened.append("approval", {"by": "human"})
+    assert rec.seq == 2
+    assert reopened.verify() == (True, None)
+    assert len(reopened.tail(10)) == 3
+
+
+def test_intent_and_result_are_linked(tmp_path: Path) -> None:
+    log = AuditLog(tmp_path / "a.jsonl", "s1")
+    intent = log.append("model_call", {"phase": "intent", "model": "driver"})
+    result = log.append("model_call", {"phase": "result"}, ref=intent.seq)
+    assert result.payload["ref"] == intent.seq
+
+
+def test_tampered_payload_breaks_chain(tmp_path: Path) -> None:
+    path = tmp_path / "a.jsonl"
+    log = AuditLog(path, "s1")
+    log.append("file_write", {"path": "workspace/report.docx"})
+    log.append("approval", {"by": "human"})
+
+    lines = path.read_text(encoding="utf-8").splitlines()
+    rec = json.loads(lines[0])
+    rec["payload"]["path"] = "C:/Windows/System32/evil.dll"
+    lines[0] = json.dumps(rec)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    assert AuditLog(path, "s1").verify() == (False, 0)
+
+
+def test_tampered_metadata_breaks_chain(tmp_path: Path) -> None:
+    """The reason we hash the whole record, not just prev_hash + payload."""
+    path = tmp_path / "a.jsonl"
+    log = AuditLog(path, "s1")
+    log.append("file_write", {"path": "workspace/report.docx"})
+
+    rec = json.loads(path.read_text(encoding="utf-8").splitlines()[0])
+    rec["ts"] = "1999-01-01T00:00:00+00:00"
+    path.write_text(json.dumps(rec) + "\n", encoding="utf-8")
+
+    assert AuditLog(path, "s1").verify() == (False, 0)
+
+
+@pytest.mark.parametrize(
+    "addr,local",
+    [
+        (("127.0.0.1", 11434), True),
+        (("192.168.1.10", 80), True),
+        (("104.18.6.192", 443), False),
+        (("api.openai.com", 443), False),  # unresolved hostname: deny by default
+    ],
+)
+def test_is_local(addr: tuple[str, int], local: bool) -> None:
+    assert _is_local(addr) is local
+
+
+def test_guard_blocks_and_audits(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    log = AuditLog(tmp_path / "a.jsonl", "s1")
+    monkeypatch.setattr(socket.socket, "connect", socket.socket.connect)  # restore after
+    install_guard(log)
+
+    with pytest.raises(EgressBlocked):
+        socket.socket().connect(("104.18.6.192", 443))
+
+    tail = log.tail(1)
+    assert tail[0].kind == "egress_attempt"
+    assert log.verify() == (True, None)

@@ -1,0 +1,812 @@
+{
+  "source": "mrpl_filings",
+  "files": [
+    {
+      "source_pdf": "FINANCIAL_RESULT_FOR_THE_QUARTER_30.06.2025.pdf",
+      "markdown": "data/corpus/filings/financial-result-for-the-quarter-30-06-2025.md",
+      "pages": 14,
+      "checks_passed": 5,
+      "checks_run": 7,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 20988.03,
+          "other_income": 38.03,
+          "total_income": 21026.06
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 27601.39,
+          "other_income": 37.78,
+          "total_income": 27639.17
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 27289.4,
+          "other_income": 44.73,
+          "total_income": 27334.13
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 20988.03,
+          "other_income": 38.03,
+          "total_income": 21026.06
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 27601.39,
+          "other_income": 37.78,
+          "total_income": 27639.17
+        }
+      ]
+    },
+    {
+      "source_pdf": "FINANCIAL_RESULTS_FOR_THE_QUARTER_ENDED_30.09.2025.pdf",
+      "markdown": "data/corpus/filings/financial-results-for-the-quarter-ended-30-09-2025.md",
+      "pages": 17,
+      "checks_passed": 8,
+      "checks_run": 14,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 25952.94,
+          "other_income": 76.25,
+          "total_income": 26029.19
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 20988.03,
+          "other_income": 38.03,
+          "total_income": 21026.06
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28785.92,
+          "other_income": 59.9,
+          "total_income": 28845.82
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 46940.97,
+          "other_income": 114.28,
+          "total_income": 47055.25
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 56075.32,
+          "other_income": 104.63,
+          "total_income": 56179.95
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 109277.49,
+          "other_income": 175.71,
+          "total_income": 109453.2
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 56075.32,
+          "other_income": 82.13,
+          "total_income": 56157.45
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 109277.49,
+          "other_income": 153.21,
+          "total_income": 109430.7
+        }
+      ]
+    },
+    {
+      "source_pdf": "Financial_Results_for_the_quarter_ended_30.9.2024.pdf",
+      "markdown": "data/corpus/filings/financial-results-for-the-quarter-ended-30-9-2024.md",
+      "pages": 17,
+      "checks_passed": 12,
+      "checks_run": 12,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28785.92,
+          "other_income": 59.9,
+          "total_income": 28845.82
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 27289.4,
+          "other_income": 44.73,
+          "total_income": 27334.13
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 22843.78,
+          "other_income": 74.45,
+          "total_income": 22918.23
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 56075.32,
+          "other_income": 104.63,
+          "total_income": 56179.95
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 47668.86,
+          "other_income": 126.23,
+          "total_income": 47795.09
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 105223.28,
+          "other_income": 205.08,
+          "total_income": 105428.36
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28785.92,
+          "other_income": 37.4,
+          "total_income": 28823.32
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 27289.4,
+          "other_income": 44.73,
+          "total_income": 27334.13
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 22843.78,
+          "other_income": 60.95,
+          "total_income": 22904.73
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 56075.32,
+          "other_income": 82.13,
+          "total_income": 56157.45
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 47668.86,
+          "other_income": 112.73,
+          "total_income": 47781.59
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 105223.28,
+          "other_income": 191.58,
+          "total_income": 105414.86
+        }
+      ]
+    },
+    {
+      "source_pdf": "FINANCIAL_RESULTS_FOR_THE_QUARTER_ENDED_31.12.2025.pdf",
+      "markdown": "data/corpus/filings/financial-results-for-the-quarter-ended-31-12-2025.md",
+      "pages": 12,
+      "checks_passed": 3,
+      "checks_run": 6,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 29720.13,
+          "other_income": 39.34,
+          "total_income": 29759.47
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 25952.94,
+          "other_income": 76.25,
+          "total_income": 26029.19
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 25600.78,
+          "other_income": 33.31,
+          "total_income": 25634.09
+        }
+      ]
+    },
+    {
+      "source_pdf": "PUBLICATION_OF_UN-AUDITED_FINANCIAL_RESULTS_FOR_THE_QUARTER_AND_NINE_MONTHS_ENDED_DECEMBER_31_2018.pdf",
+      "markdown": "data/corpus/filings/publication-of-un-audited-financial-results-for-the-quarter-and-nine-m.md",
+      "pages": 1,
+      "checks_passed": 5,
+      "checks_run": 6,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 20249.62,
+          "other_income": 36.77,
+          "total_income": 20286.39
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 17732.9,
+          "other_income": 38.13,
+          "total_income": 17771.03
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 54565.21,
+          "other_income": 130.67,
+          "total_income": 54695.88
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 44330.54,
+          "other_income": 127.52,
+          "total_income": 44458.06
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 63083.64,
+          "other_income": 204.57,
+          "total_income": 63288.21
+        }
+      ]
+    },
+    {
+      "source_pdf": "Standalone_and_Consolidated_Audited_Financial_Results_for_the_Quarter_and_Year_ended_March_31_2024.pdf",
+      "markdown": "data/corpus/filings/standalone-and-consolidated-audited-financial-results-for-the-quarter-.md",
+      "pages": 26,
+      "checks_passed": 7,
+      "checks_run": 11,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 29190.05,
+          "other_income": 39.27,
+          "total_income": 29229.32
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 29401.49,
+          "other_income": 86.05,
+          "total_income": 29487.54
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 124736.03,
+          "other_income": 211.72,
+          "total_income": 124947.75
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 29190.05,
+          "other_income": 39.27,
+          "total_income": 29229.32
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 29401.49,
+          "other_income": 86.05,
+          "total_income": 29487.54
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 105223.28,
+          "other_income": 191.58,
+          "total_income": 105414.86
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 124736.03,
+          "other_income": 189.97,
+          "total_income": 124926.0
+        }
+      ]
+    },
+    {
+      "source_pdf": "Standalone_and_Consolidated_Unaudited_Financial_Results_with_Limited_Review_Report_for_Q1_ended_June_30_2023.pdf",
+      "markdown": "data/corpus/filings/standalone-and-consolidated-unaudited-financial-results-with-limited-r.md",
+      "pages": 13,
+      "checks_passed": 7,
+      "checks_run": 8,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 29401.49,
+          "other_income": 86.05,
+          "total_income": 29487.54
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 35915.46,
+          "other_income": 36.73,
+          "total_income": 35952.19
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 124736.03,
+          "other_income": 211.72,
+          "total_income": 124947.75
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 24832.53,
+          "other_income": 51.78,
+          "total_income": 24884.31
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 29401.49,
+          "other_income": 86.05,
+          "total_income": 29487.54
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 35915.46,
+          "other_income": 36.73,
+          "total_income": 35952.19
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 124736.03,
+          "other_income": 189.97,
+          "total_income": 124926.0
+        }
+      ]
+    },
+    {
+      "source_pdf": "Standalone_and_Consolidated_Unaudited_Financial_Results_with_Limited_Review_Report_for_Q2_ended_September_30_2023.pdf",
+      "markdown": "data/corpus/filings/standalone-and-consolidated-unaudited-financial-results-with-limited-r.md",
+      "pages": 22,
+      "checks_passed": 2,
+      "checks_run": 15,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 10.0,
+          "other_income": 1.0,
+          "total_income": 11.0
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 64368.38,
+          "other_income": 61.62,
+          "total_income": 64430.0
+        }
+      ]
+    },
+    {
+      "source_pdf": "Statement_Of_Stand-alone_And_Consolidated_Financial_Statements_For_The_Quarter_and_the_Year_Ended_March_31_2023.pdf",
+      "markdown": "data/corpus/filings/statement-of-stand-alone-and-consolidated-financial-statements-for-the.md",
+      "pages": 21,
+      "checks_passed": 3,
+      "checks_run": 7,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28.0,
+          "other_income": 1.0,
+          "total_income": 29.0
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28239.31,
+          "other_income": 26.49,
+          "total_income": 28265.8
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 86094.38,
+          "other_income": 102.78,
+          "total_income": 86197.16
+        }
+      ]
+    },
+    {
+      "source_pdf": "Statement_Of_Stand-alone_And_Consolidated_Financial_Statements_For_The_Quarter_Ended_December_31_2023.pdf",
+      "markdown": "data/corpus/filings/statement-of-stand-alone-and-consolidated-financial-statements-for-the.md",
+      "pages": 14,
+      "checks_passed": 9,
+      "checks_run": 13,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28383.41,
+          "other_income": 39.58,
+          "total_income": 28422.99
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 22843.79,
+          "other_income": 74.45,
+          "total_income": 22918.24
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 76059.73,
+          "other_income": 165.81,
+          "total_income": 76225.54
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 95334.54,
+          "other_income": 125.67,
+          "total_income": 95460.21
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 124736.03,
+          "other_income": 211.72,
+          "total_income": 124947.75
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28383.41,
+          "other_income": 39.58,
+          "total_income": 28422.99
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 30966.16,
+          "other_income": 42.3,
+          "total_income": 31008.46
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 76059.73,
+          "other_income": 152.31,
+          "total_income": 76212.04
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 95334.54,
+          "other_income": 103.92,
+          "total_income": 95438.46
+        }
+      ]
+    },
+    {
+      "source_pdf": "Statement_of_Standalone_financial_Results_For_the_Quarter_and_half_year_ended_september_30_2022.pdf",
+      "markdown": "data/corpus/filings/statement-of-standalone-financial-results-for-the-quarter-and-half-yea.md",
+      "pages": 15,
+      "checks_passed": 5,
+      "checks_run": 6,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 28452.92,
+          "other_income": 31.64,
+          "total_income": 28484.56
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 35915.46,
+          "other_income": 36.73,
+          "total_income": 35952.19
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 64368.38,
+          "other_income": 68.37,
+          "total_income": 64436.75
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 32821.73,
+          "other_income": 33.27,
+          "total_income": 32855.0
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 86094.38,
+          "other_income": 102.78,
+          "total_income": 86197.16
+        }
+      ]
+    },
+    {
+      "source_pdf": "Statement_of_Standalone_Financial_Results_for_the_quarter_and_nine_months_ended_December_31_2021.pdf",
+      "markdown": "data/corpus/filings/statement-of-standalone-financial-results-for-the-quarter-and-nine-mon.md",
+      "pages": 18,
+      "checks_passed": 6,
+      "checks_run": 6,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 25237.57,
+          "other_income": 52.53,
+          "total_income": 25290.1
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 17691.7,
+          "other_income": 22.68,
+          "total_income": 17714.38
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 14136.33,
+          "other_income": 36.66,
+          "total_income": 14172.99
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 58077.63,
+          "other_income": 96.25,
+          "total_income": 58173.88
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 30231.14,
+          "other_income": 90.83,
+          "total_income": 30321.97
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 51019.19,
+          "other_income": 118.46,
+          "total_income": 51137.65
+        }
+      ]
+    },
+    {
+      "source_pdf": "Statement_of_Standalone_Financial_Results_for_the_Quarter_Ended_June_30_2022.pdf",
+      "markdown": "data/corpus/filings/statement-of-standalone-financial-results-for-the-quarter-ended-june-3.md",
+      "pages": 11,
+      "checks_passed": 3,
+      "checks_run": 9,
+      "facts": [
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 20.0,
+          "other_income": 15.0,
+          "total_income": 35.0
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 86094.38,
+          "other_income": 102.78,
+          "total_income": 86197.16
+        },
+        {
+          "identity": "total_income = revenue_from_operations + other_income",
+          "revenue_from_operations": 86094.38,
+          "other_income": 98.28,
+          "total_income": 86192.66
+        }
+      ]
+    },
+    {
+      "source_pdf": "AS_9100D.pdf",
+      "markdown": "data/corpus/filings/as-9100d.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Financial_Result_for_the_quarter_ended_30-06-2023_Published_in_Financial_Express_All_editions_on_30-06-2023.pdf",
+      "markdown": "data/corpus/filings/financial-result-for-the-quarter-ended-30-06-2023-published-in-financi.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "FINANCIAL_RESULTS_FOR_THE_QUARTER_AND_YEAR_ENDED_MARCH_31_2024.pdf",
+      "markdown": "data/corpus/filings/financial-results-for-the-quarter-and-year-ended-march-31-2024.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "FINANCIAL_RESULTS_FOR_THE_QUARTER_ENDED_31.03.2026.pdf",
+      "markdown": "data/corpus/filings/financial-results-for-the-quarter-ended-31-03-2026.md",
+      "pages": 22,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "ISO_14001_2015_certificate.pdf",
+      "markdown": "data/corpus/filings/iso-14001-2015-certificate.md",
+      "pages": 2,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "ISO_27001_2022.pdf",
+      "markdown": "data/corpus/filings/iso-27001-2022.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "ISO_45001_2018_certificate.pdf",
+      "markdown": "data/corpus/filings/iso-45001-2018-certificate.md",
+      "pages": 2,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "ISO_50001_2018_Certificate.pdf",
+      "markdown": "data/corpus/filings/iso-50001-2018-certificate.md",
+      "pages": 2,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "ISO_9001_2015_certificate.pdf",
+      "markdown": "data/corpus/filings/iso-9001-2015-certificate.md",
+      "pages": 2,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "OUTCOME_OF_BOARD_MEETING_-_FINANCIAL_RESULT.pdf",
+      "markdown": "data/corpus/filings/outcome-of-board-meeting-financial-result.md",
+      "pages": 16,
+      "checks_passed": 0,
+      "checks_run": 2,
+      "facts": []
+    },
+    {
+      "source_pdf": "Postal_Ballot.pdf",
+      "markdown": "data/corpus/filings/postal-ballot.md",
+      "pages": 9,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_Financial_Result_for_the_Quarter_and_Year_ended_March_31_2021.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-result-for-the-quarter-and-year-ended-march-3.md",
+      "pages": 25,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "PUBLICATION_OF_FINANCIAL_RESULT_FOR_THE_QUARTER_AND_YEAR_ENDED_MARCH_31st_2020.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-result-for-the-quarter-and-year-ended-march-3.md",
+      "pages": 21,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "PUBLICATION_OF_FINANCIAL_RESULT_FOR_THE_QUARTER_ENDED_DECEMBER_31st_2019.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-result-for-the-quarter-ended-december-31st-20.md",
+      "pages": 9,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "PUBLICATION_OF_FINANCIAL_RESULT_FOR_THE_QUARTER_ENDED_JUNE_30_2019.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-result-for-the-quarter-ended-june-30-2019.md",
+      "pages": 3,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "PUBLICATION_OF_FINANCIAL_RESULT_FOR_THE_QUARTER_ENDED_JUNE_30_2020.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-result-for-the-quarter-ended-june-30-2020.md",
+      "pages": 10,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_Financial_Result_for_the_year_ended_31.03.2025.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-result-for-the-year-ended-31-03-2025.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 4,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_Financial_Results_for_Q1_of_FY_2026-27_on_30.6.2026.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-results-for-q1-of-fy-2026-27-on-30-6-2026.md",
+      "pages": 3,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "PUBLICATION_OF_FINANCIAL_RESULTS_FOR_THE_QUARTER_AND_YEAR_ENDED_MARCH_31_2019.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-results-for-the-quarter-and-year-ended-march-.md",
+      "pages": 14,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_Financial_Results_on_25.03.2026.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-results-on-25-03-2026.md",
+      "pages": 2,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_Financial_year_QTR_and_Nine_Months_ended_31.12.2025.pdf",
+      "markdown": "data/corpus/filings/publication-of-financial-year-qtr-and-nine-months-ended-31-12-2025.md",
+      "pages": 2,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_Notice_of_37th_AGM.pdf",
+      "markdown": "data/corpus/filings/publication-of-notice-of-37th-agm.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_the_Unaudited_Financial_Result_for_the_quarter_ended_30.06.2025.pdf",
+      "markdown": "data/corpus/filings/publication-of-the-unaudited-financial-result-for-the-quarter-ended-30.md",
+      "pages": 3,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_the_Unaudited_Financial_Result_for_the_quarter_ended_31.12.2024.pdf",
+      "markdown": "data/corpus/filings/publication-of-the-unaudited-financial-result-for-the-quarter-ended-31.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Publication_of_Unaudited_Financial_Result_for_the_quarter_and_nine_month_ended_31-12-2022.pdf",
+      "markdown": "data/corpus/filings/publication-of-unaudited-financial-result-for-the-quarter-and-nine-mon.md",
+      "pages": 1,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Skill_Development.pdf",
+      "markdown": "data/corpus/filings/skill-development.md",
+      "pages": 3,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Statement_Of_Stand-alone_And_Consolidated_Financial_Statements_For_The_Quarter_Ended_December_31_2022.pdf",
+      "markdown": "data/corpus/filings/statement-of-stand-alone-and-consolidated-financial-statements-for-the.md",
+      "pages": 12,
+      "checks_passed": 0,
+      "checks_run": 2,
+      "facts": []
+    },
+    {
+      "source_pdf": "Statement_of_Standalone_Financial_results_For_the_Quarter_and_Half_Year_Ended_September_30_2021.pdf",
+      "markdown": "data/corpus/filings/statement-of-standalone-financial-results-for-the-quarter-and-half-yea.md",
+      "pages": 17,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Statement_Of_Standalone_Financial_Results_For_the_Quarter_Ended_June_30_2021.pdf",
+      "markdown": "data/corpus/filings/statement-of-standalone-financial-results-for-the-quarter-ended-june-3.md",
+      "pages": 10,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    },
+    {
+      "source_pdf": "Swachh_Bharat.pdf",
+      "markdown": "data/corpus/filings/swachh-bharat.md",
+      "pages": 3,
+      "checks_passed": 0,
+      "checks_run": 0,
+      "facts": []
+    }
+  ]
+}

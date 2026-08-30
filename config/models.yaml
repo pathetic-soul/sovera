@@ -1,0 +1,62 @@
+# THE ONLY FILE THAT NAMES A MODEL. AGENTS.md §8.1.
+#
+# Adding a model is editing this file and clicking "Reload registry" in the UI.
+# No code change, no restart. If you find a model name hardcoded anywhere in
+# core/ or tools/, that is a bug — file it.
+#
+# `ref` must match a tag that `ollama list` actually shows, or the first call
+# fails at load time with a 404 from Ollama. Verified against this machine.
+#
+# vram_gb is a claim, not a measurement. Verify with `ollama ps` / `nvidia-smi`
+# on the actual RTX 4050 before trusting it (§5, §16). Any model claiming more
+# than the profile budget is rejected at load with a visible reason.
+
+version: 1
+profile: 6gb
+
+# Used when no model declares the requested route. §5 gives driver this job.
+fallback: driver
+
+models:
+  - id: driver
+    backend: ollama
+    ref: qwen3:4b-instruct
+    hf_ref: Qwen/Qwen3-4B-Instruct-2507
+    device: gpu
+    vram_gb: 2.6
+    max_ctx: 8192
+    capabilities: [reasoning, tool_call, planning]
+    routes: [plan, qa, classify]
+    priority: 1
+
+  - id: writer
+    backend: ollama
+    ref: qwen3:8b-q4_K_M
+    device: gpu
+    vram_gb: 4.9
+    max_ctx: 8192
+    capabilities: [reasoning, long_form]
+    routes: [summarize, approval_note]
+    priority: 1
+
+  - id: coder
+    backend: ollama
+    ref: qwen2.5-coder:7b-instruct-q4_K_M
+    hf_ref: Qwen/Qwen2.5-Coder-7B-Instruct
+    device: gpu
+    vram_gb: 4.4
+    max_ctx: 8192
+    capabilities: [code_generation, code_repair, tool_call]
+    routes: [code_write, code_fix, code_explain, calc, spreadsheet]
+    priority: 1
+    requires_tools: [py_sandbox]
+
+  - id: vision
+    backend: ollama
+    ref: qwen3-vl:4b
+    device: gpu
+    vram_gb: 3.2
+    max_ctx: 8192
+    capabilities: [vision, ocr_reasoning]
+    routes: [scan_understanding, drawing_qa, handwriting]
+    priority: 1

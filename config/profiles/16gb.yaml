@@ -1,0 +1,8 @@
+# Scaling story only — not implemented, not measured. AGENTS.md §5.
+# Same code, different registry: this is the answer to "deployable on a mid-range
+# GPU, scalable to their real server."
+id: 16gb
+vram_budget_gb: 14.5
+note: >
+  Single 16 GB card (RTX 4080 / A4000 class). Headroom for a gpt-oss-20b class
+  driver plus a resident vision model, so most swaps disappear.

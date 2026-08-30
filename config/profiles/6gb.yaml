@@ -1,0 +1,6 @@
+# Demo profile. AGENTS.md §4.1.
+id: 6gb
+vram_budget_gb: 5.2
+note: >
+  RTX 4050 Laptop, 6.0 GB physical, minus 0.5 GB display/compositor/driver and
+  0.3 GB CUDA context and fragmentation. Design against 5.2, never 6.0.
