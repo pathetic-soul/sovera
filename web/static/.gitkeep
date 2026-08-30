@@ -1,0 +1,4 @@
+# Tracked placeholder: git cannot track an empty directory, and
+# core/orchestrator.py mounts StaticFiles(directory="web/static") at import
+# time — a missing directory raises RuntimeError before the app can start.
+# Task 3 fills this directory with real assets; leave this file in place.

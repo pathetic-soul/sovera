@@ -1,43 +1,48 @@
-"""FastAPI app — sovereignty panel, registry, router, agent (§10, §14.1-5).
+"""FastAPI composition root — build the app, own the lifespan, mount the rest.
 
-Legs 1-3 touch no weights: routing is deterministic and happens before any
-model is loaded, which is what makes §4.2.3's swap-masking possible — the
-decision and its rationale render while Ollama is still loading.
+AGENTS.md §10, §14.1-5. Loopback bind only. Run: `python -m core.orchestrator`
 
-Legs 4-5 are the first VRAM spend. One model resident at a time (§4.2.1); the
-agent resolves its route once per run so a run never swaps mid-flight.
+Everything this module does is wiring. The endpoints live in `core/api/`, one
+module per panel; the containment layers live in `sovereignty/`, `core/net_guard.py`
+and `tools/py_sandbox.py`. What stays here is the single place where the audit
+log, the registry, the router, the backend, the tools and the agent are
+constructed — one lifespan, one set of objects on `app.state`, no globals (§11).
 
-Loopback bind only. Run: `python -m core.orchestrator`
+Legs 1-3 touch no weights: routing is deterministic and happens before any model
+is loaded, which is what makes §4.2.3's swap-masking possible. Legs 4-5 are the
+first VRAM spend; one model resident at a time (§4.2.1), and the agent resolves
+its route once per run so a run never swaps mid-flight.
 """
 
 from __future__ import annotations
 
-import asyncio
 import shutil
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Any, AsyncIterator
+from typing import AsyncIterator
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
-from fastapi.responses import FileResponse, PlainTextResponse
-from pydantic import BaseModel, Field
+from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from backends.ollama_backend import OllamaBackend
-from core.agent import Agent, AgentStep
+from core.agent import Agent
+from core.api import ROUTERS
 from core.audit import AuditLog
-from core.net_guard import attempt_egress, install_guard
-from core.registry import Registry, ReloadResult
+from core.net_guard import install_guard
+from core.registry import Registry
 from core.router import Router
 from core.settings import load_settings
 from sovereignty.monitor import DropWatcher
-from tools.base import JailBreak, Tool, resolve_in_jail
-from tools.registry import build_tools, tool_specs
+from tools.base import Tool
+from tools.registry import build_tools
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX = ROOT / "web" / "index.html"
-FIREWALL_RULES = ROOT / "sovereignty" / "firewall.ps1"
+WEB = ROOT / "web"
+INDEX = WEB / "index.html"
+STATIC = WEB / "static"
 WORKSPACE = ROOT / "workspace"
 SEED_CORPUS = ROOT / "data" / "corpus" / "inbox"
 
@@ -67,9 +72,6 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
     _seed_workspace()
     app.state.backend = OllamaBackend(audit)
-    # The roster and the reason `calc` is a fourth tool against §14.4's "three
-    # tools only" both live in tools/registry.py, which is also what the gate
-    # runner and the trace tests build from. One list, four consumers.
     tools: dict[str, Tool] = build_tools()
     app.state.tools = tools
     app.state.agent = Agent(
@@ -84,145 +86,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 app = FastAPI(title="Sovereign Workbench", lifespan=lifespan)
 
+for api_router in ROUTERS:
+    app.include_router(api_router)
+
+# Vendored locally, never a CDN (§2.1). StaticFiles reads off disk and opens no
+# socket; tests/test_web.py asserts nothing in web/ references an external host.
+app.mount("/static", StaticFiles(directory=STATIC), name="static")
+
 
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(INDEX)
-
-
-@app.get("/api/firewall/rules", response_class=PlainTextResponse)
-def firewall_rules() -> str:
-    """§10.1 — the ruleset is displayed verbatim in the UI, not paraphrased."""
-    return FIREWALL_RULES.read_text(encoding="utf-8")
-
-
-@app.post("/api/egress-test")
-def egress_test() -> dict[str, Any]:
-    """Sync on purpose: attempt_egress blocks, FastAPI runs it in a threadpool."""
-    probe = app.state.settings.egress_probe
-    return attempt_egress(probe.host, probe.port, app.state.audit)
-
-
-class RouteRequest(BaseModel):
-    text: str
-    attachments: list[str] = Field(default_factory=list)
-
-
-@app.get("/api/registry")
-def registry_snapshot() -> dict[str, Any]:
-    registry: Registry = app.state.registry
-    return registry.snapshot()
-
-
-@app.post("/api/registry/reload")
-def registry_reload() -> dict[str, Any]:
-    """§14.3 — the live model addition. Editing models.yaml is the whole change."""
-    registry: Registry = app.state.registry
-    result: ReloadResult = registry.reload()
-    app.state.audit.append("approval", {"event": "registry_reload", **result.model_dump()})
-    return {**result.model_dump(), "snapshot": registry.snapshot()}
-
-
-@app.post("/api/route")
-def route(req: RouteRequest) -> dict[str, Any]:
-    """Deterministic (§2.3): no model is loaded and no LLM is consulted here."""
-    router: Router = app.state.router
-    decision = router.route(req.text, req.attachments, app.state.resident)
-    app.state.audit.append("model_call", {"phase": "route", **decision.model_dump()})
-    app.state.resident = decision.model_id
-    return decision.model_dump()
-
-
-@app.get("/api/tools")
-def tools_snapshot() -> dict[str, Any]:
-    """§14.4 — the roster, and which of them the human gate covers (§2.4)."""
-    tools: dict[str, Tool] = app.state.tools
-    return {"tools": tool_specs(tools)}
-
-
-@app.get("/api/backend")
-def backend_status() -> dict[str, Any]:
-    """Is Ollama up? Rendered in the UI so a dead daemon is caught before the
-    demo, not as a stack trace mid-run."""
-    ok, note = app.state.backend.available()
-    return {"ok": ok, "note": note, "resident": app.state.resident}
-
-
-@app.get("/api/artifact")
-def artifact(path: str) -> FileResponse:
-    """Download a deliverable. Jailed by the same function the tools use, so a
-    crafted query string cannot read outside workspace/ (§2.3)."""
-    try:
-        target = resolve_in_jail(WORKSPACE, path)
-    except JailBreak as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
-    if not target.is_file():
-        raise HTTPException(status_code=404, detail=f"no such artifact: {path}")
-    return FileResponse(target, filename=target.name)
-
-
-@app.websocket("/ws/agent")
-async def agent_ws(ws: WebSocket) -> None:
-    """One run per connection (§14.4, §14.5).
-
-    A websocket rather than SSE because the human gate is bidirectional: the
-    loop stops at an approval_request and cannot continue until the reviewer
-    answers on the same channel. Approval over a separate POST would need
-    run-id bookkeeping to serve one operator on one laptop.
-    """
-    await ws.accept()
-    agent: Agent = app.state.agent
-
-    async def approve(step: AgentStep) -> bool:
-        # Safe to block here: the client has just been sent approval_request
-        # and the run is suspended until it replies.
-        reply = await ws.receive_json()
-        return bool(reply.get("approve"))
-
-    try:
-        req = await ws.receive_json()
-        task = str(req.get("text", "")).strip()
-        attachments = [str(a) for a in (req.get("attachments") or [])]
-        if not task:
-            await ws.send_json({"type": "error", "data": {"error": "empty task"}})
-            return
-
-        async for event in agent.run(task, attachments, approve, app.state.resident):
-            if event.type == "route":
-                app.state.resident = event.data["model_id"]
-            await ws.send_json(event.model_dump())
-        await ws.send_json({"type": "done", "data": {}})
-    except WebSocketDisconnect:
-        return
-
-
-@app.get("/api/audit/verify")
-def audit_verify() -> dict[str, Any]:
-    ok, broken = app.state.audit.verify()
-    return {"ok": ok, "broken_at": broken}
-
-
-@app.websocket("/ws/sovereignty")
-async def sovereignty(ws: WebSocket) -> None:
-    await ws.accept()
-    watcher: DropWatcher = app.state.watcher
-    audit: AuditLog = app.state.audit
-    available, why = watcher.available()
-    try:
-        while True:
-            new = watcher.poll()
-            await ws.send_json(
-                {
-                    "monitor_ok": available,
-                    "monitor_note": why,
-                    "total_drops": watcher.total,
-                    "new_drops": new,
-                    "audit": [r.model_dump() for r in audit.tail(15)],
-                }
-            )
-            await asyncio.sleep(1.0)
-    except WebSocketDisconnect:
-        return
 
 
 if __name__ == "__main__":
