@@ -30,6 +30,7 @@ from core.audit import AuditLog
 from core.net_guard import attempt_egress, install_guard
 from core.registry import Registry, ReloadResult
 from core.router import Router
+from core.settings import load_settings
 from sovereignty.monitor import DropWatcher
 from tools.base import JailBreak, Tool, resolve_in_jail
 from tools.registry import build_tools, tool_specs
@@ -39,7 +40,6 @@ INDEX = ROOT / "web" / "index.html"
 FIREWALL_RULES = ROOT / "sovereignty" / "firewall.ps1"
 WORKSPACE = ROOT / "workspace"
 SEED_CORPUS = ROOT / "data" / "corpus" / "inbox"
-EGRESS_TARGET = ("api.openai.com", 443)
 
 
 def _seed_workspace() -> None:
@@ -57,6 +57,7 @@ def _seed_workspace() -> None:
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     audit = AuditLog(WORKSPACE / ".audit" / "audit.jsonl", uuid.uuid4().hex[:12])
     app.state.audit = audit
+    app.state.settings = load_settings()
     app.state.watcher = DropWatcher()
     app.state.registry = Registry()
     app.state.router = Router(app.state.registry)
@@ -71,7 +72,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # runner and the trace tests build from. One list, four consumers.
     tools: dict[str, Tool] = build_tools()
     app.state.tools = tools
-    app.state.agent = Agent(app.state.backend, app.state.router, tools, WORKSPACE, audit)
+    app.state.agent = Agent(
+        app.state.backend, app.state.router, tools, WORKSPACE, audit,
+        settings=app.state.settings.agent,
+    )
 
     install_guard(audit)
     audit.append("approval", {"event": "session_start", "leg": "agent_and_sandbox"})
@@ -95,8 +99,8 @@ def firewall_rules() -> str:
 @app.post("/api/egress-test")
 def egress_test() -> dict[str, Any]:
     """Sync on purpose: attempt_egress blocks, FastAPI runs it in a threadpool."""
-    host, port = EGRESS_TARGET
-    return attempt_egress(host, port, app.state.audit)
+    probe = app.state.settings.egress_probe
+    return attempt_egress(probe.host, probe.port, app.state.audit)
 
 
 class RouteRequest(BaseModel):
@@ -222,4 +226,5 @@ async def sovereignty(ws: WebSocket) -> None:
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8080, log_level="info")
+    settings = load_settings()
+    uvicorn.run(app, host=settings.server.host, port=settings.server.port, log_level="info")

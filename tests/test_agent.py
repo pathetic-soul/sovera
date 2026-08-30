@@ -15,12 +15,15 @@ from typing import Any
 import pytest
 
 from backends.base import BackendError, Completion, LLMBackend, Message
-from core.agent import MAX_STEPS, Agent, AgentEvent, AgentStep
+from core.agent import Agent, AgentEvent, AgentStep
 from core.audit import AuditLog
 from core.registry import Registry
 from core.router import Router
+from core.settings import AgentSettings
 from tools.base import RunContext, Tool, ToolResult
 from tools.fs_read import FsRead
+
+MAX_STEPS = AgentSettings().max_steps
 
 
 class ScriptedBackend(LLMBackend):

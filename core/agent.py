@@ -28,12 +28,13 @@ from pydantic import BaseModel, Field
 from backends.base import BackendError, LLMBackend, Message
 from core.audit import AuditLog
 from core.router import RouteDecision, Router
+from core.settings import AgentSettings
 from tools.base import RunContext, Tool, ToolResult, validate_args
 
-MAX_STEPS = 8
-MAX_TOKENS = 20_000
-OBS_CHARS = 6000  # ~1500 tokens at ~4 chars/token (§8.4)
-TEMPERATURE = 0.2  # §12.8: extraction and tool selection, not prose
+# §8.4's budget now lives in config/runtime.yaml (§11: config over constants).
+# The values are unchanged; what changed is that a judge can alter them without
+# a code edit. `AgentSettings()` carries the charter defaults, so a caller that
+# passes nothing behaves exactly as this module did before.
 
 # Approval callback: given the pending step, return True to let it run.
 Approver = Callable[["AgentStep"], Awaitable[bool]]
@@ -116,10 +117,10 @@ def _extract_json(raw: str) -> dict[str, Any] | None:
     return None
 
 
-def _truncate(text: str) -> str:
-    if len(text) <= OBS_CHARS:
+def _truncate(text: str, limit: int) -> str:
+    if len(text) <= limit:
         return text
-    return text[:OBS_CHARS] + f"\n…[truncated {len(text) - OBS_CHARS} chars]"
+    return text[:limit] + f"\n…[truncated {len(text) - limit} chars]"
 
 
 class Agent:
@@ -130,12 +131,16 @@ class Agent:
         tools: dict[str, Tool],
         workspace: Path,
         audit: AuditLog,
+        settings: AgentSettings | None = None,
     ) -> None:
         self.backend = backend
         self.router = router
         self.tools = tools
         self.workspace = workspace
         self.audit = audit
+        # Default rather than required: tests/test_agent.py and finetune/gate.py
+        # construct an Agent directly and must keep working unchanged.
+        self.settings = settings or AgentSettings()
 
     async def run(
         self,
@@ -162,10 +167,12 @@ class Agent:
         spent = 0
         step_n = 0
 
-        while step_n < MAX_STEPS:
+        while step_n < self.settings.max_steps:
             step_n += 1
-            if spent >= MAX_TOKENS:
-                yield self._stop(f"token cap {MAX_TOKENS} reached after {step_n - 1} steps", spent)
+            if spent >= self.settings.max_tokens:
+                yield self._stop(
+                    f"token cap {self.settings.max_tokens} reached after {step_n - 1} steps", spent
+                )
                 return
 
             try:
@@ -236,12 +243,12 @@ class Agent:
                     continue
 
             result = await asyncio.to_thread(_invoke, tool, args, ctx)
-            step.observation = _truncate(_observe(result))
+            step.observation = _truncate(_observe(result), self.settings.observation_chars)
             step.artifacts = result.artifacts
             yield AgentEvent(type="step", data=step.model_dump())
             _record(messages, obj, step.observation)
 
-        yield self._stop(f"step cap {MAX_STEPS} reached", spent)
+        yield self._stop(f"step cap {self.settings.max_steps} reached", spent)
 
     async def _decide(
         self, ref: str, messages: list[Message], max_ctx: int
@@ -252,7 +259,7 @@ class Agent:
         """
         completion = await asyncio.to_thread(
             self.backend.chat, ref, messages,
-            max_ctx=max_ctx, temperature=TEMPERATURE, json_mode=True,
+            max_ctx=max_ctx, temperature=self.settings.temperature, json_mode=True,
         )
         used = completion.total_tokens
         obj = _extract_json(completion.text)
@@ -274,7 +281,7 @@ class Agent:
         ]
         second = await asyncio.to_thread(
             self.backend.chat, ref, repair,
-            max_ctx=max_ctx, temperature=TEMPERATURE, json_mode=True,
+            max_ctx=max_ctx, temperature=self.settings.temperature, json_mode=True,
         )
         used += second.total_tokens
         obj = _extract_json(second.text)

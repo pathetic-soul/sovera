@@ -1,0 +1,37 @@
+# Runtime knobs. AGENTS.md §11: "Config over constants. Anything a judge might
+# ask you to change live goes in YAML."
+#
+# This is NOT config/models.yaml. Models are named there and only there (§8.1).
+# Nothing in this file names a model, a model ref, or a route.
+#
+# Changing a value here takes effect on the next start. The agent caps are the
+# ones worth demonstrating: "set max_steps to 3 and watch the loop stop early"
+# is the same trick leg 3 plays with the registry, at zero extra cost.
+
+version: 1
+
+# §8.4. An 8k context window (§4.2.5) has no room to absorb a runaway loop, so
+# all three of these are load-bearing rather than defensive.
+agent:
+  max_steps: 8            # hard cap on ReAct iterations
+  max_tokens: 20000       # cumulative budget across the whole run
+  observation_chars: 6000 # ~1500 tokens at ~4 chars/token, before re-entry
+  temperature: 0.2        # §12.8: extraction and tool selection, not prose
+
+# §2.1, §4.3: loopback only, never 0.0.0.0. `host` is validated in
+# core/settings.py and a non-loopback value is REFUSED at load, because a
+# config edit must not be able to expose the workbench on the network.
+server:
+  host: 127.0.0.1
+  port: 8080
+
+# §10.3, the red button. A judge asking "try a different host" is answered by
+# editing this, not by editing Python.
+egress_probe:
+  host: api.openai.com
+  port: 443
+
+# §9.3. The image is built once at build time; the timeout bounds a runaway script.
+sandbox:
+  image: sandbox-py:local
+  timeout_s: 60

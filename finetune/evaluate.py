@@ -30,8 +30,9 @@ from typing import Any
 
 from backends.base import BackendError, Message
 from backends.ollama_backend import OllamaBackend
-from core.agent import TEMPERATURE, _extract_json
+from core.agent import _extract_json
 from core.audit import AuditLog
+from core.settings import AgentSettings
 from tools.base import Tool, validate_args
 from tools.doc_write import DocWrite
 from tools.fs_read import FsRead
@@ -132,7 +133,7 @@ def main() -> int:
             try:
                 completion = backend.chat(
                     args.ref, prefix, max_ctx=MAX_CTX,
-                    temperature=TEMPERATURE, json_mode=True,
+                    temperature=AgentSettings().temperature, json_mode=True,
                 )
             except BackendError as exc:
                 print(f"backend error: {exc}")
