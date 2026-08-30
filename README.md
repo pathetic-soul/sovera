@@ -318,4 +318,5 @@ Two things worth settling first:
   that impresses and one that gets a wrong thickness figure questioned on
   stage.
 #   s o v e r a  
+ #   s o v e r a  
  
