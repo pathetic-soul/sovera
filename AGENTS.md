@@ -211,9 +211,17 @@ sovereign-workbench/
 │   ├── models.yaml               ← ONLY place models are named
 │   ├── profiles/{6gb,16gb,120gb}.yaml
 │   ├── env.sovereign
-│   └── routing_exemplars.jsonl   ← labelled prompts for the router
+│   ├── routing_exemplars.jsonl   ← labelled prompts for the router
+│   └── runtime.yaml              ← agent caps, server bind, egress-probe target
 ├── core/
-│   ├── orchestrator.py           ← FastAPI app, request lifecycle
+│   ├── orchestrator.py           ← FastAPI composition root: app factory, lifespan, /static mount
+│   ├── api/                      ← one router per UI panel
+│   │   ├── sovereignty.py        ← firewall rules, red button, drop stream
+│   │   ├── registry.py           ← registry read + hot reload
+│   │   ├── routing.py            ← /api/route
+│   │   ├── agent.py              ← agent websocket, tools, backend health
+│   │   └── workspace.py          ← artifact download, audit verify
+│   ├── settings.py               ← config/runtime.yaml loader, validated at load
 │   ├── registry.py               ← loads/validates/hot-reloads models.yaml
 │   ├── routing/                  ← task_type + modality detection
 │   │   ├── types.py              ← TaskType, Modality, Scorer protocol
@@ -251,7 +259,7 @@ sovereign-workbench/
 │   ├── firewall.ps1              ← egress control (see §17)
 │   ├── verify.ps1                ← pre-demo assertion script
 │   └── monitor.py                ← drop-log watcher → websocket
-├── web/                          ← UI, all assets vendored
+├── web/                          ← UI: index.html + static/{app.css,js/*.js}, all vendored
 ├── workspace/                    ← the ONLY writable path for the agent
 ├── models/                       ← pre-staged weights (gitignored)
 ├── data/corpus/                  ← refinery SOPs, sample reports

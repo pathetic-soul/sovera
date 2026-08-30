@@ -1,13 +1,17 @@
 # Modularity plan — Sovereign Workbench
 
-**SIH 2026 · PS 26117 (MRPL)** · drafted 2026-08-31 · **M1, M3, M4 executed 2026-08-31**
+**SIH 2026 · PS 26117 (MRPL)** · drafted 2026-08-31 · **M1–M6 executed 2026-08-31**
 
-> **Status: 3 of 6 items done.** M1 (one router split), M3 (tool registry) and
-> M4 (`core/routing/` package) are in the tree. Verified against an unchanged
-> baseline: **184 passed / 1 xfailed**, **mypy strict clean over 45 files**,
-> **router accuracy 80.3%, 13 held-out prompts misrouted** — identical before
-> and after. M2, M5 and M6 are still open and are the three that touch the demo
-> path; do them after the golden path has been timed once.
+> **Status: 6 of 6 items done.** M1 (one router split), M3 (tool registry),
+> M4 (`core/routing/` package), M2 (API router split), M5
+> (`config/runtime.yaml` + `core/settings.py`) and M6 (`web/static/` split) are
+> all in the tree. M1/M3/M4 were verified against an unchanged baseline: **184
+> passed / 1 xfailed**, **mypy strict clean over 45 files**, **router accuracy
+> 80.3%, 13 held-out prompts misrouted** — identical before and after (see
+> each item below for that historical snapshot). Current state, after all six:
+> **221 passed / 1 xfailed**, **mypy strict clean over 52 files**, router
+> accuracy since moved to **86.7%** by a later, separate corpus-expansion
+> commit — not by this modularity work, which changed no scoring code.
 
 `STATUS.md` says where the project stands, `ROADMAP.md` says what ships, this
 file says how the code is *shaped* and what to change about that. It exists
@@ -86,7 +90,7 @@ Verified: accuracy 80.3%, 13 misrouted — unchanged.
 
 ---
 
-### M2 · `core/orchestrator.py` is a composition root *and* every endpoint · ⬜ open
+### M2 · `core/orchestrator.py` is a composition root *and* every endpoint · ✅ **DONE**
 
 230 lines today: lifespan wiring, sovereignty endpoints, registry endpoints, the
 route endpoint, the agent websocket, the audit websocket, and artifact download.
@@ -114,6 +118,26 @@ state and this does not add any). Leg 6 becomes `core/api/ingest.py` plus one
 Effort: mechanical, ~1 hour. Risk: low, but it touches the file the whole demo
 runs through — do it with the golden path already timed so you have a baseline
 to re-verify against.
+
+**Done.** `core/orchestrator.py` is now 104 lines: app factory, lifespan,
+`StaticFiles` mount, and `include_router` over `core/api/ROUTERS`. The split
+landed as five panel modules rather than the six sketched above — artifacts and
+the audit endpoint share one file, `core/api/workspace.py`, because both answer
+the same "what did the agent produce" question from a reviewer's side:
+
+```
+core/api/sovereignty.py    /api/firewall/rules, /api/egress-test, /ws/sovereignty
+core/api/registry.py       /api/registry, /api/registry/reload
+core/api/routing.py        /api/route
+core/api/agent.py          /ws/agent, /api/tools, /api/backend
+core/api/workspace.py      /api/artifact, /api/audit/verify
+```
+
+`tests/test_api.py` asserts the full route set (including the `/static` mount)
+answers through the composed app rather than by walking `app.routes` for a
+`.path` attribute, since an included router's routes are wrapped lazily in this
+FastAPI version. State is still hung on `app.state`, set once in the lifespan —
+no global mutable state was added.
 
 ---
 
@@ -183,13 +207,13 @@ behind each design choice (why lexical, why the hybrid, why standardisation).
 **Move them with their code, do not summarise them.** They are a large part of
 why this repo reads as engineered rather than generated.
 
-Verified: 184 passed, mypy clean, accuracy 80.3% / 13 misrouted — unchanged.
+Verified: 221 passed (184 at the time), mypy clean, accuracy 80.3% / 13 misrouted — unchanged.
 Largest file in the package is now `scorers.py` at ~190 lines, comfortably inside
 the §11 cap with room for leg 6-7 routes.
 
 ---
 
-### M5 · Runtime constants that §11 says belong in YAML · ⬜ open
+### M5 · Runtime constants that §11 says belong in YAML · ✅ **DONE**
 
 > §11: *"Config over constants. Anything a judge might ask you to change live
 > goes in YAML."*
@@ -216,9 +240,22 @@ one YAML file.
 Effort: ~1 hour. Risk: low, but it touches the agent loop — do it after M2 so the
 golden path has been re-timed once already.
 
+**Done.** `config/runtime.yaml` + `core/settings.py` (a frozen, `extra="forbid"`
+Pydantic `Settings` model) now own the first three rows — `agent.max_steps`,
+`agent.max_tokens`, `agent.observation_chars`, `agent.temperature` — plus
+`server.host`/`server.port` and `egress_probe.host`/`egress_probe.port`. `host`
+is the one field validated at load (§2.1: loopback only, refused otherwise);
+everything else is a demo knob, deliberately unvalidated so "change it live" is
+a YAML edit. A speculative `sandbox:` block (image, timeout_s) was drafted and
+then deleted rather than wired: nothing in `tools/py_sandbox.py` reads it, so
+shipping it would have been a config key that silently does nothing — worse
+than no key. `tools/py_sandbox.py`'s `IMAGE`/`TIMEOUT_S` and `tools/fs_read.py`'s
+`MAX_CHARS` stay hardcoded, per the "would a judge ask to change this live"
+test above.
+
 ---
 
-### M6 · `web/index.html` is 342 lines of HTML + CSS + JS in one file · ⬜ open
+### M6 · `web/index.html` is 342 lines of HTML + CSS + JS in one file · ✅ **DONE**
 
 Six panels' worth of markup, an inline `<style>` block, and an inline `<script>`
 holding the sovereignty websocket, the router panel, the registry panel and the
@@ -237,6 +274,16 @@ modules, no bundler, no import maps.
 
 Effort: ~1 hour, mostly cut-and-paste. Risk: low but *visible* — this is the
 surface the judges look at. Re-open every panel after the change.
+
+**Done.** `app.mount("/static", StaticFiles(directory=WEB / "static"))` in
+`core/orchestrator.py`, and `web/index.html` now loads
+`web/static/app.css` + `web/static/js/{util,router,registry,sovereignty,agent}.js`
+via plain `<script src="/static/...">` tags — no modules, no bundler. Every
+asset stays vendored: `tests/test_web.py` scans every `.html`/`.css`/`.js` file
+for an external reference (a CDN, a webfont, a scheme-relative `//host`, and
+the multi-slash and backslash bypass forms of the same) and fails the suite if
+one appears, plus asserts no `package.json`/`node_modules` ever lands under
+`web/`. No panel logic changed — this was a pure extraction.
 
 ---
 
@@ -300,9 +347,9 @@ Strictly ordered. Each step is committable on its own and leaves the demo workin
 | 2 | ✅ M1 — one router split | `pytest` green, accuracy 80.3% recorded as the baseline | done |
 | 3 | ✅ M3 — tool registry | — | done |
 | 4 | ✅ M4 — `core/routing/` package | — | done |
-| 5 | M2 — API routers | golden path timed once (step 1) | ~1 h |
-| 6 | M5 — `config/runtime.yaml` | — | ~1 h |
-| 7 | M6 — `web/static/` split | — | ~1 h |
+| 5 | ✅ M2 — API routers | golden path timed once (step 1) | done |
+| 6 | ✅ M5 — `config/runtime.yaml` | — | done |
+| 7 | ✅ M6 — `web/static/` split | — | done |
 | 8 | **Re-time the golden path; `python gates.py --strict`** | steps 2–7 | ~1 h |
 
 Total ≈ 7 hours of refactor across steps 2–7, bracketed by two timed runs of the
@@ -315,13 +362,15 @@ the demo path.
 A refactor is only correct if the numbers do not move. After each step:
 
 ```powershell
-.venv\Scripts\python -m pytest -q      # 184 passed, 1 xfailed — unchanged
-.venv\Scripts\python -m mypy           # strict, clean, 45 files
-.venv\Scripts\python gates.py          # router accuracy MUST still read 80.3%
+.venv\Scripts\python -m pytest -q      # 221 passed, 1 xfailed (184 at M1/M3/M4 time) — unchanged by this refactor
+.venv\Scripts\python -m mypy           # strict, clean, 52 files (45 at M1/M3/M4 time)
+.venv\Scripts\python gates.py          # router accuracy MUST still read 80.3% at M1/M3/M4 time;
+                                        # 86.7% is a later, separate corpus-expansion commit
 ```
 
-The file counts move as modules are split (38 -> 45 across M1/M3/M4); the *test
-count* and the *accuracy* must not.
+The file counts move as modules are split (38 -> 45 across M1/M3/M4, 45 -> 52
+across M2/M5/M6); the *test count* and the *accuracy*, measured immediately
+before and after each refactor step, must not.
 
 Router accuracy shifting by even a tenth of a point after M1 or M4 means the
 split or the scorer changed, not that it improved. Treat any movement as a bug

@@ -149,8 +149,9 @@ quote anything that is not on this list.
 | Routing decision latency | **0.05 ms** against a 50 ms budget | deterministic, no LLM |
 | Encoder classification latency | **14.4 ms median / 17.2 ms p95**, on CPU, **0 GB VRAM** | bge-small-en-v1.5 |
 | Router accuracy | **86.7%** held out, 10 of 75 misrouted — *gate is 90%, we are short* | see §5 below |
-| Test suite | **184 passed, 1 deliberate xfail** | `pytest -q` |
-| Type checking | **mypy strict, clean, 45 files** | includes the largest module |
+| Router accuracy, same 66 held-out prompts as before the corpus expansion | **86.4%**, 9 of 66 misrouted (was 13) — none of the 66 moved into TRAIN | independent generalisation check, not the §13 gate number |
+| Test suite | **221 passed, 1 deliberate xfail** | `pytest -q` |
+| Type checking | **mypy strict, clean, 52 files** | includes the largest module |
 | Grounding — lookup questions | **10/10, both models** | `finetune/grounding_eval.py` |
 | Arithmetic, before and after `tools/calc.py` | **1/8 → 7/8** over 8 trials | same task, same model |
 | Leg 4 wall clock | ~157 s cold, including model load | measured |
