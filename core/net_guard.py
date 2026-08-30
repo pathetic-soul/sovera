@@ -34,7 +34,7 @@ def _is_local(address: Any) -> bool:
     by default. Ollama lives on 127.0.0.1 so nothing legitimate needs the LAN,
     but the two layers are kept identical so a judge sees one rule, not two.
     """
-    if not isinstance(address, tuple) or not address:1
+    if not isinstance(address, tuple) or not address:
         return False  # AF_UNIX / npipe / anything unexpected: not our business to allow
     try:
         ip = ipaddress.ip_address(address[0])
