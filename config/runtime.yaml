@@ -30,8 +30,3 @@ server:
 egress_probe:
   host: api.openai.com
   port: 443
-
-# §9.3. The image is built once at build time; the timeout bounds a runaway script.
-sandbox:
-  image: sandbox-py:local
-  timeout_s: 60

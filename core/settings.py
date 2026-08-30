@@ -16,12 +16,22 @@ Tool selection also stays out — see `tools/registry.py` for why making the
 
 WHY `server.host` IS VALIDATED AND NOTHING ELSE IS
 --------------------------------------------------
-Every other value here is a performance or budget knob: set `max_steps` to 3 and
-the loop stops early, which is a demo, not a hazard. `server.host` is different.
-§2.1 and §4.3 both require a loopback bind, and the entire containment claim
-assumes nothing is listening on the network. A YAML file that can bind 0.0.0.0
-hands one character the power to void the thesis, so it is refused at load
-rather than trusted.
+Most other values here are a performance or budget knob: set `max_steps` to 3
+and the loop stops early, which is a demo, not a hazard. `server.host` is
+different in kind. §2.1 and §4.3 both require a loopback bind, and the entire
+containment claim assumes nothing is listening on the network. A YAML file
+that can bind 0.0.0.0 hands one character the power to void the thesis, so it
+is refused at load rather than trusted. It has exactly one correct value.
+
+`egress_probe` is the one value that is not a performance knob and is still
+left unvalidated on purpose. Pointing it at a reachable local address (say,
+`127.0.0.1`) makes the §10.3 red button connect successfully and the
+sovereignty panel render `!! CONTAINMENT FAILED` — the graded claim, inverted,
+by a config edit. That is accepted rather than guarded against, because the
+probe's entire job is to name an external target: "try a different host" is a
+question judges ask, and the answer has to be a YAML edit, not a hardcoded
+address. `server.host` has one correct value to validate against; `egress_probe`
+is supposed to point at arbitrary hosts, so there is nothing to validate.
 """
 
 from __future__ import annotations
@@ -47,7 +57,7 @@ class NotLoopback(ValueError):
 class AgentSettings(BaseModel):
     """§8.4 loop budget. Defaults are the charter's values, not placeholders."""
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, extra="forbid")
 
     max_steps: int = Field(default=8, gt=0, le=64)
     max_tokens: int = Field(default=20_000, gt=0)
@@ -56,7 +66,7 @@ class AgentSettings(BaseModel):
 
 
 class ServerSettings(BaseModel):
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, extra="forbid")
 
     host: str = "127.0.0.1"
     port: int = Field(default=8080, gt=0, lt=65536)
@@ -85,29 +95,19 @@ class EgressProbeSettings(BaseModel):
     """§10.3, the red button target. Deliberately configurable: "try a
     different host" is a question judges ask, and it should be a YAML edit."""
 
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, extra="forbid")
 
     host: str = "api.openai.com"
     port: int = Field(default=443, gt=0, lt=65536)
 
 
-class SandboxSettings(BaseModel):
-    """§9.3. `image` is built at build time; nothing here pulls it."""
-
-    model_config = ConfigDict(frozen=True)
-
-    image: str = "sandbox-py:local"
-    timeout_s: int = Field(default=60, gt=0, le=600)
-
-
 class Settings(BaseModel):
-    model_config = ConfigDict(frozen=True)
+    model_config = ConfigDict(frozen=True, extra="forbid")
 
     version: int = 1
     agent: AgentSettings = Field(default_factory=AgentSettings)
     server: ServerSettings = Field(default_factory=ServerSettings)
     egress_probe: EgressProbeSettings = Field(default_factory=EgressProbeSettings)
-    sandbox: SandboxSettings = Field(default_factory=SandboxSettings)
 
 
 def load_settings(path: Path = RUNTIME_YAML) -> Settings:

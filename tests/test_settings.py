@@ -103,3 +103,21 @@ def test_yaml_is_the_only_place_the_caps_are_written() -> None:
 def test_runtime_yaml_is_valid_yaml_and_versioned() -> None:
     raw = yaml.safe_load(RUNTIME_YAML.read_text(encoding="utf-8"))
     assert raw["version"] == 1
+
+
+def test_unknown_key_in_nested_model_is_rejected() -> None:
+    """A typo like `max_step` for `max_steps` must fail loudly, not be
+    silently dropped and leave the default in place unexplained."""
+    from core.settings import AgentSettings
+
+    with pytest.raises(ValidationError, match="max_step"):
+        AgentSettings.model_validate({"max_step": 3})
+
+
+def test_unknown_key_via_load_settings_is_rejected(tmp_path: Path) -> None:
+    """The same typo, made in config/runtime.yaml, must abort the load
+    rather than silently run on defaults nobody can explain."""
+    bad = tmp_path / "runtime.yaml"
+    bad.write_text("agent: {max_step: 3}\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="max_step"):
+        load_settings(bad)
