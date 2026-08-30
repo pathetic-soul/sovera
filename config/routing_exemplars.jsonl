@@ -174,3 +174,36 @@
 {"prompt": "Make a tabular summary of thickness readings by circuit", "task_type": "spreadsheet"}
 {"prompt": "Prepare a workbook with separate tabs for each unit", "task_type": "spreadsheet"}
 {"prompt": "Create a sheet listing equipment tags against their inspection intervals", "task_type": "spreadsheet"}
+{"prompt": "Who is authorised to countersign a hot work permit in the SRU during a shutdown", "task_type": "qa"}
+{"prompt": "What retirement thickness does API 510 set for a class 1 pressure vessel shell", "task_type": "qa"}
+{"prompt": "Does the vendor manual allow a weld repair on the crude charge pump casing", "task_type": "qa"}
+{"prompt": "What is the minimum hold time for a hydrotest on a class 300 line", "task_type": "qa"}
+{"prompt": "Which NDT method does the SOP require for a suspected lamination in a tank shell", "task_type": "qa"}
+{"prompt": "How long is a confined space entry certificate valid for in the CDU", "task_type": "qa"}
+{"prompt": "Write a python script that reads the UT survey csv and flags any grid below retirement", "task_type": "code_write"}
+{"prompt": "Write a program to parse the inspection log and list every overdue PSV", "task_type": "code_write"}
+{"prompt": "Give me code that converts the thickness readings into a corrosion rate table", "task_type": "code_write"}
+{"prompt": "Produce a script that renames drawing files to match the equipment tag convention", "task_type": "code_write"}
+{"prompt": "Code something that pulls the next due dates out of the inspection register", "task_type": "code_write"}
+{"prompt": "Write a small program to check the MOC list for records missing a closure date", "task_type": "code_write"}
+{"prompt": "Set out the steps to bring the FCC regenerator back online after the turnaround", "task_type": "plan"}
+{"prompt": "What order should we tackle the pending API 653 tank inspections in this quarter", "task_type": "plan"}
+{"prompt": "Work up an approach for clearing the backlog of overdue PSV pop tests", "task_type": "plan"}
+{"prompt": "Map out how we schedule the HGU reformer catalyst change against the shutdown window", "task_type": "plan"}
+{"prompt": "Propose the sequence for commissioning the new VDU overhead exchanger", "task_type": "plan"}
+{"prompt": "Condense this thirty page turnaround report into the findings that need action", "task_type": "summarize"}
+{"prompt": "Pull out the key points from the vendor inspection report on the SRU condenser", "task_type": "summarize"}
+{"prompt": "Boil the CUI survey down to the circuits that need attention this year", "task_type": "summarize"}
+{"prompt": "Shorten this MOC pack into a paragraph the shift superintendent can read", "task_type": "summarize"}
+{"prompt": "Reduce the last turnaround findings to a list of open recommendations", "task_type": "summarize"}
+{"prompt": "Compute the corrosion rate for grid S4 from the 2019 and 2024 readings", "task_type": "calc"}
+{"prompt": "What is the remaining life if the wall is 7.8 mm and t-min is 6.4 mm at 0.21 mm per year", "task_type": "calc"}
+{"prompt": "Figure out the MAWP for this shell at the measured thickness", "task_type": "calc"}
+{"prompt": "How many years until this circuit reaches retirement thickness at the current rate", "task_type": "calc"}
+{"prompt": "Calculate the required minimum thickness for a 12 inch line at 18 barg", "task_type": "calc"}
+{"prompt": "Read the scanned inspection certificate and tell me the test date and the inspector", "task_type": "scan_understanding"}
+{"prompt": "Extract the equipment tag and next due date from this scanned register page", "task_type": "scan_understanding"}
+{"prompt": "Pull the vessel serial number off the scanned nameplate photograph", "task_type": "scan_understanding"}
+{"prompt": "What thickness values are printed on this scanned UT report sheet", "task_type": "scan_understanding"}
+{"prompt": "Transcribe the readings from the scanned survey form into a list", "task_type": "scan_understanding"}
+{"prompt": "Read off the certificate number and validity dates from this scanned work permit", "task_type": "scan_understanding"}

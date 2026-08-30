@@ -44,18 +44,21 @@ Ordered by risk retired per hour spent. The first three are not features.
 
 ### P1 · Close the one failing gate
 
-5. **Router accuracy 80.3% → 90%.** The lever is corpus size, not tuning: 16
-   exemplars per class is thin, and the failures are dominated by subject matter
-   overriding intent (*"write a python script to compute corrosion rate"* routes
-   to `calc` instead of `code_write`). Expand exemplars for the confused pairs
-   and re-run `gates.py`. Never tune against the held-out set — that would buy a
-   prettier number and destroy its meaning.
+5. **Router accuracy 86.7% → 90%.** The corpus was widened 176 → 209 exemplars
+   across the six weakest classes (2026-08-31), which cut held-out misses from
+   13 to 10 but did not close the gate. The misses are not dominated by one
+   confusion — they land on 10 of 75 held-out prompts across the same six
+   classes, with `code_write` → `calc` the only pair that repeats. The lever
+   remains corpus size, not tuning: continue expanding exemplars and re-run
+   `gates.py`. Never tune against the held-out set — that would buy a prettier
+   number and destroy its meaning.
 
 ### P2 · Documentation truth
 
 6. **Refresh AGENTS.md §16.** It still records router accuracy as 75.8% with the
-   dense-encoder decision open; the encoder landed and the number is 80.3%.
-   Stale charter text is the one thing a judge reading the repo will catch.
+   dense-encoder decision open; the encoder landed and the corpus expansion
+   brought the number to 86.7%. Stale charter text is the one thing a judge
+   reading the repo will catch.
 7. **Fill the remaining VRAM figures.** `writer` is measured at 4.6 GB;
    `coder` and `driver` still need `ollama ps` readings (§16, blocking §5).
 

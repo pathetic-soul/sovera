@@ -20,7 +20,7 @@ project and the cheapest to close.
 |---|---|---|
 | Scope delivery | 🟢 62% | legs 1–5 of 8 built and verified; legs 6–8 open |
 | Quality | 🟢 | 184 tests pass, 1 deliberate xfail; mypy strict clean over 45 files |
-| Technical risk | 🟡 | router gate failing 80.3% vs 90%; grounding gap closed by `tools/calc.py` |
+| Technical risk | 🟡 | router gate failing 86.7% vs 90%; grounding gap closed by `tools/calc.py` |
 | Delivery risk | 🔴 | no version-control history; golden path never timed end to end |
 | Evidence quality | 🟢 | every headline claim has a measured number and a way to reproduce it |
 
@@ -38,7 +38,7 @@ and "broken" cost the same). Verdicts are never collapsed: **SKIP is not PASS.**
 |---|---|---|---|
 | `pytest` suite | ✅ PASS | 184 passed, 1 xfailed | 35 s |
 | `mypy --strict` | ✅ PASS | clean, 45 source files | includes `finetune/`, the largest module |
-| Router accuracy on held-out | ❌ **FAIL** | **80.3% vs 90% gate** | 13 of 66 misrouted — risk R3 |
+| Router accuracy on held-out | ❌ **FAIL** | **86.7% vs 90% gate** | 10 of 75 misrouted — risk R3 |
 | Model accuracy vs base | ✅ PASS | base 85.5% (CI 83.6–87.2), noise floor 1.53 pts | no unproven adapter registered |
 | Corpus integrity | ✅ PASS | 60 train / 40 bench docs, 0 overlap | derived figures reconcile |
 | Sandbox image built | ⚠️ SKIP | — | `docker build -t sandbox-py:local sandbox\` **before arming the firewall** |
@@ -88,7 +88,7 @@ Scored **probability (1–5) × impact (1–5)**. Response bands: >18 avoid ·
 |---|---|---|---|---|---|---|
 | **R1** | **Zero git commits.** Weeks of work exist in one folder on one laptop. One bad delete, one disk fault, one cloud-sync conflict and the project is gone. | 4 | 5 | **20** | **Avoid** | Commit today, push to a private remote before the next work session. |
 | **R2** | Golden path never timed end to end against the 6-minute §13 gate. The first full run would happen on stage. | 4 | 4 | **16** | Mitigate | Full dress rehearsal with a stopwatch, this week. Non-negotiable before freeze. |
-| **R3** | Router accuracy 80.3% vs the 90% gate — the one §13 number a judge can ask about. | 5 | 3 | **15** | Mitigate | Corpus size is the lever: 16 exemplars per class is thin. Expand the confused pairs (`code_write` vs `calc`). |
+| **R3** | Router accuracy 86.7% vs the 90% gate — the one §13 number a judge can ask about. | 5 | 3 | **15** | Mitigate | Corpus expanded 176 → 209 exemplars across the six weakest classes (2026-08-31); misses fell 13 → 10 but the gate is still not met. Continue expanding — no single confused pair dominates, so broad coverage is still the lever. |
 | **R4** | Venue laptop may not run as Administrator; the drop-log monitor needs read access to `pfirewall.log`. Without it the sovereignty panel — the graded claim — degrades on stage. | 3 | 5 | **15** | Mitigate | Rehearse the exact elevated launch sequence; pre-agree an ACL relaxation on that one file as fallback. |
 | **R5** | Thermal throttle after ~20 min of sustained inference on the RTX 4050 laptop. A silent killer mid-demo. | 3 | 4 | **12** | Mitigate | 25-minute sustained-load soak test with clocks logged. Currently untested. |
 | **R7** | Sandbox image not built on the demo machine. It is the only step that needs a network, and §2.1 forbids doing it at demo time. | 2 | 5 | **10** | Mitigate | Build it in the same pre-flight window as model staging. `gates.py` checks for it. |

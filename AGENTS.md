@@ -537,7 +537,7 @@ Prompts written for frontier models fail on a 4B. Rules:
 | Test | Gate |
 |---|---|
 | `pytest tests/` | green before any merge |
-| Router accuracy on held-out prompts | ≥ 90% — **currently 75.8%, FAILING**, see §16 |
+| Router accuracy on held-out prompts | ≥ 90% — **currently 86.7%, FAILING**, see §16 |
 | Golden demo path (§14) end to end | < 6 min wall clock |
 | `sovereignty/verify.ps1` | exits 0 |
 | Egress packets during a full demo run | **0 delivered**, drops counted and shown |
@@ -687,18 +687,19 @@ Do not silently invent answers. Flag these when they block you.
       **Test this. A thermal throttle mid-demo is a silent killer.**
 - [ ] Does the venue laptop run the demo as Administrator? The drop-log monitor needs
       read access to `pfirewall.log`. Rehearse the exact launch sequence.
-- [ ] **Router accuracy is 75.8% against a 90% gate — blocking §13.** The lexical
-      TF-IDF scorer in `core/routing/scorers.py` has plateaued: leave-one-out CV on the
-      training split gives 74.5% for class centroids, 64.5% for nearest-exemplar,
-      and up-weighting the opening intent phrase made it worse at every setting
-      tried. This is not a tuning problem. §9.2 specified embedding similarity and
-      it was right; closing the gap needs a dense encoder staged on disk. Decide:
-      reuse `embed` (bge-m3 ONNX int8, ~1.2 GB CPU, already budgeted in §5, one
-      model serving both routing and retrieval), or stage a small sentence encoder
-      for routing alone (~90 MB) and keep bge-m3 for §9.4. Weights must be
-      pre-staged — §2.1 forbids fetching them at runtime.
-      `tests/test_router.py` records the gap as a **strict xfail**, so the day the
-      encoder lands the suite fails until the xfail is deleted.
+- [ ] **Router accuracy is 86.7% against a 90% gate — blocking §13.** The
+      encoder decision this bullet used to track is resolved: `bge-small-en-v1.5`
+      runs on CPU as the dense half of `HybridScorer` (w=0.8), which took
+      held-out accuracy from the lexical-only plateau of 75.8% to 80.3%. The
+      exemplar corpus was then widened 176 → 209 rows across the six weakest
+      classes (2026-08-31), taking held-out to 86.7% and cutting misses from 13
+      of 66 to 10 of 75 — no single confusion pair dominates; `code_write` ->
+      `calc` is the only one that repeats. This is still not a tuning problem:
+      the blend weight was chosen by leave-one-out CV on the training split
+      alone and the held-out set was scored once. The remaining lever is more
+      corpus, not a different scorer.
+      `tests/test_router.py` records the gap as a **strict xfail**, so the day
+      the gate is finally met the suite fails until the xfail is deleted.
 
 ---
 

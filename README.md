@@ -16,15 +16,16 @@ Legs 4–5 are the first real VRAM spend. **Measured peak 4.6 GB** against the
 resident — the largest model in the roster. That closes one of the §16 blockers
 for this model; the rest still need `ollama ps` figures.
 
-**Router accuracy: 80.3%** on held-out prompts, against the §13 gate of 90%.
+**Router accuracy: 86.7%** on held-out prompts, against the §13 gate of 90%.
 The dense encoder §9.2 originally specified has landed, and it closed most of
-the gap the lexical scorer had plateaued against:
+the gap the lexical scorer had plateaued against; the exemplar corpus was then
+widened from 176 to 209 rows across the six weakest classes:
 
-| scorer | TRAIN LOO-CV | held-out (66 prompts) |
+| scorer | TRAIN LOO-CV | held-out (75 prompts) |
 |---|---|---|
-| lexical TF-IDF (was shipping) | 74.5% | 75.8% |
+| lexical TF-IDF (was shipping) | 74.5% | 75.8% (66 prompts, pre-expansion) |
 | dense `bge-small-en-v1.5` | 84.5% | — |
-| **hybrid, w=0.8 (ships now)** | **85.5%** | **80.3%** |
+| **hybrid, w=0.8 (ships now)** | **85.5%** | **86.7%** |
 
 The encoder runs on **CPU** — §9.2 specifies it, and it is the right call
 anyway: 14.4 ms median / 17.2 ms p95 per classification against a 50 ms budget,
@@ -37,11 +38,13 @@ quoting: the blend weight was chosen by leave-one-out CV on the **training
 split only**, and the held-out set was scored **once**, afterwards. Tuning
 against held-out would have bought a prettier number and destroyed its meaning.
 
-**Still short of the gate.** 13 of 66 held-out prompts miss, dominated by
-subject matter overriding intent — "write a python script to compute corrosion
-rate" routes to `calc` rather than `code_write`. The next lever is corpus size:
-16 exemplars per class is thin. Tracked in [AGENTS.md §16](AGENTS.md); recorded
-in the suite as a strict xfail so the gap cannot be quietly forgotten.
+**Still short of the gate.** 10 of 75 held-out prompts miss, spread across the
+same six weak classes (`qa`, `code_write`, `plan`, `summarize`, `calc`,
+`scan_understanding`) with no single confusion dominating — `code_write` ->
+`calc` is the only pair that repeats (2 of 10). The corpus expansion from 176
+to 209 exemplars cut misses from 13 to 10 without closing the gate; the next
+lever is more of the same, not tuning. Tracked in [AGENTS.md §16](AGENTS.md);
+recorded in the suite as a strict xfail so the gap cannot be quietly forgotten.
 
 ---
 

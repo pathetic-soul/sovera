@@ -56,13 +56,15 @@ def test_corpus_is_big_enough() -> None:
 @pytest.mark.xfail(
     strict=True,
     reason=(
-        "The hybrid scorer measures 80.3% on held-out prompts; the §13 gate is 90%. "
+        "The hybrid scorer measures 86.7% on held-out prompts; the §13 gate is 90%. "
         "This is a real, known gap, not a flaky test. The dense encoder §9.2 asked for "
-        "has now landed and closed most of it — held-out went 75.8% -> 80.3%, and TRAIN "
-        "LOO-CV reads lexical 74.5%, dense 84.5%, hybrid 85.5% at w=0.8. The remaining "
-        "13 misses are dominated by subject matter overriding intent (a 'python script to "
-        "compute corrosion rate' routes to calc, not code_write); the next lever is corpus "
-        "size, currently 16 exemplars per class. "
+        "has landed — held-out went 75.8% -> 80.3% — and TRAIN LOO-CV reads lexical "
+        "74.5%, dense 84.5%, hybrid 85.5% at w=0.8. The exemplar corpus was then "
+        "widened 176 -> 209 rows across the six weakest classes, taking held-out to "
+        "86.7% and cutting misses from 13 of 66 to 10 of 75. The remaining misses do "
+        "not have one dominant cause: they land on 10 of 75 held-out prompts across "
+        "the same six weak classes, with 'code_write' -> 'calc' the only pair that "
+        "repeats. The next lever is more corpus, currently ~19 exemplars per class. "
         "strict=True: when the gate is finally met and this passes, the suite fails "
         "until the xfail is deleted."
     ),
