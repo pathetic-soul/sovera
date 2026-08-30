@@ -37,6 +37,10 @@ _MULTI_SLASH = re.compile(r"/{3,}")
 
 
 def _external_hits(text: str) -> list[str]:
+    # The WHATWG URL parser treats `\` as `/` for special schemes, so
+    # `https:\\cdn.example.com` really does load. Normalise before collapsing
+    # multi-slash runs so a backslash form of that bypass is caught the same way.
+    text = text.replace("\\", "/")
     text = _MULTI_SLASH.sub("//", text)
     # `//` inside a JS line comment is not a URL; strip the obvious case first.
     return [m.group(0) for m in _EXTERNAL.finditer(text)
@@ -60,6 +64,10 @@ def test_no_external_references(path: Path) -> None:
     [
         pytest.param('<script src="////cdn.example.com/x.js"></script>', True,
                       id="multi-slash-bypass"),
+        pytest.param('<script src="https:\\\\cdn.example.com/y.js"></script>', True,
+                      id="backslash-bypass"),
+        pytest.param('<script src="https:\\/\\/cdn.example.com/z.js"></script>', True,
+                      id="mixed-slash-backslash-bypass"),
         pytest.param("// http://example.com", False, id="dead-js-comment"),
         pytest.param("ws://127.0.0.1:8080/ws", False, id="loopback"),
     ],
@@ -68,8 +76,10 @@ def test_external_reference_bypass_regression(text: str, expect_hit: bool) -> No
     """Regression for a review finding: a run of 3+ leading slashes evaded
     detection because its own extra slashes satisfied the "preceded by a
     `//` comment" exclusion. §2.1 forbids the multi-slash form exactly as
-    much as the two-slash one; the negative controls (a dead comment, our
-    own loopback) must stay unflagged."""
+    much as the two-slash one. The WHATWG URL parser also treats `\\` as `/`
+    for special schemes, so a backslash (or mixed backslash/slash) form loads
+    exactly as much as the canonical one and must be caught the same way. The
+    negative controls (a dead comment, our own loopback) must stay unflagged."""
     assert bool(_external_hits(text)) is expect_hit
 
 
