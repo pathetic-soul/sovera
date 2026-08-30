@@ -102,7 +102,7 @@ Committed — all five carry over from the Sprint 1 retro:
 |---|---|---|---|
 | AI-1 | Commit the repository, push to a private remote | **P0** | `git log` is non-empty and a remote has the work |
 | AI-2 | Dress-rehearse the golden path, firewall armed, stopwatch running | **P0** | a wall-clock time is recorded against the 6-minute gate |
-| AI-3 | Expand router exemplars for the `code_write` vs `calc` confusion | P1 | `gates.py` reports a number above 80.3% |
+| AI-3 | ~~Expand router exemplars across the six weak classes~~ — done 2026-08-31: 176 → 209 exemplars, held-out misses 13 → 10, accuracy 80.3% → 86.7% (gate still 90%, not met) | P1 | `gates.py` reports a number above 80.3% — met |
 | AI-4 | Refresh AGENTS.md §16 so the charter matches `gates.py` | P1 | no hand-typed metric survives in §16 |
 | AI-5 | Measure `coder` and `driver` VRAM with `ollama ps` | P1 | both figures recorded in §5 |
 

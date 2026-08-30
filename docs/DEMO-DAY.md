@@ -148,7 +148,7 @@ quote anything that is not on this list.
 | Peak VRAM, largest model resident | **4.6 GB** against a 5.2 GB ceiling | `writer` qwen3:8b-q4_K_M, num_ctx 8192 |
 | Routing decision latency | **0.05 ms** against a 50 ms budget | deterministic, no LLM |
 | Encoder classification latency | **14.4 ms median / 17.2 ms p95**, on CPU, **0 GB VRAM** | bge-small-en-v1.5 |
-| Router accuracy | **80.3%** held out — *gate is 90%, we are short* | see §5 below |
+| Router accuracy | **86.7%** held out, 10 of 75 misrouted — *gate is 90%, we are short* | see §5 below |
 | Test suite | **184 passed, 1 deliberate xfail** | `pytest -q` |
 | Type checking | **mypy strict, clean, 45 files** | includes the largest module |
 | Grounding — lookup questions | **10/10, both models** | `finetune/grounding_eval.py` |
@@ -162,13 +162,16 @@ quote anything that is not on this list.
 ## 5. Hard questions, and the honest answers
 
 **"Your router accuracy is below your own gate."**
-Yes — 80.3% against a 90% gate, and it is written down in our own test suite as a
+Yes — 86.7% against a 90% gate, and it is written down in our own test suite as a
 strict xfail so it cannot be quietly forgotten. The dense encoder took it from
-75.8%. The remaining failures are one pattern: subject matter overriding intent.
-The lever is corpus size — 16 exemplars per class is thin — not tuning. And we
-tuned the blend weight on the training split only, scoring held-out once at the
-end; tuning against held-out would have bought a prettier number and destroyed
-its meaning.
+75.8% to 80.3%; a corpus expansion on 2026-08-31 (176 → 209 exemplars across
+the six weakest classes) cut the misses from 13 of 66 to 10 of 75. There is no
+longer one dominant confusion to point to — the 10 remaining misses land on
+the same six weak classes, spread across nine distinct confusion pairs, with
+only `code_write` → `calc` repeating (2 of 10). The lever is still corpus
+size, not tuning. And we tuned the blend weight on the training split only,
+scoring held-out once at the end; tuning against held-out would have bought a
+prettier number and destroyed its meaning.
 
 **"Did fine-tuning help?"**
 No, and we kept the result. The QLoRA adapter scored 0/8 with and without the

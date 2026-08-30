@@ -55,10 +55,13 @@ Ordered by risk retired per hour spent. The first three are not features.
 
 ### P2 · Documentation truth
 
-6. **Refresh AGENTS.md §16.** It still records router accuracy as 75.8% with the
-   dense-encoder decision open; the encoder landed and the corpus expansion
-   brought the number to 86.7%. Stale charter text is the one thing a judge
-   reading the repo will catch.
+6. **AGENTS.md §16 refreshed — done.** §16 used to record router accuracy as
+   75.8% with the dense-encoder decision framed as open; both were already
+   stale before this task, since the encoder had landed. This task's corpus
+   expansion (176 → 209 exemplars) rewrote §16 to state 86.7%, mark the
+   encoder decision resolved, and record the corpus-expansion result. Stale
+   charter text is the one thing a judge reading the repo will catch, so
+   keep §16 moving in lockstep with `gates.py` from here.
 7. **Fill the remaining VRAM figures.** `writer` is measured at 4.6 GB;
    `coder` and `driver` still need `ollama ps` readings (§16, blocking §5).
 
