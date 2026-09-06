@@ -19,7 +19,7 @@ project and the cheapest to close.
 | Dimension | Score | Note |
 |---|---|---|
 | Scope delivery | 🟢 62% | legs 1–5 of 8 built and verified; legs 6–8 open |
-| Quality | 🟢 | 250 tests pass, 1 deliberate xfail; mypy strict clean over 54 files |
+| Quality | 🟢 | 251 tests pass, 1 deliberate xfail; mypy strict clean over 54 files |
 | Technical risk | 🟡 | router gate failing 86.7% vs 90%; grounding gap closed by `tools/calc.py` |
 | Delivery risk | 🔴 | no version-control history; golden path never timed end to end |
 | Evidence quality | 🟢 | every headline claim has a measured number and a way to reproduce it |
@@ -36,8 +36,8 @@ and "broken" cost the same). Verdicts are never collapsed: **SKIP is not PASS.**
 
 | Gate | Verdict | Number | Note |
 |---|---|---|---|
-| `pytest` suite | ✅ PASS | 250 passed, 1 xfailed | 44 s |
-| `mypy --strict` | ✅ PASS | clean, 52 source files | includes `finetune/`, the largest module |
+| `pytest` suite | ✅ PASS | 251 passed, 1 xfailed | 44 s |
+| `mypy --strict` | ✅ PASS | clean, 54 source files | includes `finetune/`, the largest module |
 | Router accuracy on held-out | ❌ **FAIL** | **86.7% vs 90% gate** | 10 of 75 misrouted — risk R3 |
 | Model accuracy vs base | ✅ PASS | base 85.5% (CI 83.6–87.2), noise floor 1.53 pts | no unproven adapter registered |
 | Corpus integrity | ✅ PASS | 60 train / 40 bench docs, 0 overlap | derived figures reconcile |
@@ -87,11 +87,11 @@ Scored **probability (1–5) × impact (1–5)**. Response bands: >18 avoid ·
 | ID | Risk | P | I | Score | Response | Action |
 |---|---|---|---|---|---|---|
 | **R1** | **Zero git commits.** Weeks of work exist in one folder on one laptop. One bad delete, one disk fault, one cloud-sync conflict and the project is gone. | 4 | 5 | **20** | **Avoid** | Commit today, push to a private remote before the next work session. |
-| **R2** | Golden path never timed end to end against the 6-minute §13 gate. The first full run would happen on stage. | 4 | 4 | **16** | Mitigate | Full dress rehearsal with a stopwatch, this week. Non-negotiable before freeze. |
+| **R2** | Golden path never timed end to end against the 6-minute §13 gate. | 1 | 4 | **4** | **Closed 2026-09-07** | Timed through the real UI: **185.4 s against the 360 s gate**, status `done`, 5,995 tokens, `.docx` produced. Route line rendered at **0.1 s**, confirming §4.2.3 swap-masking. Run was unattended (auto-approve), so a live run adds human decision time at the gate — still ~3 min of headroom. |
 | **R3** | Router accuracy 86.7% vs the 90% gate — the one §13 number a judge can ask about. | 5 | 3 | **15** | Mitigate | Corpus expanded 176 → 209 exemplars across the six weakest classes (2026-08-31); misses fell 13 → 10 but the gate is still not met. Continue expanding — no single confused pair dominates, so broad coverage is still the lever. |
 | **R4** | Venue laptop may not run as Administrator; the drop-log monitor needs read access to `pfirewall.log`. Without it the sovereignty panel — the graded claim — degrades on stage. | 3 | 5 | **15** | Mitigate | Rehearse the exact elevated launch sequence; pre-agree an ACL relaxation on that one file as fallback. |
 | **R5** | Thermal throttle after ~20 min of sustained inference on the RTX 4050 laptop. A silent killer mid-demo. | 3 | 4 | **12** | Mitigate | 25-minute sustained-load soak test with clocks logged. Currently untested. |
-| **R7** | Sandbox image not built on the demo machine. It is the only step that needs a network, and §2.1 forbids doing it at demo time. | 2 | 5 | **10** | Mitigate | Build it in the same pre-flight window as model staging. `gates.py` checks for it. |
+| **R7** | Sandbox image not built on the demo machine. It is the only step that needs a network, and §2.1 forbids doing it at demo time. | 1 | 5 | **5** | **Closed 2026-09-07** | `sandbox-py:local` present and newer than `sandbox/Dockerfile`. Ran a live container with the full §9.3 hardening argv: `OSError [Errno 101] Network is unreachable` confirmed from inside. |
 | **R6** | Doc drift. §16 previously recorded router accuracy as 75.8% with the encoder undecided; both were stale until the 2026-08-31 corpus-expansion task refreshed §16 to 86.7% and resolved the encoder decision. README's test count was also fixed. | 4 | 2 | 8 | Contain | Quote `gates.py`, never a hand-typed number. Keep §16 moving in lockstep with every future number change, so this risk does not reopen. |
 | **R8** | Model arithmetic on tabular inspection data — a wrong thickness figure is the one error a refinery audience will catch. | 2 | 4 | 8 | **Contained** | `tools/calc.py` moved the base model from 1/8 to 7/8 correct. Route every derived figure through `calc`/`py_sandbox`, never mental math. |
 | **R9** | Legs 6–8 unbuilt with scope freeze approaching. | 3 | 2 | 6 | Accept | The charter is explicit: *ship three legs deep, not six shallow.* Do not chase 6–8 at the cost of rehearsal. |
@@ -149,7 +149,7 @@ SIH 26117/
 ├─ config/              models.yaml (the ONLY place models are named) + profiles + exemplars
 ├─ data/corpus/         refinery SOPs, API 510 UT reports, filings
 ├─ finetune/            build-time only: QLoRA, benchmarks, corpus curation
-├─ tests/               250 tests, 1 deliberate xfail
+├─ tests/               251 tests, 1 deliberate xfail
 ├─ sandbox/Dockerfile   the network-less execution image
 └─ web/index.html       the panel — vanilla JS, zero dependencies
 ```

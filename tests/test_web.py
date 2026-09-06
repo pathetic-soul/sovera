@@ -97,6 +97,24 @@ def test_index_loads_every_script_locally() -> None:
         assert src.startswith("/static/"), f"non-local asset reference: {src}"
 
 
+def test_agent_panel_can_supply_attachments() -> None:
+    """§9.2's first hard override — "image/PDF attached -> modality=image" — is
+    unreachable from the agent flow if the panel cannot supply an attachment.
+
+    Measured against the running server: routing the same text with
+    `attachments: ["inbox/hello.png"]` yields modality=image and fires the
+    override; with `[]` it yields modality=text and the override never runs. The
+    router panel has always had this input. The agent panel shipped without one
+    and sent a hardcoded empty list, so every agent run reported "image absent"
+    regardless of what the task was about.
+    """
+    html = (WEB / "index.html").read_text(encoding="utf-8")
+    js = (WEB / "static" / "js" / "agent.js").read_text(encoding="utf-8")
+    assert 'id="agentattach"' in html, "the agent panel has no attachments input"
+    assert "attachments: []" not in js, "agent.js hardcodes an empty attachment list"
+    assert "agentattach" in js, "agent.js never reads the attachments input"
+
+
 def test_no_build_step_was_introduced() -> None:
     """§7: no npm build step. A package.json under web/ means one appeared."""
     assert not (WEB / "package.json").exists()

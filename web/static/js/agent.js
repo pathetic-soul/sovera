@@ -45,7 +45,11 @@ function runAgent() {
   agentWs = ws;
   ws.onopen = () => {
     $('agentstat').textContent = 'running';
-    ws.send(JSON.stringify({text, attachments: [], auto_approve: $('autoapprove').checked}));
+    // Read the same way the router panel does (router.js). Sending a hardcoded
+    // [] here made §9.2's "image attached -> vision routes only" override
+    // unreachable from the agent flow: every run reported "image absent".
+    const attachments = $('agentattach').value.split(',').map(s => s.trim()).filter(Boolean);
+    ws.send(JSON.stringify({text, attachments, auto_approve: $('autoapprove').checked}));
   };
   ws.onmessage = e => onAgentEvent(JSON.parse(e.data));
   ws.onclose = () => {

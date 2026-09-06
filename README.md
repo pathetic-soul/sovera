@@ -9,7 +9,7 @@ Project status, risks and the demo-day script live in [docs/](docs/).
 
 **Status:** demo legs 1–5 of 8 (§14) — sovereignty panel, red button, audit log,
 model registry, deterministic router, live model addition, the agent loop with
-three tools, and the container sandbox.
+six tools, and the container sandbox.
 
 Legs 4–5 are the first real VRAM spend. **Measured peak 4.6 GB** against the
 5.2 GB ceiling (§4.1), on the RTX 4050, with `writer` (qwen3:8b-q4_K_M)
@@ -75,7 +75,7 @@ Loopback bind only, never `0.0.0.0`.
 ## Tests
 
 ```powershell
-.venv\Scripts\python -m pytest -q              # 250 passed, 1 xfailed
+.venv\Scripts\python -m pytest -q              # 251 passed, 1 xfailed
 .venv\Scripts\python -m mypy                   # strict, clean
 .venv\Scripts\python gates.py                  # all §13 acceptance gates, one table
 .venv\Scripts\python gates.py --strict         # run this the morning of the demo
