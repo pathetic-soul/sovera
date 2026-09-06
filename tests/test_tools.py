@@ -11,6 +11,7 @@ from core.audit import AuditLog
 from tools.base import JailBreak, RunContext, resolve_in_jail, validate_args
 from tools.doc_write import DocWrite
 from tools.fs_read import FsRead
+from tools.fs_write import FsWrite
 from tools.ocr_read import OcrRead, _lines_from_result
 from tools.py_sandbox import PySandbox
 
@@ -245,6 +246,40 @@ def test_doc_write_sanitises_a_hostile_filename(ctx: RunContext) -> None:
 def test_doc_write_emits_intent_then_result(ctx: RunContext) -> None:
     """§2.2: write before the action, outcome after, as two linked records."""
     DocWrite().run({"filename": "n", "title": "T", "body": "b"}, ctx)
+    records = [r for r in ctx.audit.tail() if r.kind == "file_write"]
+    assert [r.payload["phase"] for r in records] == ["intent", "result"]
+    assert records[1].payload["ref"] == records[0].seq
+
+
+# --- fs_write (§8.3, §2.3, §2.4) --------------------------------------------
+
+def test_fs_write_creates_the_file_and_parent_dirs(ctx: RunContext) -> None:
+    result = FsWrite().run({"path": "out/notes.txt", "content": "hello"}, ctx)
+    assert result.ok and result.artifacts == ["out/notes.txt"]
+    written = ctx.workspace / "out" / "notes.txt"
+    assert written.read_text(encoding="utf-8") == "hello"
+
+
+def test_fs_write_overwrites_an_existing_file(ctx: RunContext) -> None:
+    (ctx.workspace / "inbox" / "r.md").write_text("old", encoding="utf-8")
+    result = FsWrite().run({"path": "inbox/r.md", "content": "new"}, ctx)
+    assert result.ok
+    assert (ctx.workspace / "inbox" / "r.md").read_text(encoding="utf-8") == "new"
+
+
+def test_fs_write_refuses_to_escape(ctx: RunContext) -> None:
+    result = FsWrite().run({"path": "../../pwn.txt", "content": "x"}, ctx)
+    assert not result.ok and result.error is not None and "outside" in result.error
+
+
+def test_fs_write_is_gated_by_the_human(ctx: RunContext) -> None:
+    """§2.4 is a compliance feature. If this flips to False, the gate is gone."""
+    assert FsWrite().requires_approval is True
+
+
+def test_fs_write_emits_intent_then_result(ctx: RunContext) -> None:
+    """§2.2: write before the action, outcome after, as two linked records."""
+    FsWrite().run({"path": "out/n.txt", "content": "b"}, ctx)
     records = [r for r in ctx.audit.tail() if r.kind == "file_write"]
     assert [r.payload["phase"] for r in records] == ["intent", "result"]
     assert records[1].payload["ref"] == records[0].seq

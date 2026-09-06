@@ -41,6 +41,7 @@ from tools.base import Tool
 from tools.calc import Calc
 from tools.doc_write import DocWrite
 from tools.fs_read import FsRead
+from tools.fs_write import FsWrite
 from tools.ocr_read import OcrRead
 from tools.py_sandbox import PySandbox
 
@@ -59,7 +60,7 @@ from tools.py_sandbox import PySandbox
 # 0 GB of the 5.2 GB VRAM budget the LLMs already fight over. It sits next to
 # fs_read because it is the same "read before you answer" discipline applied
 # to a scanned image instead of a text file.
-TOOL_CLASSES: tuple[Callable[[], Tool], ...] = (FsRead, OcrRead, Calc, PySandbox, DocWrite)
+TOOL_CLASSES: tuple[Callable[[], Tool], ...] = (FsRead, OcrRead, Calc, PySandbox, DocWrite, FsWrite)
 
 
 def build_tools() -> dict[str, Tool]:

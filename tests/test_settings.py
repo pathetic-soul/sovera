@@ -28,8 +28,8 @@ from core.settings import (
 def test_defaults_match_the_charter() -> None:
     """§8.4 caps and §12.8 temperature, as shipped."""
     s = Settings()
-    assert s.agent.max_steps == 8
-    assert s.agent.max_tokens == 20_000
+    assert s.agent.max_steps == 64
+    assert s.agent.max_tokens == 1_000_000
     assert s.agent.observation_chars == 6000
     assert s.agent.temperature == 0.2
     assert s.server.port == 8080
@@ -84,7 +84,7 @@ def test_a_malformed_file_names_the_problem(tmp_path: Path) -> None:
 
 def test_a_missing_file_falls_back_to_charter_defaults(tmp_path: Path) -> None:
     """A fresh clone with no runtime.yaml still starts, on the §8.4 values."""
-    assert load_settings(tmp_path / "absent.yaml").agent.max_steps == 8
+    assert load_settings(tmp_path / "absent.yaml").agent.max_steps == 64
 
 
 def test_yaml_is_the_only_place_the_caps_are_written() -> None:

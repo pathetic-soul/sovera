@@ -382,7 +382,10 @@ class AgentStep(BaseModel):
 ```
 
 Loop rules:
-- Hard cap **8 steps**, hard cap **20k cumulative tokens**. Exceed → stop, report partial.
+- Hard cap **64 steps** (the `max_steps` schema ceiling), hard cap **1,000,000
+  cumulative tokens** (`config/runtime.yaml`, raised from the original 8/20k
+  charter values so long multi-document tasks don't stop early — see
+  `core/settings.py`). Exceed → stop, report partial.
 - Invalid tool args → one grammar-constrained repair attempt → then fail loudly.
 - Observations truncated to 1500 tokens before re-entering context (6 GB, remember).
 - Every step is audited and streamed to the UI as a visible plan trace.

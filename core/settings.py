@@ -59,8 +59,8 @@ class AgentSettings(BaseModel):
 
     model_config = ConfigDict(frozen=True, extra="forbid")
 
-    max_steps: int = Field(default=8, gt=0, le=64)
-    max_tokens: int = Field(default=20_000, gt=0)
+    max_steps: int = Field(default=64, gt=0, le=64)
+    max_tokens: int = Field(default=1_000_000, gt=0)
     observation_chars: int = Field(default=6000, gt=0)
     temperature: float = Field(default=0.2, ge=0.0, le=0.8)  # §12.8: never above 0.8
 

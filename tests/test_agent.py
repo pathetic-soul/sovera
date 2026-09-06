@@ -153,7 +153,9 @@ def test_step_cap_stops_and_reports_partial(build: Any) -> None:
 
 
 def test_token_cap_stops_the_run(build: Any) -> None:
-    agent, _, _, _ = build([call("echo", msg="x")] * 8, tokens=9000)
+    # tokens/call chosen so the 1,000,000 cap (config/runtime.yaml) trips
+    # within the 8 scripted replies, rather than exhausting the script first.
+    agent, _, _, _ = build([call("echo", msg="x")] * 8, tokens=150_000)
     events = drain(agent, "burn tokens")
     assert events[-1].data["halted"] is True
     assert "token cap" in events[-1].data["answer"]
