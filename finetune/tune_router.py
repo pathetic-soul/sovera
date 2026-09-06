@@ -38,7 +38,7 @@ from core.routing.features import _standardise
 # reported against another that merely looked identical. See core/routing/split.py.
 from core.routing.split import split
 
-WEIGHTS = [round(w, 2) for w in np.arange(0.0, 1.01, 0.1)]
+WEIGHTS = [float(round(w, 2)) for w in np.arange(0.0, 1.01, 0.1)]
 
 
 def _dense_loo_scores(

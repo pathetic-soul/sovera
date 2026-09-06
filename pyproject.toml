@@ -19,6 +19,10 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.3", "mypy>=1.13", "types-PyYAML>=6.0"]
+# tools/ocr_read.py (§5's `ocr` roster row): CPU-only, lazily imported, so a
+# demo install that skips this extra still starts — the tool just names the
+# install command in its error instead of failing at import time.
+ocr = ["paddleocr>=2.9", "paddlepaddle>=2.6"]
 # Build-time only (AGENTS.md §3): corpus curation and fine-tuning. Never
 # imported by core/, tools/ or backends/, so a demo install does not need them.
 curate = ["pypdf>=5.0", "cryptography>=3.1", "kaggle>=1.7",
@@ -55,7 +59,7 @@ ignore_missing_imports = true
 # The training stack: no py.typed markers, and these are build-time only.
 module = ["torch.*", "transformers.*", "peft.*", "bitsandbytes.*",
           "datasets.*", "kaggle.*", "kagglesdk.*", "pypdf.*", "numpy.*",
-          "huggingface_hub.*", "safetensors.*"]
+          "huggingface_hub.*", "safetensors.*", "paddleocr.*", "paddle.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

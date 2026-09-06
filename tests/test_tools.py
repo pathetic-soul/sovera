@@ -11,6 +11,7 @@ from core.audit import AuditLog
 from tools.base import JailBreak, RunContext, resolve_in_jail, validate_args
 from tools.doc_write import DocWrite
 from tools.fs_read import FsRead
+from tools.ocr_read import OcrRead, _lines_from_result
 from tools.py_sandbox import PySandbox
 
 
@@ -126,6 +127,85 @@ def test_fs_read_missing_file_lists_what_exists(ctx: RunContext) -> None:
 def test_fs_read_refuses_to_escape(ctx: RunContext) -> None:
     result = FsRead().run({"path": "../../secrets.txt"}, ctx)
     assert not result.ok and result.error is not None and "outside" in result.error
+
+
+# --- ocr_read (§5 `ocr` roster row) -----------------------------------------
+
+def test_ocr_read_refuses_to_escape(ctx: RunContext) -> None:
+    result = OcrRead().run({"path": "../../secrets.png"}, ctx)
+    assert not result.ok and result.error is not None and "outside" in result.error
+
+
+def test_ocr_read_missing_file_names_it(ctx: RunContext) -> None:
+    result = OcrRead().run({"path": "inbox/missing.png"}, ctx)
+    assert not result.ok
+    assert result.error is not None and "no such file" in result.error
+
+
+def test_ocr_read_rejects_non_image_extensions(ctx: RunContext) -> None:
+    (ctx.workspace / "inbox" / "r.md").write_text("hi", encoding="utf-8")
+    result = OcrRead().run({"path": "inbox/r.md"}, ctx)
+    assert not result.ok
+    assert result.error is not None and "not an image" in result.error
+
+
+def test_ocr_read_names_the_install_command_when_paddleocr_is_absent(
+    ctx: RunContext, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """§12.6-style discipline: a missing optional dependency is a message a
+    human can act on, not a traceback that kills the run."""
+    (ctx.workspace / "inbox" / "scan.png").write_bytes(b"\x89PNG\r\n")
+
+    def _raise() -> None:
+        raise ImportError("no module named paddleocr")
+
+    monkeypatch.setattr("tools.ocr_read._get_engine", _raise)
+    result = OcrRead().run({"path": "inbox/scan.png"}, ctx)
+    assert not result.ok
+    assert result.error is not None and "pip install" in result.error
+
+
+def test_ocr_read_audits_as_file_read_with_the_tool_name(
+    ctx: RunContext, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """kind stays 'file_read' — §8.5's Kind literal is closed — and 'tool' in
+    the payload is what tells ocr_read's reads apart from fs_read's."""
+    (ctx.workspace / "inbox" / "scan.png").write_bytes(b"\x89PNG\r\n")
+    monkeypatch.setattr(
+        "tools.ocr_read._get_engine", lambda: pytest.fail("should not run without a real image")
+    )
+    OcrRead().run({"path": "inbox/missing2.png"}, ctx)
+    records = ctx.audit.tail()
+    assert records[-1].kind == "file_read"
+    assert records[-1].payload["tool"] == "ocr_read"
+
+
+def test_lines_from_result_reads_the_3x_dict_shape() -> None:
+    page = {"rec_texts": ["V-2301", "8.9 mm"], "rec_scores": [0.99, 0.87]}
+    assert _lines_from_result([page]) == [("V-2301", 0.99), ("8.9 mm", 0.87)]
+
+
+def test_lines_from_result_reads_the_2x_box_tuple_shape() -> None:
+    page = [[[[0, 0], [1, 0], [1, 1], [0, 1]], ("V-2301", 0.99)]]
+    assert _lines_from_result([page]) == [("V-2301", 0.99)]
+
+
+def test_ocr_read_extracts_real_text_from_a_generated_image(ctx: RunContext) -> None:
+    """The one real, non-mocked check: render text into an image with PIL and
+    confirm PaddleOCR actually reads it back — not just that the plumbing
+    doesn't crash. Skips cleanly where the optional `ocr` extra is not
+    installed (`pip install -e ".[ocr]"`)."""
+    pytest.importorskip("paddleocr")
+    from PIL import Image, ImageDraw
+
+    img = Image.new("RGB", (400, 80), "white")
+    ImageDraw.Draw(img).text((10, 20), "V-2301 8.9 MM", fill="black")
+    path = ctx.workspace / "inbox" / "scan.png"
+    img.save(path)
+
+    result = OcrRead().run({"path": "inbox/scan.png"}, ctx)
+    assert result.ok
+    assert "8.9" in result.output
 
 
 # --- doc_write (§9.5) -------------------------------------------------------

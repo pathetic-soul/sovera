@@ -41,6 +41,7 @@ from tools.base import Tool
 from tools.calc import Calc
 from tools.doc_write import DocWrite
 from tools.fs_read import FsRead
+from tools.ocr_read import OcrRead
 from tools.py_sandbox import PySandbox
 
 # The roster, in the order the agent sees it in its system prompt. Order is not
@@ -53,7 +54,12 @@ from tools.py_sandbox import PySandbox
 # fine-tuned driver wrote the wrong formula (1/8 and 0/8 correct) and py_sandbox
 # executed it faithfully. Moving the formula into code took the base model to
 # 7/8. See tools/calc.py.
-TOOL_CLASSES: tuple[Callable[[], Tool], ...] = (FsRead, Calc, PySandbox, DocWrite)
+#
+# `ocr_read` is leg 6 (§5's `ocr` roster row): CPU-only PaddleOCR, so it costs
+# 0 GB of the 5.2 GB VRAM budget the LLMs already fight over. It sits next to
+# fs_read because it is the same "read before you answer" discipline applied
+# to a scanned image instead of a text file.
+TOOL_CLASSES: tuple[Callable[[], Tool], ...] = (FsRead, OcrRead, Calc, PySandbox, DocWrite)
 
 
 def build_tools() -> dict[str, Tool]:
