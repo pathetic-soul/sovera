@@ -43,9 +43,17 @@ $ext = @(Get-NetTCPConnection -State Established -ErrorAction SilentlyContinue |
 Check "zero established external sockets" ($ext.Count -eq 0) `
       ("open: " + (($ext | ForEach-Object { "$($_.RemoteAddress):$($_.RemotePort)" }) -join ", "))
 
-# 4. Audit chain intact
+# 4. Audit chain intact.
+# The venv interpreter explicitly, never a bare `python`: this script is meant to
+# be run from an ELEVATED shell (it reads the firewall drop log), and a fresh
+# elevated PowerShell does not have .venv on PATH. Bare `python` there resolves
+# to system/Anaconda Python, which lacks this project's deps -- so the check
+# fails on an import error while the chain is perfectly intact, and the demo
+# gets halted for nothing.
 Push-Location $root
-$auditOut = & python -m core.audit verify "workspace\.audit\audit.jsonl"
+$py = Join-Path $root ".venv\Scripts\python.exe"
+if (-not (Test-Path $py)) { $py = "python" }
+$auditOut = & $py -m core.audit verify "workspace\.audit\audit.jsonl"
 $auditOk  = $LASTEXITCODE -eq 0
 Pop-Location
 Check "audit chain intact" $auditOk $auditOut

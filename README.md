@@ -75,7 +75,7 @@ Loopback bind only, never `0.0.0.0`.
 ## Tests
 
 ```powershell
-.venv\Scripts\python -m pytest -q              # 182 passed, 1 xfailed
+.venv\Scripts\python -m pytest -q              # 250 passed, 1 xfailed
 .venv\Scripts\python -m mypy                   # strict, clean
 .venv\Scripts\python gates.py                  # all §13 acceptance gates, one table
 .venv\Scripts\python gates.py --strict         # run this the morning of the demo
@@ -234,7 +234,8 @@ It prints `OSError [Errno 101] Network is unreachable` — from inside the
 container, with the host firewall not even involved.
 
 Measured on this machine: leg 4 ≈ 157 s cold (8B, includes model load), leg 5
-≈ 12 s once `coder` is warm. Peak VRAM 4.6 GB. Token spend 4–6k of the 20k cap.
+≈ 12 s once `coder` is warm. Peak VRAM 4.6 GB. Token spend 4–6k (the cap is now
+1,000,000, raised from 20k so long multi-document tasks don't stop early).
 
 ### Known gap in leg 5 — now measured
 
@@ -307,7 +308,7 @@ Firewall, drop counters → drop log) are recorded in [AGENTS.md §17](AGENTS.md
 |---|---|
 | `backends/base.py` | `LLMBackend` ABC — `Message`, `Completion` |
 | `backends/ollama_backend.py` | Ollama over loopback via stdlib `urllib`; audits every call |
-| `core/agent.py` | the ReAct loop: 8 steps, 20k tokens, one repair, human gate |
+| `core/agent.py` | the ReAct loop: 64 steps, 1M tokens, one repair, human gate (optionally auto) |
 | `tools/base.py` | `Tool` ABC, the workspace jail, flat-schema arg validation |
 | `tools/fs_read.py` | jailed read, truncated to the context budget |
 | `tools/doc_write.py` | `.docx` deliverable via python-docx |
@@ -328,8 +329,3 @@ Two things worth settling first:
 - The **grounding gap** in leg 5 above. It is the difference between a demo
   that impresses and one that gets a wrong thickness figure questioned on
   stage.
-#   s o v e r a 
- 
- #   s o v e r a 
- 
- 

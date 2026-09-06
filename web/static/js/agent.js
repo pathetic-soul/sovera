@@ -7,7 +7,20 @@ let agentWs = null;
 fetch('/api/backend').then(r => r.json()).then(b => {
   $('backend').className = b.ok ? 'ok' : 'bad';
   $('backend').textContent = b.ok ? `ollama up — ${b.note}` : `ollama down — ${b.note}`;
+  $('autoapprove').checked = !!b.auto_approve;
+  renderGateBanner();
 });
+
+// The §2.4 gate is a compliance control, so arming it off must never be quiet.
+function renderGateBanner() {
+  const on = $('autoapprove').checked;
+  $('gatebanner').style.display = on ? '' : 'none';
+  $('gatebanner').textContent = on
+    ? '⚠ auto mode — writes and sandboxed code run without human approval. '
+      + 'The audit log records these as granted_by: auto, not as human sign-off. '
+      + 'Turn this off for the demo.'
+    : '';
+}
 
 function addStep(cls, html) {
   const div = document.createElement('div');
@@ -32,7 +45,7 @@ function runAgent() {
   agentWs = ws;
   ws.onopen = () => {
     $('agentstat').textContent = 'running';
-    ws.send(JSON.stringify({text, attachments: []}));
+    ws.send(JSON.stringify({text, attachments: [], auto_approve: $('autoapprove').checked}));
   };
   ws.onmessage = e => onAgentEvent(JSON.parse(e.data));
   ws.onclose = () => {
@@ -57,11 +70,14 @@ function onAgentEvent(ev) {
   if (ev.type === 'approval_request') {
     const div = addStep('gate',
       `<b>step ${d.n}</b> <span class="tag">${esc(d.tool)}</span> `
-      + `<span class="warn">awaiting human approval</span>`
+      + (d.auto ? `<span class="warn">auto-approved (granted_by: auto)</span>`
+                : `<span class="warn">awaiting human approval</span>`)
       + `<div class="dim">${esc(d.thought)}</div>`
       + `<div class="obs">${esc(JSON.stringify(d.args, null, 1))}</div>`
-      + `<p style="margin:8px 0 0"><button class="go" data-yes>✓ Approve</button> `
-      + `<button data-no>✕ Reject</button></p>`);
+      + (d.auto ? '' : `<p style="margin:8px 0 0"><button class="go" data-yes>✓ Approve</button> `
+                       + `<button data-no>✕ Reject</button></p>`));
+    // Auto-granted steps never suspend the loop, so there is nothing to answer.
+    if (d.auto) return;
     $('agentstat').textContent = 'waiting for approval';
     const answer = ok => {
       agentWs.send(JSON.stringify({approve: ok}));
@@ -91,7 +107,7 @@ function onAgentEvent(ev) {
     addStep('done', `<b>answer</b><div class="obs">${esc(d.answer)}</div>`);
     $('agentstat').className = d.halted ? 'warn' : 'ok';
     $('agentstat').textContent = d.halted ? 'halted' : 'done';
-    $('budget').textContent = `${d.tokens_used} / 20000 tokens · ${d.steps ?? ''} steps`;
+    $('budget').textContent = `${d.tokens_used} / ${d.max_tokens ?? '?'} tokens · ${d.steps ?? ''} steps`;
     return;
   }
 

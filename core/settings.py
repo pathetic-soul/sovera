@@ -63,6 +63,10 @@ class AgentSettings(BaseModel):
     max_tokens: int = Field(default=1_000_000, gt=0)
     observation_chars: int = Field(default=6000, gt=0)
     temperature: float = Field(default=0.2, ge=0.0, le=0.8)  # §12.8: never above 0.8
+    # §2.4 relaxation, off by default and off for the demo. When armed, gated
+    # tools run unattended — but the audit chain records `granted_by: "auto"`,
+    # never "human", so the log cannot imply a sign-off that did not happen.
+    auto_approve: bool = False
 
 
 class ServerSettings(BaseModel):

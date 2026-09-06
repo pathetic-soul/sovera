@@ -67,8 +67,13 @@
     <div style="display:flex; gap:8px; align-items:center; margin:8px 0">
       <button class="go" onclick="runAgent()" id="runbtn">▶ Run</button>
       <span id="agentstat" class="dim">idle</span>
+      <label class="dim" style="text-transform:none; letter-spacing:0">
+        <input type="checkbox" id="autoapprove" onchange="renderGateBanner()"
+               style="vertical-align:middle; margin:0 4px 0 0"> auto mode — accept edits
+      </label>
       <span style="margin-left:auto" class="dim" id="budget"></span>
     </div>
+    <div id="gatebanner" class="warn" style="margin:0 0 8px; display:none"></div>
     <div id="agentroute" class="dim"></div>
     <div class="scroll" id="trace" style="max-height:420px; margin-top:8px"></div>
   </section>

@@ -150,10 +150,17 @@ class Agent:
         attachments: list[str] | None = None,
         approve: Approver | None = None,
         resident: str | None = None,
+        auto_approve: bool | None = None,
     ) -> AsyncIterator[AgentEvent]:
         """Stream the run. Yields one event per step so the UI renders a live
-        plan trace (§8.4) instead of a spinner."""
+        plan trace (§8.4) instead of a spinner.
+
+        `auto_approve` arms the §2.4 relaxation for this run only; None means
+        "use the configured default". The gate still emits its event and still
+        audits, so an unattended grant is visible rather than invisible.
+        """
         approver: Approver = approve or _deny_by_default
+        auto_gate = self.settings.auto_approve if auto_approve is None else auto_approve
         ctx = RunContext(
             workspace=self.workspace, audit=self.audit, session_id=self.audit.session_id
         )
@@ -203,6 +210,7 @@ class Agent:
                         "answer": str(obj["answer"]),
                         "steps": step_n - 1,
                         "tokens_used": spent,
+                        "max_tokens": self.settings.max_tokens,
                         "model": spec.id,
                     },
                 )
@@ -228,12 +236,21 @@ class Agent:
             if tool.requires_approval:
                 yield AgentEvent(
                     type="approval_request",
-                    data={**step.model_dump(), "description": tool.description},
+                    data={**step.model_dump(), "description": tool.description,
+                          "auto": auto_gate},
                 )
-                granted = await approver(step)
+                granted = True if auto_gate else await approver(step)
                 self.audit.append(
                     "approval",
-                    {"tool": name, "granted": granted, "step": step_n, "args": args},
+                    {
+                        "tool": name,
+                        "granted": granted,
+                        # The compliance-critical field: an auto-grant must never
+                        # be indistinguishable from a human one in the chain (§2.4).
+                        "granted_by": "auto" if auto_gate else "human",
+                        "step": step_n,
+                        "args": args,
+                    },
                 )
                 if not granted:
                     step.observation = (
@@ -316,7 +333,8 @@ class Agent:
     def _stop(self, why: str, spent: int) -> AgentEvent:
         self.audit.append("error", {"event": "agent_halted", "why": why, "tokens": spent})
         return AgentEvent(type="final", data={"answer": f"Stopped: {why}. Partial work above.",
-                                              "halted": True, "tokens_used": spent})
+                                              "halted": True, "tokens_used": spent,
+                                              "max_tokens": self.settings.max_tokens})
 
 
 class _Unrepairable(RuntimeError):

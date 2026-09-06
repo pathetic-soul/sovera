@@ -18,9 +18,13 @@ therefore checked at the source instead (each router's own, un-included
 
 from __future__ import annotations
 
+from typing import Any, AsyncIterator
+
+from fastapi.testclient import TestClient
 from starlette.routing import Match
 from starlette.types import Scope
 
+from core.agent import AgentEvent
 from core.api import ROUTERS
 from core.orchestrator import app
 
@@ -59,3 +63,44 @@ def test_no_duplicate_paths() -> None:
         declared += [r.path for r in api_router.routes]
     duplicates = {p for p in declared if declared.count(p) > 1}
     assert not duplicates, f"path registered twice: {sorted(duplicates)}"
+
+
+# --- the §2.4 auto-approve flag, over the wire ------------------------------
+
+class _RecordingAgent:
+    """Stands in for the real Agent to capture what /ws/agent forwards."""
+
+    def __init__(self) -> None:
+        self.seen: list[bool | None] = []
+
+    async def run(
+        self,
+        task: str,
+        attachments: Any = None,
+        approve: Any = None,
+        resident: Any = None,
+        auto_approve: bool | None = None,
+    ) -> AsyncIterator[AgentEvent]:
+        self.seen.append(auto_approve)
+        yield AgentEvent(type="final", data={"answer": "done"})
+
+
+def _forwarded(payload: dict[str, Any]) -> bool | None:
+    agent = _RecordingAgent()
+    app.state.agent = agent
+    app.state.resident = None
+    with TestClient(app).websocket_connect("/ws/agent") as ws:
+        ws.send_json(payload)
+        while ws.receive_json()["type"] != "done":
+            pass
+    return agent.seen[0]
+
+
+def test_ws_forwards_auto_approve_when_the_panel_arms_it() -> None:
+    assert _forwarded({"text": "do it", "auto_approve": True}) is True
+
+
+def test_ws_omitting_the_flag_defers_to_config_rather_than_auto_approving() -> None:
+    """Absent must mean "use the configured default", never an implicit yes —
+    an API client that never heard of this flag must still hit the §2.4 gate."""
+    assert _forwarded({"text": "do it"}) is None

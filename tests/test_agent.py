@@ -249,6 +249,53 @@ def test_no_approver_means_denied(build: Any) -> None:
     assert "denied" in kinds(events)
 
 
+# --- auto mode: the §2.4 relaxation, and the honesty it owes the log ---------
+
+def test_auto_approve_runs_the_gated_tool_without_an_approver(build: Any) -> None:
+    agent, _, _, _ = build([call("gated", msg="ok"), finish()], tools=[GatedTool()])
+    events = drain(agent, "do it", auto_approve=True)
+    assert "denied" not in kinds(events)
+    assert events[2].data["observation"] == "echo: ok"
+
+
+def test_auto_approve_is_audited_as_auto_never_as_human(build: Any) -> None:
+    """The whole basis for allowing this: the chain must not imply a human
+    signed off when nobody did."""
+    agent, _, audit, _ = build([call("gated", msg="ok"), finish()], tools=[GatedTool()])
+    drain(agent, "do it", auto_approve=True)
+    approvals = [r for r in audit.tail() if r.kind == "approval" and "granted_by" in r.payload]
+    assert [r.payload["granted_by"] for r in approvals] == ["auto"]
+    assert all(r.payload["granted"] for r in approvals)
+
+
+def test_human_approval_is_audited_as_human(build: Any) -> None:
+    agent, _, audit, _ = build([call("gated", msg="ok"), finish()], tools=[GatedTool()])
+
+    async def yes(step: AgentStep) -> bool:
+        return True
+
+    drain(agent, "do it", approve=yes)
+    approvals = [r for r in audit.tail() if r.kind == "approval" and "granted_by" in r.payload]
+    assert [r.payload["granted_by"] for r in approvals] == ["human"]
+
+
+def test_auto_approve_is_off_by_default(build: Any) -> None:
+    """§2.4 stays armed unless someone explicitly relaxes it."""
+    from core.settings import AgentSettings
+
+    assert AgentSettings().auto_approve is False
+    agent, _, _, _ = build([call("gated", msg="x"), finish()], tools=[GatedTool()])
+    assert "denied" in kinds(drain(agent, "do it"))
+
+
+def test_auto_approve_still_announces_the_gate(build: Any) -> None:
+    """An unattended grant must be visible in the trace, not silent."""
+    agent, _, _, _ = build([call("gated", msg="ok"), finish()], tools=[GatedTool()])
+    events = drain(agent, "do it", auto_approve=True)
+    gate = next(e for e in events if e.type == "approval_request")
+    assert gate.data["auto"] is True
+
+
 # --- failure surfaces -------------------------------------------------------
 
 def test_backend_down_is_reported_not_swallowed(build: Any) -> None:

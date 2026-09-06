@@ -31,7 +31,14 @@ def backend_status(request: Request) -> dict[str, Any]:
     """Is Ollama up? Rendered in the UI so a dead daemon is caught before the
     demo, not as a stack trace mid-run."""
     ok, note = request.app.state.backend.available()
-    return {"ok": ok, "note": note, "resident": request.app.state.resident}
+    return {
+        "ok": ok,
+        "note": note,
+        "resident": request.app.state.resident,
+        # So the panel's auto-approve box opens in the state the server is
+        # actually configured for, rather than claiming a gate that is not armed.
+        "auto_approve": request.app.state.settings.agent.auto_approve,
+    }
 
 
 @router.websocket("/ws/agent")
@@ -56,11 +63,16 @@ async def agent_ws(ws: WebSocket) -> None:
         req = await ws.receive_json()
         task = str(req.get("text", "")).strip()
         attachments = [str(a) for a in (req.get("attachments") or [])]
+        # Absent means "use the configured default" (§2.4), not "auto-approve".
+        raw_auto = req.get("auto_approve")
+        auto_approve = None if raw_auto is None else bool(raw_auto)
         if not task:
             await ws.send_json({"type": "error", "data": {"error": "empty task"}})
             return
 
-        async for event in agent.run(task, attachments, approve, ws.app.state.resident):
+        async for event in agent.run(
+            task, attachments, approve, ws.app.state.resident, auto_approve
+        ):
             if event.type == "route":
                 ws.app.state.resident = event.data["model_id"]
             await ws.send_json(event.model_dump())

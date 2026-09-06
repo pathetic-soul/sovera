@@ -39,6 +39,10 @@ Kind = Literal[
 ]
 
 GENESIS = "0" * 64
+
+
+class ConcurrentAudit(RuntimeError):
+    """Another process appended to this log. §2.2 makes this fatal, not a warning."""
 DEFAULT_PATH = Path("workspace/.audit/audit.jsonl")
 
 
@@ -66,6 +70,7 @@ class AuditLog:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.session_id = session_id
         self._seq, self._prev = self._resume()
+        self._size = self.path.stat().st_size if self.path.exists() else 0
 
     def _resume(self) -> tuple[int, str]:
         last: str | None = None
@@ -93,11 +98,32 @@ class AuditLog:
             prev_hash=self._prev,
         )
         rec.hash = rec.digest()
+        self._assert_sole_writer()
         with self.path.open("a", encoding="utf-8") as fh:
             fh.write(rec.model_dump_json() + "\n")
         self._seq += 1
         self._prev = rec.hash
+        self._size = self.path.stat().st_size
         return rec
+
+    def _assert_sole_writer(self) -> None:
+        """Refuse to append if the file grew behind our back.
+
+        `seq` and `prev_hash` are held in memory from construction, so two live
+        processes on one file both resume from the same point and both write the
+        same seq — which silently breaks the chain rather than failing. That is
+        not hypothetical: starting a second orchestrator while the first held
+        port 8080 produced a duplicate seq and a BROKEN verify. Comparing size is
+        O(1) and catches exactly that, loudly, before the bad record is written.
+        """
+        actual = self.path.stat().st_size if self.path.exists() else 0
+        if actual != self._size:
+            raise ConcurrentAudit(
+                f"{self.path} changed underneath this process "
+                f"({self._size} -> {actual} bytes). Another writer — most likely a "
+                f"second app instance — is appending to the same audit log. Stop it "
+                f"before continuing; two writers corrupt the hash chain."
+            )
 
     def tail(self, n: int = 50) -> list[AuditRecord]:
         if not self.path.exists():
@@ -139,6 +165,14 @@ def main() -> int:
         print("usage: audit verify [path]", file=sys.stderr)
         return 2
     path = Path(sys.argv[2]) if len(sys.argv) > 2 else DEFAULT_PATH
+    # verify() answers "is this chain broken", and a log that does not exist is
+    # not broken — which is the right answer for the API (a fresh install has
+    # nothing to verify) and the wrong one here. This CLI is the §10.5 pre-demo
+    # assertion: a typo'd path printing "chain intact" asserts nothing while
+    # looking like proof. Missing must fail loudly.
+    if not path.exists():
+        print(f"FAIL no audit log at {path} — nothing was verified", file=sys.stderr)
+        return 1
     ok, broken = AuditLog(path).verify()
     if ok:
         print(f"OK  chain intact: {path}")

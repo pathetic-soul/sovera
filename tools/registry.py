@@ -50,7 +50,7 @@ from tools.py_sandbox import PySandbox
 # `core/agent.py:_tool_lines` renders in this order, so read-before-answer
 # (`fs_read`) leads and the two gated, side-effecting tools trail.
 #
-# `calc` is a deliberate fourth against §14.4's "three tools only". It was added
+# `calc` was a deliberate fourth against §14.4's "three tools only". It was added
 # on measurement, not preference: on the leg-5 task both the base and the
 # fine-tuned driver wrote the wrong formula (1/8 and 0/8 correct) and py_sandbox
 # executed it faithfully. Moving the formula into code took the base model to

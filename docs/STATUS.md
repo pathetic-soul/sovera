@@ -19,7 +19,7 @@ project and the cheapest to close.
 | Dimension | Score | Note |
 |---|---|---|
 | Scope delivery | 🟢 62% | legs 1–5 of 8 built and verified; legs 6–8 open |
-| Quality | 🟢 | 225 tests pass, 1 deliberate xfail; mypy strict clean over 52 files |
+| Quality | 🟢 | 250 tests pass, 1 deliberate xfail; mypy strict clean over 54 files |
 | Technical risk | 🟡 | router gate failing 86.7% vs 90%; grounding gap closed by `tools/calc.py` |
 | Delivery risk | 🔴 | no version-control history; golden path never timed end to end |
 | Evidence quality | 🟢 | every headline claim has a measured number and a way to reproduce it |
@@ -36,7 +36,7 @@ and "broken" cost the same). Verdicts are never collapsed: **SKIP is not PASS.**
 
 | Gate | Verdict | Number | Note |
 |---|---|---|---|
-| `pytest` suite | ✅ PASS | 225 passed, 1 xfailed | 185 s |
+| `pytest` suite | ✅ PASS | 250 passed, 1 xfailed | 44 s |
 | `mypy --strict` | ✅ PASS | clean, 52 source files | includes `finetune/`, the largest module |
 | Router accuracy on held-out | ❌ **FAIL** | **86.7% vs 90% gate** | 10 of 75 misrouted — risk R3 |
 | Model accuracy vs base | ✅ PASS | base 85.5% (CI 83.6–87.2), noise floor 1.53 pts | no unproven adapter registered |
@@ -67,7 +67,7 @@ them: on current evidence the demo has not been rehearsed as a whole.
 | 1 | Sovereignty panel, red button, audit log | ✅ Done | firewall drop rows + hash-chained JSONL, tamper check live |
 | 2 | Registry + deterministic router, 2 models | ✅ Done | 0.05 ms/decision vs a 50 ms budget; accuracy below gate |
 | 3 | Live model addition | ✅ Done | verified 3 ways: accepted · over-budget rejected · bad YAML safe |
-| 4 | Agent loop, 3 tools, `.docx` deliverable | ✅ Done | 4.6 GB peak, ~157 s cold; human gate wired both ways |
+| 4 | Agent loop, 6 tools, `.docx` deliverable | ✅ Done | 4.6 GB peak, ~157 s cold; human gate wired both ways (auto-approve opt-in, audited as `granted_by: auto`) |
 | 5 | Coding task in `--network none` sandbox | ✅ Done | `Errno 101 Network is unreachable` from inside the container |
 | 6 | Multimodal — handwriting / drawing title block | ⬜ Not started | `vision` (qwen3-vl:4b) already staged and routed to |
 | 7 | Ingest + hybrid retrieval over 10–15 docs | ⬜ Not started | `ingest/` and `retrieval/` packages do not exist yet |
@@ -149,7 +149,7 @@ SIH 26117/
 ├─ config/              models.yaml (the ONLY place models are named) + profiles + exemplars
 ├─ data/corpus/         refinery SOPs, API 510 UT reports, filings
 ├─ finetune/            build-time only: QLoRA, benchmarks, corpus curation
-├─ tests/               225 tests, 1 deliberate xfail
+├─ tests/               250 tests, 1 deliberate xfail
 ├─ sandbox/Dockerfile   the network-less execution image
 └─ web/index.html       the panel — vanilla JS, zero dependencies
 ```

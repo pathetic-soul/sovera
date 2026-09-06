@@ -573,7 +573,8 @@ Everything else is secondary. If a task doesn't serve this path, defer it.
    ways: a fitting model is accepted and routed to, an over-budget model is
    rejected with a visible reason, and malformed YAML leaves the previous
    registry serving. Zero code change in all three.
-4. **Agent loop with 3 tools only** (`fs_read`, `py_sandbox`, `doc_write`).
+4. **Agent loop** — built with 3 tools (`fs_read`, `py_sandbox`, `doc_write`);
+   now 6, after `calc` (§16, measured), `ocr_read` (leg 6) and `fs_write`.
    ✅ built — `core/agent.py`, `backends/`, `tools/`. Inspection report →
    findings → approval note → `.docx` that opens in Word. The §2.4 gate is
    wired both ways: approve writes the file, reject writes nothing and the

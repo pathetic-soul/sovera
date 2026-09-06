@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from core.audit import AuditLog
+from core.audit import AuditLog, ConcurrentAudit
 from core.net_guard import EgressBlocked, _is_local, install_guard
 
 
@@ -25,6 +25,37 @@ def test_chain_verifies_and_resumes(tmp_path: Path) -> None:
     assert rec.seq == 2
     assert reopened.verify() == (True, None)
     assert len(reopened.tail(10)) == 3
+
+
+def test_a_second_writer_is_refused_instead_of_breaking_the_chain(tmp_path: Path) -> None:
+    """The real incident this guards: a second orchestrator started while the
+    first held port 8080, both resumed from the same seq, and the chain broke
+    silently. Failing loudly beats a BROKEN verify discovered on stage."""
+    path = tmp_path / "a.jsonl"
+    first = AuditLog(path, "s1")
+    first.append("tool_call", {"n": 1})
+
+    second = AuditLog(path, "s2")      # a second process, resuming from the same point
+    second.append("tool_call", {"n": 2})
+
+    with pytest.raises(ConcurrentAudit):
+        first.append("tool_call", {"n": 3})
+    assert AuditLog(path, "s3").verify() == (True, None), "chain damaged despite the guard"
+
+
+def test_verify_cli_fails_when_the_log_is_absent(tmp_path: Path) -> None:
+    """§10.5 pre-demo assertion: a missing log must not print 'chain intact'.
+    verify() itself still answers True — nothing is broken — but the CLI, whose
+    whole job is to assert, has to treat 'nothing checked' as a failure."""
+    import subprocess
+    import sys
+
+    proc = subprocess.run(
+        [sys.executable, "-m", "core.audit", "verify", str(tmp_path / "absent.jsonl")],
+        capture_output=True, text=True,
+    )
+    assert proc.returncode == 1
+    assert "no audit log" in (proc.stdout + proc.stderr)
 
 
 def test_intent_and_result_are_linked(tmp_path: Path) -> None:

@@ -17,6 +17,11 @@ agent:
   max_tokens: 1000000     # cumulative budget across the whole run, raised for long tasks
   observation_chars: 6000 # ~1500 tokens at ~4 chars/token, before re-entry
   temperature: 0.2        # §12.8: extraction and tool selection, not prose
+  # §2.4 is a compliance control, so this stays false here and the agent panel
+  # arms it per run instead. TURN IT OFF FOR THE DEMO: "a human approves every
+  # write" must be answerable with a clean yes. When armed, every gated action
+  # is still audited, but as granted_by: auto — never as a human approval.
+  auto_approve: false
 
 # §2.1, §4.3: loopback only, never 0.0.0.0. `host` is validated in
 # core/settings.py and a non-loopback value is REFUSED at load, because a
