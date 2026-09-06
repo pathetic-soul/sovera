@@ -11,7 +11,7 @@ function renderRegistry(s) {
   ).join('');
   $('rejected').innerHTML = s.rejected.length
     ? '<h2 style="margin-top:12px">Rejected</h2>' + s.rejected.map(r =>
-        `<div class="rec egress">${esc(r.model_id)} — ${esc(r.reason)}</div>`).join('')
+        `<div class="rec egress">${esc(r.model_id)}: ${esc(r.reason)}</div>`).join('')
     : '';
 }
 
@@ -21,7 +21,7 @@ async function reloadRegistry() {
   $('reloadmsg').className = r.ok ? 'ok' : 'bad';
   $('reloadmsg').textContent = r.ok
     ? `${r.accepted.length} accepted, ${r.rejected.length} rejected`
-    : `keeping previous registry — ${r.error}`;
+    : `keeping previous registry: ${r.error}`;
   if (r.snapshot) renderRegistry(r.snapshot);
 }
 

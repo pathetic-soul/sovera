@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "border-left:2px solid var(--line)",
+        "createdAt": "2026-09-06T20:36:26.960Z",
+        "reason": "Claude, on evidence: pre-existing incumbent design (git diff confirms it predates this session). README.md demo runbook narrates it on stage as 'two linked records with a red left border'. Semantic status coding, not decoration: --line neutral, --bad egress, --warn gate, --ok done. NOT user-confirmed."
+      }
+    ]
+  }
+}

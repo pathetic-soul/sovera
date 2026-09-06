@@ -4,6 +4,28 @@
 :root { --bg:#11131a; --panel:#1a1d27; --line:#2c3040; --fg:#dfe3ee; --dim:#99a3bb;
         --ok:#3fb950; --bad:#f85149; --warn:#d29922; --focus:#79c0ff; }
 * { box-sizing: border-box; }
+
+/* ===== AMBIENT LIGHT + SURFACE ============================================
+   The cursor carries a light across the console. One fixed composited layer
+   driven by two custom properties (ambient.js writes them at most once per
+   frame), sitting UNDER everything via a negative z-index so it can never
+   intercept a click or wash out text being read off a projector.
+
+   The grid is the world, not decoration: this is an instrument panel, and a
+   faint 32px rule grid is what the surface of one looks like. Painted once. */
+body::before {
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.016) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 1px, transparent 1px 32px);
+}
+body::after {
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:radial-gradient(620px circle at var(--mx, 50vw) var(--my, 40vh),
+             rgba(88,140,255,.10), rgba(63,185,80,.045) 42%, transparent 68%);
+  transition:opacity .5s ease; opacity:0;
+}
+body.lit::after { opacity:1; }
 /* 14px, not 13: this panel is read off a projector from the back of a room,
    which is the §3 "legible" requirement rather than a cosmetic one. --dim was
    also lifted (#818aa3 -> #99a3bb, 4.88:1 -> 6.5:1) because ambient light on a
@@ -18,12 +40,46 @@ header { padding:15px 20px; border-bottom:1px solid var(--line); display:flex;
          gap:18px; align-items:baseline; background:#161925;
          box-shadow:inset 0 1px 0 rgba(255,255,255,.045), 0 3px 14px rgba(0,0,0,.4);
          position:relative; z-index:2; }
-h1 { font-size:19px; margin:0; font-weight:700; letter-spacing:2px; }
+h1 { font-size:19px; margin:0; font-weight:700; letter-spacing:2px;
+     display:flex; align-items:center; gap:11px; }
+/* Live status LED, driven by REAL state rather than decoration. A coloured dot
+   that always says "green" is worse than no dot: it looks like a status
+   indicator while indicating nothing. sovereignty.js already classes #chain
+   .ok/.bad and agent.js classes #backend, so :has() reads the actual system:
+   green + slow pulse when the chain verifies, red + urgent pulse when it does
+   not. It is the only continuous animation on the page. */
+h1::before {
+  content:""; width:9px; height:9px; border-radius:50%; background:var(--ok);
+  box-shadow:0 0 10px var(--ok); animation:led 2.4s ease-in-out infinite;
+}
+@keyframes led { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+
+body:has(#chain.bad) h1::before,
+body:has(#backend.bad) h1::before {
+  background:var(--bad); box-shadow:0 0 12px var(--bad); animation-duration:.85s;
+}
 .grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); }
 /* Same inset highlight as the header, so every panel reads as a machined plate
    in the same console rather than a coloured rectangle. */
-section { background:var(--panel); padding:18px 20px; min-height:340px;
-          box-shadow:inset 0 1px 0 rgba(255,255,255,.035); }
+/* Translucent so the ambient light and the grid read THROUGH the plate — an
+   opaque panel would sit on top of the light and kill the whole effect. */
+section { background:rgba(26,29,39,.88); padding:18px 20px; min-height:340px;
+          box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+          transition:background .35s ease, box-shadow .35s ease;
+          opacity:0; transform:translateY(10px);
+          animation:panelIn .55s cubic-bezier(.16,1,.3,1) both; }
+@keyframes panelIn { to { opacity:1; transform:none; } }
+/* Staggered arrival: the console comes up plate by plate on first paint. */
+.grid > section:nth-child(1) { animation-delay:.04s; }
+.grid > section:nth-child(2) { animation-delay:.10s; }
+.grid > section:nth-child(3) { animation-delay:.16s; }
+.grid > section:nth-child(4) { animation-delay:.22s; }
+.grid > section:nth-child(5) { animation-delay:.28s; }
+
+/* The plate catches the light as the cursor crosses it. */
+section:hover { background:rgba(31,35,48,.9);
+                box-shadow:inset 0 1px 0 rgba(255,255,255,.07),
+                           0 0 0 1px rgba(120,160,255,.10); }
 
 /* Instrument labels. The rule under each one is what separates a panel's title
    from its readout — previously they floated at the same weight as body text
@@ -48,7 +104,12 @@ h2 { font-size:12px; color:var(--dim); text-transform:uppercase; letter-spacing:
 button { font:inherit; padding:10px 14px; border:1px solid var(--bad); border-radius:3px;
          background:#3d1418; color:#ffb3ae; cursor:pointer; }
 button:hover { background:var(--bad); color:#fff; }
-button.plain { border-color:var(--line); background:#22263200; color:var(--fg); padding:5px 10px; }
+/* Secondary controls were a transparent fill (#22263200 is zero-alpha), so they
+   read as text with a hairline around it. Given a real surface they look like
+   controls a judge can see being pressed from across the room. */
+button.plain { border-color:var(--line); background:#242938; color:var(--fg);
+               padding:7px 12px; font-weight:600; }
+button.plain:hover { background:#2f3546; border-color:var(--dim); }
 table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
 td, th { text-align:left; padding:5px 10px 5px 0; border-bottom:1px solid var(--line);
          white-space:nowrap; }
@@ -62,31 +123,107 @@ th { color:var(--dim); font-weight:400; font-size:12px; }
    than sitting on it. This is also what stops a half-clipped record at the
    bottom edge from looking like a rendering fault: it reads as more to scroll. */
 .scroll { max-height:230px; overflow:auto; background:#0f1119; border-radius:4px;
-          border:1px solid #23273400; box-shadow:inset 0 1px 3px rgba(0,0,0,.45);
-          padding:9px 11px; }
-pre { background:#0c0e14; border:1px solid var(--line); padding:10px; overflow:auto;
+          box-shadow:inset 0 1px 3px rgba(0,0,0,.45); padding:9px 11px; }
+/* A well with nothing in it yet is a stray dark bar, not an empty state — the
+   plan trace before a run, the score table before a route. Collapse until the
+   JS fills them; both reappear the moment a row or step is appended. */
+.scroll:empty, .scroll:has(> table:empty) { display:none; }
+pre { background:#0f1119; border:1px solid var(--line); border-radius:4px;
+      box-shadow:inset 0 1px 3px rgba(0,0,0,.45); padding:11px 13px; overflow:auto;
       max-height:240px; margin:0; color:var(--dim); font-size:13px; }
-.rec { border-left:2px solid var(--line); padding:2px 0 2px 8px; margin-bottom:3px; }
+/* 1px, not 2px, on ORDINARY records. Two independent design detectors flagged
+   "colored side-tab on every list item" as the most recognisable AI-UI tell,
+   and they were right about the cause: when every record carries the same 2px
+   tab, the semantic ones (egress red, gate amber, denied red, done green) stop
+   reading as exceptional. Dropping the neutral default to a hairline makes the
+   coloured states louder by contrast while removing the templated look. The
+   README's demo beat, a red border on the egress pair, is untouched. */
+.rec { border-left:1px solid var(--line); padding:2px 0 2px 9px; margin-bottom:3px; }
+.rec.egress { border-left-width:2px; }
 .rec.egress { border-left-color:var(--bad); color:#ffb3ae; }
 /* :not([type=checkbox]) because this rule was written for text fields, and a
    checkbox inheriting width:100% and padding:7px renders as a stray white
    block floating off its own label. */
 textarea, input:not([type="checkbox"]) {
-                  width:100%; font:inherit; background:#0c0e14; color:var(--fg);
-                  border:1px solid var(--line); border-radius:3px; padding:7px; }
+                  width:100%; font:inherit; background:#0f1119; color:var(--fg);
+                  border:1px solid var(--line); border-radius:4px; padding:9px 11px;
+                  box-shadow:inset 0 1px 3px rgba(0,0,0,.45); }
+textarea:hover, input:not([type="checkbox"]):hover { border-color:#39405a; }
+::placeholder { color:#6f7896; }
 input[type="checkbox"] { accent-color:var(--ok); width:14px; height:14px;
                          margin:0 6px 0 0; vertical-align:-2px; cursor:pointer; }
 label:has(input[type="checkbox"]) { cursor:pointer; user-select:none; white-space:nowrap; }
+/* ===== MOTION ==============================================================
+   Operate mode: motion explains feedback and state, it does not perform. The
+   budget is set by §17 — an 8B model is resident on a 6 GB card during the
+   demo, and GPU pressure on Windows does not raise, it goes 20-25x slower. So:
+   transform / opacity / colour only, every sequence bounded, nothing looping
+   forever, and no continuous compositing while the model is generating. */
+
 @keyframes flash { from { background:#5c1a1f; } to { background:transparent; } }
 .flash { animation: flash 1.2s ease-out; }
+
+/* Records and steps arrive one at a time from JS, so appending them IS the
+   stagger — no per-item delay needed. This is the "watch it think" beat. */
+@keyframes enter {
+  from { opacity:0; transform:translateY(-4px); }
+  to   { opacity:1; transform:none; }
+}
+.rec, .step, tbody tr { animation:enter .26s cubic-bezier(.16,1,.3,1) both; }
+
+/* THE focal moment. sovereignty.js swaps the counter dim -> ok the instant the
+   firewall kills a packet; this is that swap given a body. Fires once, on the
+   class change, and never again. */
+.big { transition:color .45s cubic-bezier(.16,1,.3,1); }
+@keyframes contained {
+  0%   { transform:scale(1);    text-shadow:none; }
+  40%  { transform:scale(1.06); text-shadow:0 0 26px rgba(63,185,80,.55); }
+  100% { transform:scale(1);    text-shadow:0 0 10px rgba(63,185,80,.22); }
+}
+.big.ok { animation:contained .7s cubic-bezier(.16,1,.3,1) both; }
+
+/* The approval gate is the one place the machine stops and asks a human. It
+   pulses three times, then holds — an attention cue, not an ambient loop. */
+@keyframes gate {
+  0%,100% { box-shadow:inset 3px 0 0 -1px transparent; background:#241d0c; }
+  50%     { box-shadow:inset 3px 0 0 -1px var(--warn); background:#2e2410; }
+}
+.step.gate { animation:enter .26s cubic-bezier(.16,1,.3,1) both,
+                       gate 1.5s ease-in-out 3 .26s; }
+
+/* Feedback: 120ms, the "immediate" band. Long feedback reads as latency. */
+button { transition:background .14s ease, color .14s ease, border-color .14s ease,
+                    transform .08s ease; }
+button:active { transform:translateY(1px); }
+a, .tag, td, textarea, input:not([type="checkbox"]) {
+  transition:color .14s ease, background .14s ease, border-color .14s ease; }
+#agentstat, #result, #chain, #backend, #mon { transition:color .3s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Reduced, not erased: movement goes, the colour changes that carry meaning
+     — contained/blocked/approved — stay legible. */
+  .rec, .step, tbody tr, .step.gate, .big.ok, .flash { animation:none; }
+  * { transition-duration:.01ms !important; }
+}
 button.go { border-color:var(--ok); background:#12301a; color:#8ef0a6; }
 button.go:hover { background:var(--ok); color:#04140a; }
-.step { border-left:2px solid var(--line); padding:4px 0 6px 9px; margin-bottom:6px; }
-.step.gate { border-left-color:var(--warn); background:#241d0c; padding:8px 0 8px 9px; }
-.step.deny { border-left-color:var(--bad); }
-.step.done { border-left-color:var(--ok); }
-.tag { display:inline-block; padding:0 5px; border:1px solid var(--line);
-       border-radius:2px; font-size:12px; color:var(--dim); }
+.step { border-left:1px solid var(--line); padding:4px 0 6px 9px; margin-bottom:6px; }
+/* Semantic states now carry light, so status is legible from the back of the
+   room before the text is: amber = a human is being asked, red = refused,
+   green = done. Same three colours the system already uses. */
+.step.gate { border-left-color:var(--warn); background:#241d0c; padding:8px 0 8px 9px;
+             box-shadow:-1px 0 14px -2px rgba(210,153,34,.55); }
+.step.deny { border-left-color:var(--bad);
+             box-shadow:-1px 0 14px -2px rgba(248,81,73,.45); }
+.step.done { border-left-color:var(--ok);
+             box-shadow:-1px 0 14px -2px rgba(63,185,80,.45); }
+.rec.egress { box-shadow:-1px 0 14px -2px rgba(248,81,73,.5); }
+/* Tool-name chips in the plan trace. They were dim text in a hairline box; a
+   real surface makes "which tool ran at step 3" readable at a glance from the
+   back of the room, which is the question being asked of that panel. */
+.tag { display:inline-block; padding:1px 7px; border:1px solid #333a4f;
+       border-radius:3px; font-size:12px; color:#b6c0d8; background:#262c3d;
+       font-weight:600; letter-spacing:.3px; }
 .obs { white-space:pre-wrap; color:var(--dim); max-height:120px; overflow:auto;
        border-left:1px solid var(--line); padding-left:8px; margin-top:3px; }
 a { color:var(--focus); }

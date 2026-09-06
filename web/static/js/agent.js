@@ -6,7 +6,7 @@ let agentWs = null;
 
 fetch('/api/backend').then(r => r.json()).then(b => {
   $('backend').className = b.ok ? 'ok' : 'bad';
-  $('backend').textContent = b.ok ? `ollama up — ${b.note}` : `ollama down — ${b.note}`;
+  $('backend').textContent = b.ok ? `ollama up: ${b.note}` : `ollama down: ${b.note}`;
   $('autoapprove').checked = !!b.auto_approve;
   renderGateBanner();
 });
@@ -16,7 +16,7 @@ function renderGateBanner() {
   const on = $('autoapprove').checked;
   $('gatebanner').style.display = on ? '' : 'none';
   $('gatebanner').textContent = on
-    ? '⚠ auto mode — writes and sandboxed code run without human approval. '
+    ? '⚠ auto mode: writes and sandboxed code run without human approval. '
       + 'The audit log records these as granted_by: auto, not as human sign-off. '
       + 'Turn this off for the demo.'
     : '';
@@ -65,7 +65,7 @@ function onAgentEvent(ev) {
     // reads as an explanation rather than a stall (AGENTS.md 4.2.3).
     $('agentroute').className = 'ok';
     $('agentroute').innerHTML = `<b>${esc(d.model_id)}</b>`
-      + (d.swap_required ? ' <span class="warn">[loading — swap]</span>'
+      + (d.swap_required ? ' <span class="warn">[loading, swap]</span>'
                          : ' <span class="dim">[loading]</span>')
       + `<br><span class="dim">${esc(d.reason)}</span>`;
     return;
@@ -98,7 +98,7 @@ function onAgentEvent(ev) {
     const links = (d.artifacts || []).map(a =>
       `<a href="/api/artifact?path=${encodeURIComponent(a)}">${esc(a)}</a>`).join(' ');
     addStep(ev.type === 'denied' ? 'deny' : '',
-      `<b>step ${d.n}</b> <span class="tag">${esc(d.tool || '—')}</span> `
+      `<b>step ${d.n}</b> <span class="tag">${esc(d.tool || '-')}</span> `
       + (d.repaired ? '<span class="warn tag">repaired</span> ' : '')
       + `<span class="dim">${d.tokens_used} tok</span>`
       + `<div class="dim">${esc(d.thought)}</div>`
