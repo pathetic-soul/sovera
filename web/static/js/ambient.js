@@ -13,6 +13,58 @@
   // Entrance choreography, one authored moment on first paint.
   requestAnimationFrame(function () { document.body.classList.add('lit'); });
 
+  // The resting heartbeat layer. Injected rather than authored into index.html
+  // so the markup stays about the product and this stays purely presentational.
+  if (!reduced.matches) {
+    var drift = document.createElement('div');
+    drift.className = 'ambient-drift';
+    drift.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(drift);
+  }
+
+  // Faceted background field. Two CSS-border triangles per cell, alternate rows
+  // offset by half a cell so the facets interlock.
+  //
+  // CAP is the one thing added to the reference construction: an uncapped grid
+  // on a 4K display builds a couple of thousand elements, and this sits behind
+  // a page that also runs an agent loop. 900 cells covers 2560x1440 at this
+  // size and costs one static paint.
+  var TRI = 52, CAP = 900, facets;
+
+  function buildFacets() {
+    if (reduced.matches) return;
+    if (!facets) {
+      facets = document.createElement('div');
+      facets.className = 'facets';
+      facets.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(facets);
+    }
+    var cell = TRI * 2 + 2;
+    var cols = Math.ceil(window.innerWidth / cell) + 1;
+    var rows = Math.ceil(window.innerHeight / (1.733 * TRI)) + 1;
+    if (cols * rows > CAP) rows = Math.max(1, Math.floor(CAP / cols));
+
+    facets.style.setProperty('--tri', TRI + 'px');
+    facets.style.setProperty('--columns', cols);
+    var frag = document.createDocumentFragment();       // one reflow, not cols*rows
+    for (var y = 0; y < rows; y++) {
+      for (var x = 0; x < cols; x++) {
+        var i = document.createElement('i');
+        if (y % 2 === 0) i.className = 'off';
+        frag.appendChild(i);
+      }
+    }
+    facets.replaceChildren(frag);
+  }
+
+  buildFacets();
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);                          // rebuilding per resize event is a jank factory
+    resizeTimer = setTimeout(buildFacets, 180);
+  });
+
   if (reduced.matches) return;
 
   var x = 0, y = 0, queued = false;

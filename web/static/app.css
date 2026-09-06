@@ -5,6 +5,47 @@
         --ok:#3fb950; --bad:#f85149; --warn:#d29922; --focus:#79c0ff; }
 * { box-sizing: border-box; }
 
+/* @property makes --glow-color a real animatable colour rather than a string,
+   which is what lets the cursor light shift hue over time instead of snapping.
+   Palette is this console's own (blue -> green), not the reference's teal/pink:
+   inventing new hues next to an established semantic palette is how a page
+   stops looking like one product. */
+@property --glow-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #79c0ff;
+}
+
+/* Faceted triangle field. Same construction as the reference (two CSS-border
+   triangles per cell, offset on alternate rows), but sized and toned for a
+   surface that sits BEHIND live data: the facets read as a machined plate at
+   this opacity, and anything stronger competes with the audit log for the eye.
+   Built as fixed, pointer-events:none, z-index -3, so it can never take a
+   click or affect layout. */
+.facets {
+  position:fixed; inset:0; z-index:-3; pointer-events:none; overflow:hidden;
+  display:grid; grid-template-columns:repeat(var(--columns, 20), calc(var(--tri) * 2 + 2px));
+  opacity:.5;
+}
+.facets > i {
+  display:inline-block; position:relative;
+  width:calc(var(--tri) * 2 + 2px); height:calc(1.733 * var(--tri));
+}
+.facets > i.off { transform:translateX(calc(-1 * var(--tri) - 1px)); }
+.facets > i::before, .facets > i::after {
+  content:""; position:absolute; top:2px; width:0; height:0;
+  border-right:calc(var(--tri) - 2px) solid transparent;
+  border-left:calc(var(--tri) - 2px) solid transparent;
+}
+.facets > i::before {
+  left:calc(-1 * var(--tri));
+  border-bottom:calc(1.733 * var(--tri) - 2px) solid #161a24;
+}
+.facets > i::after {
+  right:5px;
+  border-top:calc(1.733 * var(--tri) - 2px) solid #141822;
+}
+
 /* ===== AMBIENT LIGHT + SURFACE ============================================
    The cursor carries a light across the console. One fixed composited layer
    driven by two custom properties (ambient.js writes them at most once per
@@ -16,16 +57,58 @@
 body::before {
   content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
   background:
-    repeating-linear-gradient(0deg,  rgba(255,255,255,.016) 0 1px, transparent 1px 32px),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.016) 0 1px, transparent 1px 32px);
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.012) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 32px);
 }
+/* The cursor light, now colour-animating via @property. `closest-side` keeps it
+   circular at any viewport, as in the reference. It follows the pointer through
+   --mx/--my, which ambient.js writes at most once per frame. */
 body::after {
   content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
-  background:radial-gradient(620px circle at var(--mx, 50vw) var(--my, 40vh),
-             rgba(88,140,255,.10), rgba(63,185,80,.045) 42%, transparent 68%);
+  background:radial-gradient(circle 620px at var(--mx, 50vw) var(--my, 40vh),
+             var(--glow-color), transparent 66%);
+  animation:glowshift 9s ease-in-out infinite alternate;
   transition:opacity .5s ease; opacity:0;
 }
+@keyframes glowshift {
+  from { --glow-color:rgba(121,192,255,.12); }
+  to   { --glow-color:rgba(63,185,80,.11);   }
+}
 body.lit::after { opacity:1; }
+
+/* Idle drift. Every other animation here is event-driven (a drop lands, a step
+   arrives, the gate opens), which is correct but leaves the console visibly
+   dead while nothing is happening. This is the resting heartbeat: one slow
+   composited layer, 22s per cycle, so the surface is never completely still.
+   Transform only, so it costs a composite and no layout. */
+.ambient-drift {
+  position:fixed; inset:-25%; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(38vw 38vw at 22% 28%, rgba(63,185,80,.075), transparent 62%),
+    radial-gradient(34vw 34vw at 78% 72%, rgba(88,140,255,.085), transparent 62%);
+  animation:drift 22s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  0%   { transform:translate3d(-3%, -2%, 0) scale(1);    }
+  50%  { transform:translate3d( 2%,  3%, 0) scale(1.06); }
+  100% { transform:translate3d( 3%, -3%, 0) scale(1.02); }
+}
+
+/* The monitor is genuinely tailing pfirewall.log, so the panel says so: a scan
+   line crossing the egress plate once every 4s. It represents real work, which
+   is the difference between a live indicator and decoration. */
+.grid > section:first-of-type { position:relative; overflow:hidden; }
+.grid > section:first-of-type::after {
+  content:""; position:absolute; left:0; right:0; top:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(63,185,80,.55), transparent);
+  animation:scan 4.2s linear infinite; pointer-events:none;
+}
+@keyframes scan {
+  0%   { transform:translateY(0);      opacity:0; }
+  8%   { opacity:1; }
+  92%  { opacity:1; }
+  100% { transform:translateY(420px);  opacity:0; }
+}
 /* 14px, not 13: this panel is read off a projector from the back of a room,
    which is the §3 "legible" requirement rather than a cosmetic one. --dim was
    also lifted (#818aa3 -> #99a3bb, 4.88:1 -> 6.5:1) because ambient light on a
@@ -195,6 +278,16 @@ label:has(input[type="checkbox"]) { cursor:pointer; user-select:none; white-spac
 button { transition:background .14s ease, color .14s ease, border-color .14s ease,
                     transform .08s ease; }
 button:active { transform:translateY(1px); }
+button:disabled { cursor:not-allowed; }
+
+/* The probe runs for ~4 seconds while the firewall refuses to answer. Without
+   this the room stares at a static button and nobody knows it is working.
+   The pulse IS the wait made visible, and it stops the moment a verdict lands. */
+@keyframes firing {
+  0%,100% { background:#3d1418; box-shadow:0 0 0 0 rgba(248,81,73,.45); }
+  50%     { background:#5a1a20; box-shadow:0 0 0 7px rgba(248,81,73,0); }
+}
+button.firing { animation:firing 1.15s ease-out infinite; border-color:var(--bad); }
 a, .tag, td, textarea, input:not([type="checkbox"]) {
   transition:color .14s ease, background .14s ease, border-color .14s ease; }
 #agentstat, #result, #chain, #backend, #mon { transition:color .3s ease; }
@@ -202,7 +295,14 @@ a, .tag, td, textarea, input:not([type="checkbox"]) {
 @media (prefers-reduced-motion: reduce) {
   /* Reduced, not erased: movement goes, the colour changes that carry meaning
      — contained/blocked/approved — stay legible. */
-  .rec, .step, tbody tr, .step.gate, .big.ok, .flash { animation:none; }
+  .rec, .step, tbody tr, .step.gate, .big.ok, .flash, section,
+  h1::before, body.lit::after, .ambient-drift,
+  .grid > section:first-of-type::after { animation:none; }
+  section { opacity:1; transform:none; }
+  .grid > section:first-of-type::after { display:none; }
+  /* button.firing deliberately keeps a non-moving cue: reduced motion means
+     less movement, NOT losing the only signal that a 4s probe is running. */
+  button.firing { animation:none; background:#5a1a20; }
   * { transition-duration:.01ms !important; }
 }
 button.go { border-color:var(--ok); background:#12301a; color:#8ef0a6; }
