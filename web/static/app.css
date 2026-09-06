@@ -25,7 +25,7 @@
 .facets {
   position:fixed; inset:0; z-index:-3; pointer-events:none; overflow:hidden;
   display:grid; grid-template-columns:repeat(var(--columns, 20), calc(var(--tri) * 2 + 2px));
-  opacity:.5;
+  opacity:1;
 }
 .facets > i {
   display:inline-block; position:relative;
@@ -37,13 +37,17 @@
   border-right:calc(var(--tri) - 2px) solid transparent;
   border-left:calc(var(--tri) - 2px) solid transparent;
 }
+/* Two clearly distinct facet tones. The previous pair (#161a24 / #141822 on a
+   #11131a ground) differed by ~2% and was invisible in practice: the effect was
+   present in the DOM and absent on screen. These read as an actual faceted
+   plate while still sitting well below the data in the visual stack. */
 .facets > i::before {
   left:calc(-1 * var(--tri));
-  border-bottom:calc(1.733 * var(--tri) - 2px) solid #161a24;
+  border-bottom:calc(1.733 * var(--tri) - 2px) solid #1b2130;
 }
 .facets > i::after {
   right:5px;
-  border-top:calc(1.733 * var(--tri) - 2px) solid #141822;
+  border-top:calc(1.733 * var(--tri) - 2px) solid #10141d;
 }
 
 /* ===== AMBIENT LIGHT + SURFACE ============================================
@@ -141,12 +145,21 @@ body:has(#chain.bad) h1::before,
 body:has(#backend.bad) h1::before {
   background:var(--bad); box-shadow:0 0 12px var(--bad); animation-duration:.85s;
 }
-.grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); }
+/* The gap colour used to be an OPAQUE background on this container, which sat
+   between the facet field and the panels and hid the entire background layer no
+   matter how translucent the plates became. A translucent gap keeps the 1px
+   rules that separate the plates while letting the field read through them. */
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:1px;
+        background:rgba(44,48,64,.55); }
 /* Same inset highlight as the header, so every panel reads as a machined plate
    in the same console rather than a coloured rectangle. */
 /* Translucent so the ambient light and the grid read THROUGH the plate — an
    opaque panel would sit on top of the light and kill the whole effect. */
-section { background:rgba(26,29,39,.88); padding:18px 20px; min-height:340px;
+/* .74, not .88: at .88 the plates were effectively opaque and the faceted field
+   behind them was invisible, which made the whole background layer pointless.
+   The readouts (.scroll, pre, inputs) stay solid, so the data itself never
+   competes with the texture. Contrast measured after this change, not assumed. */
+section { background:rgba(26,29,39,.74); padding:18px 20px; min-height:340px;
           box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
           transition:background .35s ease, box-shadow .35s ease;
           opacity:0; transform:translateY(10px);
