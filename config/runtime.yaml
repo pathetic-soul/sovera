@@ -13,8 +13,8 @@ version: 1
 # §8.4. An 8k context window (§4.2.5) has no room to absorb a runaway loop, so
 # all three of these are load-bearing rather than defensive.
 agent:
-  max_steps: 8            # hard cap on ReAct iterations
-  max_tokens: 20000       # cumulative budget across the whole run
+  max_steps: 64           # hard cap on ReAct iterations (64 is core/settings.py's ceiling)
+  max_tokens: 1000000     # cumulative budget across the whole run, raised for long tasks
   observation_chars: 6000 # ~1500 tokens at ~4 chars/token, before re-entry
   temperature: 0.2        # §12.8: extraction and tool selection, not prose
 

@@ -65,6 +65,15 @@ class OllamaBackend(LLMBackend):
             "messages": [m.model_dump(exclude_defaults=True) for m in messages],
             "stream": False,
             "options": {"temperature": temperature, "num_ctx": max_ctx},
+            # Measured on this machine: qwen3-vl:4b (Ollama's "thinking" build,
+            # `ollama show --modelfile` -> RENDERER/PARSER qwen3-vl-thinking)
+            # spent 2173 eval tokens and 104s producing one ~300-char reply to
+            # the ReAct loop's one-JSON-object prompt — the hidden <think> block
+            # is uncapped by §8.4's budget and would blow the 20k cap in ~9
+            # steps. `think: False` drops that call to ~1s; Ollama ignores the
+            # field for models that don't support hybrid thinking (verified
+            # against qwen3:4b-instruct above), so this is safe for every route.
+            "think": False,
         }
         if json_mode:
             payload["format"] = "json"
@@ -91,8 +100,15 @@ class OllamaBackend(LLMBackend):
             )
             raise
 
+        msg = body.get("message", {})
+        # qwen3-vl:4b's thinking parser leaves `content` empty and puts the
+        # whole reply in `thinking` even with think:False (measured, not
+        # documented) — fall back rather than silently returning "" to a loop
+        # that then reports "model produced invalid output twice" for no
+        # visible reason.
+        text = msg.get("content") or msg.get("thinking", "")
         completion = Completion(
-            text=body.get("message", {}).get("content", ""),
+            text=text,
             model=ref,
             prompt_tokens=int(body.get("prompt_eval_count", 0)),
             eval_tokens=int(body.get("eval_count", 0)),
