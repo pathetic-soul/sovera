@@ -316,16 +316,37 @@ Firewall, drop counters → drop log) are recorded in [AGENTS.md §17](AGENTS.md
 | `sandbox/Dockerfile` | the sandbox image — stdlib only, non-root, pre-built |
 | `data/corpus/inbox/` | a realistic API 510 UT report, seeded into `workspace/` |
 
-## Next
+## Legs 6 and 7 — multimodal and hybrid retrieval
 
-Leg 6 (§14): multimodal — a handwritten inspection note or a drawing title
-block through `vision`, answered with the source region highlighted. The
-`vision` model (`qwen3-vl:4b`) is already staged and routed to.
+**Leg 6.** `backends/base.py`'s `Message.images` field existed from the start
+but nothing ever populated it — an attached image reached only the router's
+modality classifier, never the `vision` model's pixels. `core/agent.py`
+now base64-encodes image attachments (jailed to `workspace/`, 6 MB cap) onto
+the first turn. Live-verified against `qwen3-vl:4b`: it correctly described
+real image content it had never seen, where before it could only guess from
+the filename. Not built: highlighting the source region in the answer — that
+needs bounding boxes from a layout model, a separate piece of work.
 
-Two things worth settling first:
+**Leg 7.** `tools/kb_search.py` + `retrieval/{chunker,index,hybrid}.py`:
+hybrid BM25 + dense retrieval, fused by Reciprocal Rank Fusion, over the 158
+markdown documents already in `data/corpus/` (120 synthetic UT reports, 38
+real MRPL SEBI filings). The dense half reuses the router's own
+bge-small-en-v1.5 encoder — 0 new GB of VRAM. `rank_bm25` was named in §7
+since the charter but never actually installed; it is now.
+
+Scoped down from §9.4's full spec, on purpose:
+
+| §9.4 asks for | This pass ships | Why |
+|---|---|---|
+| Cross-encoder rerank, top-30→top-5 | RRF fusion of two rankings only | A reranker is a second staged CPU model — out of scope for one pass |
+| LanceDB / Qdrant | In-memory index, rebuilt once per process | Correct and simpler at 158 documents; revisit if the corpus grows |
+| `{doc_id, page, section, bbox}` | `{doc_id, section}` | Markdown has no pages or bounding boxes |
+| Scan → deskew → layout → OCR ingest (§9.1) | Indexes documents already in markdown | The ingest pipeline for scanned PDFs is separate, larger work |
+
+Two things still worth settling:
 
 - The **encoder question** in §16 — router accuracy is still the one §13 number
-  failing, and legs 4–5 did not touch it.
+  failing, and legs 4–7 did not touch it.
 - The **grounding gap** in leg 5 above. It is the difference between a demo
   that impresses and one that gets a wrong thickness figure questioned on
   stage.

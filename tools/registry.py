@@ -42,6 +42,7 @@ from tools.calc import Calc
 from tools.doc_write import DocWrite
 from tools.fs_read import FsRead
 from tools.fs_write import FsWrite
+from tools.kb_search import KbSearch
 from tools.ocr_read import OcrRead
 from tools.py_sandbox import PySandbox
 
@@ -60,7 +61,12 @@ from tools.py_sandbox import PySandbox
 # 0 GB of the 5.2 GB VRAM budget the LLMs already fight over. It sits next to
 # fs_read because it is the same "read before you answer" discipline applied
 # to a scanned image instead of a text file.
-TOOL_CLASSES: tuple[Callable[[], Tool], ...] = (FsRead, OcrRead, Calc, PySandbox, DocWrite, FsWrite)
+# `kb_search` is leg 7 (§9.4): hybrid BM25+dense over data/corpus/, not
+# workspace/. It sits next to fs_read/ocr_read as a third read-only,
+# ungated source of context.
+TOOL_CLASSES: tuple[Callable[[], Tool], ...] = (
+    FsRead, OcrRead, KbSearch, Calc, PySandbox, DocWrite, FsWrite,
+)
 
 
 def build_tools() -> dict[str, Tool]:
@@ -79,11 +85,3 @@ def tool_specs(tools: dict[str, Tool] | None = None) -> list[dict[str, Any]]:
     return [tool.spec() for tool in (tools or build_tools()).values()]
 
 
-def gated_tools(tools: dict[str, Tool] | None = None) -> list[str]:
-    """Names of the tools that cannot run without a human approving (§2.4).
-
-    Exposed as its own function because "which actions need sign-off" is a
-    question a PSU reviewer asks directly, and it should have one answer derived
-    from the tools themselves rather than a list in a slide.
-    """
-    return [t.name for t in (tools or build_tools()).values() if t.requires_approval]

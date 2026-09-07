@@ -14,6 +14,7 @@ from tools.base import JailBreak, RunContext, resolve_in_jail, validate_args
 from tools.doc_write import DocWrite
 from tools.fs_read import FsRead
 from tools.fs_write import FsWrite
+from tools.kb_search import KbSearch
 from tools.ocr_read import OcrRead, _lines_from_result
 from tools.py_sandbox import PySandbox
 
@@ -209,6 +210,34 @@ def test_ocr_read_extracts_real_text_from_a_generated_image(ctx: RunContext) -> 
     result = OcrRead().run({"path": "inbox/scan.png"}, ctx)
     assert result.ok
     assert "8.9" in result.output
+
+
+# --- kb_search (§9.4, leg 7) -------------------------------------------------
+
+def test_kb_search_rejects_empty_query(ctx: RunContext) -> None:
+    result = KbSearch().run({"query": ""}, ctx)
+    assert not result.ok and result.error == "empty query"
+
+
+def test_kb_search_is_not_gated(ctx: RunContext) -> None:
+    """§2.4 gates writes and execution; a read across the corpus is neither."""
+    assert KbSearch().requires_approval is False
+
+
+def test_kb_search_finds_a_real_equipment_tag_in_the_real_corpus(ctx: RunContext) -> None:
+    """The one non-mocked check: search the actual data/corpus/ against a tag
+    that is genuinely in it — V-2301, the vessel README's own demo runbook
+    asks the agent about (data/corpus/inbox/UT-2024-114-V-2301.md)."""
+    result = KbSearch().run({"query": "V-2301 thickness survey findings"}, ctx)
+    assert result.ok
+    assert "V-2301" in result.output
+
+
+def test_kb_search_audits_the_query_and_source_docs(ctx: RunContext) -> None:
+    KbSearch().run({"query": "corrosion allowance"}, ctx)
+    records = [r for r in ctx.audit.tail() if r.kind == "tool_call" and r.payload.get("tool") == "kb_search"]
+    assert records and records[-1].payload["ok"] is True
+    assert records[-1].payload["hits"] > 0
 
 
 # --- doc_write (§9.5) -------------------------------------------------------

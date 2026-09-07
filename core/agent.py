@@ -18,6 +18,7 @@ no room to absorb a runaway loop.
 from __future__ import annotations
 
 import asyncio
+import base64
 import json
 import re
 from pathlib import Path
@@ -28,8 +29,14 @@ from pydantic import BaseModel, Field
 from backends.base import BackendError, LLMBackend, Message
 from core.audit import AuditLog
 from core.router import RouteDecision, Router
+from core.routing.features import IMAGE_EXT
 from core.settings import AgentSettings
-from tools.base import RunContext, Tool, ToolResult, validate_args
+from tools.base import JailBreak, RunContext, Tool, ToolResult, resolve_in_jail, validate_args
+
+# 6 MB is generous for a scanned page or a title-block photo at phone-camera
+# resolution, and it keeps one hostile/huge attachment from blowing the 8k
+# context ceiling (§4.2.5) via base64 bloat (~1.37x the raw bytes).
+MAX_IMAGE_BYTES = 6 * 1024 * 1024
 
 # §8.4's budget now lives in config/runtime.yaml (§11: config over constants).
 # The values are unchanged; what changed is that a judge can alter them without
@@ -125,6 +132,44 @@ def _truncate(text: str, limit: int) -> str:
     return text[:limit] + f"\n…[truncated {len(text) - limit} chars]"
 
 
+def _load_images(paths: list[str], workspace: Path, audit: AuditLog) -> list[str]:
+    """Base64-encode the image attachments for the VLM route (leg 6, §5 `vision`).
+
+    Previously `attachments` reached only the router's modality classifier —
+    `Message.images` existed on the contract (backends/base.py) but nothing
+    ever populated it, so `vision` answered from the filename and the task
+    text alone, never the pixels. This is the one place a run's attachments
+    become bytes, so it is where the jail and the size cap both apply.
+
+    A bad attachment (missing, not an image, oversized, outside the jail)
+    is audited and skipped rather than failing the run — the model still has
+    the task text and `ocr_read` as a fallback path for printed text.
+    """
+    images: list[str] = []
+    for rel in paths:
+        if Path(rel).suffix.lower() not in IMAGE_EXT:
+            continue  # not an image attachment; ocr_read/fs_read handle the rest
+        try:
+            target = resolve_in_jail(workspace, rel)
+        except JailBreak as exc:
+            audit.append("file_read", {"tool": "vision_attach", "path": rel,
+                                       "ok": False, "error": str(exc)})
+            continue
+        if not target.is_file():
+            audit.append("file_read", {"tool": "vision_attach", "path": rel,
+                                       "ok": False, "error": "no such file"})
+            continue
+        size = target.stat().st_size
+        if size > MAX_IMAGE_BYTES:
+            audit.append("file_read", {"tool": "vision_attach", "path": rel, "ok": False,
+                                       "error": f"{size}B exceeds {MAX_IMAGE_BYTES}B cap"})
+            continue
+        images.append(base64.b64encode(target.read_bytes()).decode("ascii"))
+        audit.append("file_read", {"tool": "vision_attach", "path": rel,
+                                   "ok": True, "bytes": size})
+    return images
+
+
 class Agent:
     def __init__(
         self,
@@ -169,9 +214,10 @@ class Agent:
         spec = self.router.registry.models[decision.model_id]
         yield AgentEvent(type="route", data=decision.model_dump())
 
+        images = _load_images(attachments or [], self.workspace, self.audit)
         messages = [
             Message(role="system", content=SYSTEM.replace("{tools}", _tool_lines(self.tools))),
-            Message(role="user", content=task),
+            Message(role="user", content=task, images=images),
         ]
         spent = 0
         step_n = 0

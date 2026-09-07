@@ -574,12 +574,15 @@ Everything else is secondary. If a task doesn't serve this path, defer it.
    rejected with a visible reason, and malformed YAML leaves the previous
    registry serving. Zero code change in all three.
 4. **Agent loop** — built with 3 tools (`fs_read`, `py_sandbox`, `doc_write`);
-   now 6, after `calc` (§16, measured), `ocr_read` (leg 6) and `fs_write`.
+   now 7, after `calc` (§16, measured), `ocr_read`, `fs_write` and
+   `kb_search` (leg 7).
    ✅ built — `core/agent.py`, `backends/`, `tools/`. Inspection report →
    findings → approval note → `.docx` that opens in Word. The §2.4 gate is
    wired both ways: approve writes the file, reject writes nothing and the
    model finishes in chat. 4.6 GB peak, ~157 s cold including model load.
-   Input is a text report, not a scan — OCR arrives with leg 6.
+   Image attachments now reach `vision` as real pixels (leg 6) — the
+   `images` field on `Message` existed since backends/base.py shipped but
+   nothing populated it until `core/agent.py:_load_images`.
 5. **Coding task** run and verified in the sandbox, showing `--network none`.
    ✅ built — `tools/py_sandbox.py`, `sandbox/Dockerfile`. Verified from inside
    the container: `OSError [Errno 101] Network is unreachable`, `/src`
@@ -588,11 +591,25 @@ Everything else is secondary. If a task doesn't serve this path, defer it.
    There is deliberately **no host-execution fallback** — if the daemon is down
    the tool fails and names the fix. See the grounding gap in §16 before
    choosing which coding task to demo.
-6. **Multimodal**: handwritten inspection note or a drawing title block → structured
-   answer with the source region highlighted.
-7. **Ingest + hybrid retrieval** over 10–15 realistic refinery documents
-   (public API 570/510/653 inspection formats, PSU tender PDFs, MOC templates).
-   Realistic corpus beats synthetic every time.
+6. **Multimodal.** ✅ built — an attached image now reaches `vision` as real
+   base64 pixels (`core/agent.py:_load_images`), jailed and size-capped the
+   same as every other file the agent touches. Live-verified against the
+   real qwen3-vl:4b: it correctly described genuine image content it had
+   never been shown, where before this fix it could only answer from the
+   filename. **Not built:** source-region highlighting — that needs bounding
+   boxes from a layout model, which is a separate, larger piece of work.
+7. **Hybrid retrieval.** ✅ built, scoped down — `tools/kb_search.py` +
+   `retrieval/{chunker,index,hybrid}.py`: BM25 (`rank_bm25`, named in §7
+   since the charter but never actually installed until now) + dense
+   (reused the §9.2 router's own bge-small-en-v1.5 encoder, 0 new GB VRAM)
+   fused by Reciprocal Rank Fusion. Indexes the 158 markdown documents
+   already in `data/corpus/` (120 synthetic UT reports + 38 real MRPL SEBI
+   filings) rather than curating a fresh 10–15-document set. **Not built:**
+   the cross-encoder rerank step (top-30 → top-5) §9.4 specifies — that is a
+   second staged CPU model, out of scope for this pass; RRF fusion of two
+   rankings is the fallback. **Not built:** the scan-to-structured-JSON
+   ingest pipeline (§9.1, deskew/layout/OCR) — this leg indexes documents
+   that are already markdown, not scanned PDFs.
 8. **Cable pull.**
 
 **Scope freeze: end of week 3.** After that, only bug fixes and rehearsal.

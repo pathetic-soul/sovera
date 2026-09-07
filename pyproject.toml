@@ -10,6 +10,10 @@ dependencies = [
     "pyyaml>=6.0",
     "python-docx>=1.1",
     "sympy>=1.13",
+    # tools/kb_search.py + retrieval/: lexical half of the §9.4 hybrid search.
+    # Pure Python, zero network I/O — was named in §7 since the charter but
+    # never actually installed until leg 7.
+    "rank_bm25>=0.2",
     # core/embed.py imports numpy at module scope, and core/routing/classifier.py
     # imports embed at module scope, so the app does not start without it.
     # The encoder weights are optional (the router falls back to the lexical
@@ -53,6 +57,10 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "sympy.*"         # sympy ships no py.typed marker either
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "rank_bm25.*"     # ships no py.typed marker either
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]

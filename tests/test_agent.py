@@ -142,6 +142,65 @@ def test_route_is_emitted_before_any_model_call(build: Any) -> None:
     assert first.data["reason"]
 
 
+# --- image attachments (leg 6, §5 `vision`) ---------------------------------
+# 1x1 PNG, the smallest valid file of that format — plumbing only. Whether a
+# real VLM can read the pixels is an integration question the model, not this
+# loop, is responsible for; this proves the bytes actually reach the backend.
+_PNG_1X1 = bytes.fromhex(
+    "89504e470d0a1a0a0000000d494844520000000100000001080600000"
+    "01f15c4890000000a4944415478da6360000002000155008d1fdd4a00"
+    "0000004945454e42600042".ljust(216, "0")
+)
+
+
+def test_image_attachment_reaches_the_backend(build: Any) -> None:
+    import base64
+
+    agent, backend, _, ws = build([finish("looks good")])
+    (ws / "inbox").mkdir(exist_ok=True)
+    (ws / "inbox" / "scan.png").write_bytes(_PNG_1X1)
+
+    drain(agent, "What does this drawing show?", attachments=["inbox/scan.png"])
+
+    sent = backend.calls[0][1]  # the user turn
+    assert sent.images == [base64.b64encode(_PNG_1X1).decode("ascii")]
+
+
+def test_non_image_attachment_sends_no_images(build: Any) -> None:
+    agent, backend, _, ws = build([finish()])
+    (ws / "inbox" / "r.md").write_text("text", encoding="utf-8")
+
+    drain(agent, "summarise", attachments=["inbox/r.md"])
+
+    assert backend.calls[0][1].images == []
+
+
+def test_missing_image_attachment_does_not_crash_the_run(build: Any) -> None:
+    """A guessed or stale path degrades to a text-only run rather than failing
+    the whole loop — the model still has the task and can fall back to a tool."""
+    agent, backend, audit, _ = build([finish()])
+
+    events = drain(agent, "read this scan", attachments=["inbox/missing.png"])
+
+    assert events[-1].type == "final"
+    assert backend.calls[0][1].images == []
+    assert any(r.kind == "file_read" and r.payload.get("tool") == "vision_attach"
+              and not r.payload["ok"] for r in audit.tail())
+
+
+def test_oversized_image_attachment_is_skipped(build: Any) -> None:
+    from core.agent import MAX_IMAGE_BYTES
+
+    agent, backend, audit, ws = build([finish()])
+    (ws / "inbox" / "huge.png").write_bytes(b"\x89PNG\r\n" + b"\x00" * MAX_IMAGE_BYTES)
+
+    drain(agent, "read this scan", attachments=["inbox/huge.png"])
+
+    assert backend.calls[0][1].images == []
+    assert any("exceeds" in r.payload.get("error", "") for r in audit.tail()
+              if r.kind == "file_read")
+
+
 # --- caps (§8.4) ------------------------------------------------------------
 
 def test_step_cap_stops_and_reports_partial(build: Any) -> None:

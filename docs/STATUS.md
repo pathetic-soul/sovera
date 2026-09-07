@@ -67,10 +67,10 @@ them: on current evidence the demo has not been rehearsed as a whole.
 | 1 | Sovereignty panel, red button, audit log | ✅ Done | firewall drop rows + hash-chained JSONL, tamper check live |
 | 2 | Registry + deterministic router, 2 models | ✅ Done | 0.05 ms/decision vs a 50 ms budget; accuracy below gate |
 | 3 | Live model addition | ✅ Done | verified 3 ways: accepted · over-budget rejected · bad YAML safe |
-| 4 | Agent loop, 6 tools, `.docx` deliverable | ✅ Done | 4.6 GB peak, ~157 s cold; human gate wired both ways (auto-approve opt-in, audited as `granted_by: auto`) |
+| 4 | Agent loop, 7 tools, `.docx` deliverable | ✅ Done | 4.6 GB peak, ~157 s cold; human gate wired both ways (auto-approve opt-in, audited as `granted_by: auto`) |
 | 5 | Coding task in `--network none` sandbox | ✅ Done | `Errno 101 Network is unreachable` from inside the container |
-| 6 | Multimodal — handwriting / drawing title block | ⬜ Not started | `vision` (qwen3-vl:4b) already staged and routed to |
-| 7 | Ingest + hybrid retrieval over 10–15 docs | ⬜ Not started | `ingest/` and `retrieval/` packages do not exist yet |
+| 6 | Multimodal — image attachments reach `vision` | ✅ Done | `Message.images` was dead since backends/base.py shipped; now base64-wired in `core/agent.py`. Live-verified: qwen3-vl:4b correctly described real pixel content it had never been shown. No source-region highlighting (needs bounding boxes from a layout model, out of scope for this pass) |
+| 7 | Hybrid retrieval over the reference corpus | 🟡 Scoped-down, done | BM25 (`rank_bm25`) + dense (reused `core.embed` encoder, 0 new GB VRAM) + RRF fusion, `tools/kb_search.py`, 158 docs (120 synthetic UT reports + 38 real MRPL filings). Cut vs §9.4: no cross-encoder rerank (would need a second staged CPU model), no LanceDB (in-memory index, correct at this corpus size), no `bbox` (markdown has no pages). Full scan-to-structured-JSON ingest pipeline (§9.1) not built — this indexes the existing markdown corpus, not scanned PDFs |
 | 8 | Cable pull | ⬜ Not started | trivial once 1–7 hold |
 
 **Scope freeze: end of week 3** (§14). Project start ≈ 2026-08-24 by earliest
