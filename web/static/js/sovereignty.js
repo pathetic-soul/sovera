@@ -1,18 +1,16 @@
-// The sovereignty panel: drop counter, drop table, audit stream, red button,
-// chain verification, and the firewall ruleset shown verbatim (AGENTS.md §10).
-// This is the graded claim; it reconnects on close because a blank panel mid-demo
-// looks like a failure of the thesis rather than of a websocket.
+// The sovereignty panel: drop counter, drop feed, audit stream, red button,
+// chain verification. The drop monitor is the graded claim; it reconnects on
+// close because a blank rail mid-demo looks like a failure of the thesis
+// rather than of a websocket.
 
-// The drop counter is the thesis as a number, so a change in it is the one
-// state change worth animating rather than swapping. Counts from the value on
-// screen to the new one over ~600ms; a jump from 0 to 7 reads as a glitch,
-// a climb reads as packets being killed one after another.
+// The counter is the thesis as a number, so a change in it is the one state
+// change worth animating: counts up to the new value over ~600ms so a jump
+// from 0 to 7 reads as packets being killed one after another.
 let dropsShown = 0;
 function setDrops(target) {
   const el = $('drops');
   el.className = 'big ' + (target > 0 ? 'ok' : 'dim');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced || target === dropsShown || target - dropsShown > 500) {
+  if (reducedMotion() || target === dropsShown || target - dropsShown > 500) {
     dropsShown = target; el.textContent = target; return;
   }
   const from = dropsShown, t0 = performance.now();
@@ -26,12 +24,19 @@ function setDrops(target) {
   })(t0);
 }
 
+// Audit kinds map onto the console's semantic palette; unknown kinds stay dim.
+const KIND_CLASS = {
+  egress_attempt: 'k-bad', error: 'k-bad',
+  approval: 'k-warn', model_call: 'k-focus', tool_call: 'k-ok',
+  file_write: 'k-ok', file_read: '',
+};
+
 function render(m) {
   setDrops(m.total_drops);
   $('mon').textContent = m.monitor_ok
-    ? 'watching Windows Firewall drop log'
+    ? 'watching the Windows Firewall drop log, live'
     : 'monitor unavailable: ' + m.monitor_note;
-  $('mon').className = m.monitor_ok ? 'dim' : 'warn';
+  $('mon').className = m.monitor_ok ? 'mon dim' : 'mon warn';
 
   if (m.new_drops.length) {
     const tb = $('droptbl');
@@ -39,17 +44,20 @@ function render(m) {
     for (const d of m.new_drops) {
       const tr = tb.insertRow(0);
       tr.className = 'flash';
-      tr.innerHTML = `<td>${d.ts}</td><td>${d.proto}</td><td>${d.dst}</td><td>${d.dport}</td>`;
+      tr.innerHTML = `<td class="dim">${d.ts}</td><td class="dim">${d.proto}</td>`
+        + `<td>${d.dst}</td><td><span class="port">${d.dport}</span></td>`;
     }
     while (tb.rows.length > 40) tb.deleteRow(-1);
   }
 
-  $('audit').innerHTML = m.audit.slice().reverse().map(r =>
-    `<div class="rec ${r.kind === 'egress_attempt' ? 'egress' : ''}">`
-    + `<b>#${r.seq}</b> ${r.kind} `
-    + `<span class="dim">${r.ts.slice(11, 19)} · ${r.hash.slice(0, 8)}</span><br>`
-    + `<span class="dim">${esc(JSON.stringify(r.payload))}</span></div>`
-  ).join('');
+  $('audit').innerHTML = m.audit.slice().reverse().map(r => {
+    const kc = KIND_CLASS[r.kind] ?? '';
+    return `<div class="rec${r.kind === 'egress_attempt' ? ' egress' : ''}">`
+      + `<div class="recline"><b class="seq">#${r.seq}</b>`
+      + `<span class="kind ${kc}">${r.kind}</span>`
+      + `<span class="rmeta">${r.ts.slice(11, 19)} · ${r.hash.slice(0, 8)}</span></div>`
+      + `<div class="payload">${esc(JSON.stringify(r.payload))}</div></div>`;
+  }).join('');
 }
 
 function connect() {
@@ -61,37 +69,37 @@ connect();
 
 async function fire() {
   const btn = $('firebtn');
+  const label = btn.querySelector('.rlabel');
   if (btn.disabled) return;               // the probe takes ~4s; two clicks fired two probes
-  const label = btn.textContent;
+  const labelText = label.textContent;
   btn.disabled = true;
   btn.classList.add('firing');            // pulses while the firewall runs out the clock
-  btn.textContent = '● Reaching for api.openai.com:443…';
+  label.textContent = 'Reaching for api.openai.com…';
   $('result').textContent = 'attempting…';
-  $('result').className = 'warn';
+  $('result').className = 'verdict warn';
   try {
-    const r = await (await fetch('/api/egress-test', {method: 'POST'})).json();
+    const r = await (await fetch('/api/egress-test', { method: 'POST' })).json();
     const p = r.payload;
-    $('result').className = p.contained ? 'ok' : 'bad';
+    $('result').className = p.contained ? 'verdict ok' : 'verdict bad';
     $('result').textContent = p.contained
-      ? `BLOCKED at ${p.stage} after ${p.elapsed_s}s: ${p.error}`
+      ? `BLOCKED at ${p.stage} after ${p.elapsed_s}s — ${p.error}`
       : `!! CONTAINMENT FAILED: reached ${p.resolved}`;
   } catch (e) {
-    $('result').className = 'bad';
+    $('result').className = 'verdict bad';
     $('result').textContent = `probe failed to run: ${e}`;
   } finally {
     // finally, not after the await: a thrown fetch must not leave the single
     // most important control on the page permanently dead mid-demo.
     btn.disabled = false;
     btn.classList.remove('firing');
-    btn.textContent = label;
+    label.textContent = labelText;
   }
 }
 
 async function checkChain() {
   const r = await (await fetch('/api/audit/verify')).json();
-  $('chain').className = r.ok ? 'ok' : 'bad';
+  $('chain').className = 'pill led ' + (r.ok ? 'ok' : 'bad');
   $('chain').textContent = r.ok ? 'chain: intact' : `chain: BROKEN at seq ${r.broken_at}`;
 }
 checkChain();
 
-fetch('/api/firewall/rules').then(r => r.text()).then(t => $('rules').textContent = t);

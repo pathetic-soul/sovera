@@ -1,28 +1,29 @@
-// The router panel (AGENTS.md §9.2). The `reason` string is rendered verbatim
-// because it IS the explanation shown while a model swaps (§4.2.3) — a stall
-// with a rationale on screen reads as an explanation, not a hang.
+// The router panel (§9.2). Deterministic, loads nothing — which is why the
+// decision can render here before the weights it selected finish loading
+// (§4.2.3 swap masking).
 
 async function doRoute() {
   const text = $('prompt').value.trim();
   if (!text) return;
-  const attachments = $('attach').value.split(',').map(s => s.trim()).filter(Boolean);
-  $('decision').textContent = 'routing…';
+  const attachments = splitList('attach');
+  $('decision').hidden = false;
+  $('decision').className = 'routecard';
+  $('decision').innerHTML = '<div class="rreason dim">routing…</div>';
+
   const d = await (await fetch('/api/route', {
-    method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({text, attachments})
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text, attachments })
   })).json();
 
-  // The reason string IS the explanation shown during a model swap (AGENTS.md 4.2.3).
-  $('decision').className = 'ok';
-  $('decision').innerHTML = `<b>${esc(d.model_id)}</b>`
-    + (d.swap_required ? ' <span class="warn">[swap]</span>' : '')
-    + `<br><span class="dim">${esc(d.reason)}</span>`;
+  $('decision').className = 'routecard ok';
+  $('decision').innerHTML = routeCardHTML(d);
 
   const ranked = Object.entries(d.scores).sort((a, b) => b[1] - a[1]);
   const top = ranked[0][1] || 1;
   $('scoretbl').innerHTML = ranked.map(([k, v]) =>
-    `<tr><td style="width:9em">${k}</td><td style="width:4em">${v.toFixed(3)}</td>`
-    + `<td><div style="height:8px;width:${Math.max(1, 100 * v / top)}%;`
-    + `background:${k === d.task_type ? 'var(--ok)' : 'var(--line)'}"></div></td></tr>`
+    `<tr${k === d.task_type ? ' class="win"' : ''}>`
+    + `<td class="sk">${k}</td><td class="sv">${v.toFixed(3)}</td>`
+    + `<td><span class="sbar"><i style="width:${Math.max(1, 100 * v / top)}%"></i></span></td></tr>`
   ).join('');
 }
+

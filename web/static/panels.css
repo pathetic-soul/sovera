@@ -1,0 +1,297 @@
+/* ==========================================================================
+   Sovereign Workbench — panel surfaces. Design core lives in app.css.
+   ========================================================================== */
+
+/* ===== SOVEREIGNTY RAIL ===================================================
+   The drop stream is the graded claim, so the rail is persistent: it never
+   scrolls away and never hides behind a tab (§10.2). */
+.rail {
+  position: sticky; top: 14px;
+  display: flex; flex-direction: column; gap: 14px;
+  max-height: calc(100vh - 28px);
+  overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+}
+.plate { position: relative; overflow: hidden; flex: none; }
+.auditpanel { display: flex; flex-direction: column; flex: 1 0 240px; min-height: 240px; }
+
+/* Monitor scan line: the watcher genuinely tails pfirewall.log, so the plate
+   says so — one pass every ~4s represents real work, not decoration. */
+.scanning::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(63,185,80,.55), transparent);
+  animation: scan 4.2s linear infinite; pointer-events: none;
+}
+@keyframes scan {
+  0%   { transform: translateY(0); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(430px); opacity: 0; }
+}
+
+.count { display: flex; align-items: baseline; gap: 14px; padding: 14px 16px 4px; }
+.big { font: 700 58px/1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.countcap { font: 11px/1.5 var(--sans); color: var(--faint); max-width: 15ch; }
+.mon { padding: 0 16px; font: 11.5px/1.5 var(--mono); }
+.mon.warn { color: var(--warn-ink); }
+
+/* The red button — the single most memorable thing in the demo (§10.3). The
+   hazard frame marks it as the one guard-styled control on the console. */
+.probe {
+  margin: 12px 14px 0; padding: 12px;
+  border: 1px solid rgba(248,81,73,.32); border-radius: 9px;
+  background:
+    repeating-linear-gradient(135deg, rgba(248,81,73,.055) 0 9px, transparent 9px 18px),
+    #170d10;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+button.red {
+  width: 100%; display: flex; flex-direction: column; gap: 3px; align-items: center;
+  padding: 12px 14px; border-radius: 7px;
+  border-color: rgba(248,81,73,.55); background: #221016; color: var(--bad-ink);
+}
+button.red:hover { background: #33161d; border-color: var(--bad); }
+button.firing { opacity: 1; }
+.rlabel { font: 700 12.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.rtarget { font: 10.5px/1 var(--mono); color: var(--faint); letter-spacing: .06em; }
+.rled {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--bad);
+  box-shadow: 0 0 10px rgba(248,81,73,.8); margin-bottom: 4px; opacity: .55;
+}
+button.red.firing .rled, button.red:hover .rled { opacity: 1; }
+.verdict { margin-top: 9px; font: 11.5px/1.5 var(--mono); min-height: 2.6em; }
+.verdict.ok { color: var(--ok-ink); }
+.verdict.bad { color: var(--bad-ink); }
+.verdict.warn { color: var(--warn-ink); }
+
+.feed {
+  max-height: 172px; margin: 0 14px 14px;
+  border: 1px solid var(--line); border-radius: 7px; background: var(--panel-lo);
+}
+table { width: 100%; border-collapse: collapse; }
+th {
+  position: sticky; top: 0; background: #131828; z-index: 1;
+  font: 600 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .12em;
+  color: var(--faint); text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line);
+}
+td {
+  padding: 6px 10px; font: 12px/1.4 var(--mono);
+  border-bottom: 1px solid rgba(38,45,66,.5); vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: 0; }
+.port {
+  display: inline-block; padding: 1px 6px; border: 1px solid var(--line);
+  border-radius: 4px; background: #151a29; color: var(--dim); font-size: 11px;
+}
+
+/* Audit ledger */
+.audit { flex: 1; min-height: 200px; padding: 10px 12px; }
+.rec {
+  border: 1px solid var(--line); border-left: 3px solid var(--line-hi);
+  border-radius: 6px; background: #10141f;
+  padding: 7px 10px; margin-bottom: 7px;
+}
+.rec.egress { border-left-color: var(--bad); background: #1c0f12; }
+.recline { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.seq { font: 700 11px/1 var(--mono); color: var(--fg); }
+.kind {
+  font: 600 9.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .1em;
+  padding: 2px 6px; border-radius: 4px; border: 1px solid var(--line); color: var(--dim);
+}
+.kind.k-ok { color: var(--ok-ink); border-color: rgba(63,185,80,.35); }
+.kind.k-bad { color: var(--bad-ink); border-color: rgba(248,81,73,.4); }
+.kind.k-warn { color: var(--warn-ink); border-color: rgba(210,153,34,.4); }
+.kind.k-focus { color: var(--focus-ink); border-color: rgba(121,192,255,.35); }
+.rmeta { margin-left: auto; font: 10.5px/1 var(--mono); color: var(--faint); }
+.payload {
+  margin-top: 5px; font: 10.5px/1.5 var(--mono); color: var(--dim);
+  word-break: break-all; white-space: pre-wrap;
+}
+
+/* ===== STAGE ============================================================== */
+.stage { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.duo { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 14px; }
+.duo.flip { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.pbody { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+/* Route decision cards (router panel + agent run channel) */
+.routecard {
+  border: 1px solid rgba(121,192,255,.3); border-left: 3px solid var(--focus);
+  background: var(--focus-bg); border-radius: 7px; padding: 10px 12px;
+}
+.composer + .routecard { margin: 0 14px 4px; }
+.rcrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.rmodel { font: 700 13px/1.2 var(--mono); color: var(--focus-ink); }
+.rswap, .rhot {
+  font: 600 9.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .1em;
+  padding: 3px 7px; border-radius: 4px;
+}
+.rswap { color: #1c1206; background: var(--warn); }
+.rhot { color: var(--dim); border: 1px solid var(--line); }
+.rmeta { margin-left: auto; font: 10.5px/1 var(--mono); color: var(--faint); }
+.rreason { margin-top: 6px; font: 11.5px/1.55 var(--mono); color: var(--dim); }
+
+/* Router score bars */
+.scores { max-height: 190px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel-lo); }
+.sk { width: 11em; color: var(--dim); }
+.sv { width: 4.5em; color: var(--faint); font-variant-numeric: tabular-nums; }
+tr.win .sk { color: var(--ok-ink); }
+tr.win .sv { color: var(--fg); }
+.sbar { display: block; height: 8px; border-radius: 4px; background: #151a29; overflow: hidden; }
+.sbar i { display: block; height: 100%; background: var(--line-hi); border-radius: 4px; }
+tr.win .sbar i { background: linear-gradient(90deg, #2f7c3d, var(--ok)); }
+
+/* Registry */
+.modelwrap { max-height: 220px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel-lo); }
+.mid { font-weight: 700; color: var(--fg); }
+.mref { font-size: 11px; }
+.dev {
+  font: 600 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em;
+  padding: 2px 6px; border-radius: 4px; border: 1px solid var(--line);
+}
+.dev.gpu { color: var(--focus-ink); border-color: rgba(121,192,255,.35); }
+.dev.cpu { color: var(--warn-ink); border-color: rgba(210,153,34,.35); }
+.vram { white-space: nowrap; }
+.vbar {
+  display: inline-block; width: 64px; height: 7px; border-radius: 4px;
+  background: #151a29; vertical-align: middle; overflow: hidden;
+}
+.vbar i { display: block; height: 100%; background: linear-gradient(90deg, #2f5a8f, var(--focus)); }
+.vnum { margin-left: 7px; font-size: 11px; color: var(--dim); font-variant-numeric: tabular-nums; }
+.mroutes { font-size: 11px; }
+.rec.reject { border-left-color: var(--bad); background: #1c0f12; font: 12px/1.5 var(--mono); color: var(--dim); }
+.rec.reject b { color: var(--bad-ink); }
+
+/* Tool roster — the §2.4 gate surface, rendered not implied */
+.toolgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tool { border: 1px solid var(--line); border-radius: 7px; background: var(--panel-lo); padding: 8px 10px; }
+.tool.gated { border-color: rgba(210,153,34,.4); background: #1a150c; }
+.trow { display: flex; gap: 8px; align-items: center; }
+.trow b { font: 700 12px/1 var(--mono); color: var(--fg); }
+.tgate, .topen {
+  margin-left: auto; font: 600 9px/1 var(--mono); text-transform: uppercase;
+  letter-spacing: .1em; padding: 2px 6px; border-radius: 4px;
+}
+.tgate { color: #1c1206; background: var(--warn); }
+.topen { color: var(--faint); border: 1px solid var(--line); }
+.tdesc { margin-top: 5px; font: 10.5px/1.5 var(--mono); color: var(--dim); }
+
+/* Firewall ruleset, verbatim, line-numbered */
+.rules {
+  margin: 12px 14px 14px; padding: 10px 0; max-height: 300px;
+  border: 1px solid var(--line); border-radius: 7px;
+  background: var(--panel-lo); font: 11.5px/1.6 var(--mono); color: #b9c2d8;
+}
+.rl { display: flex; padding: 0 12px; }
+.rl.comment .lc { color: var(--faint); font-style: italic; }
+.ln { flex: none; width: 3.5ch; margin-right: 12px; text-align: right; color: #39415a; user-select: none; }
+.lc { white-space: pre-wrap; word-break: break-all; }
+.lc .kw { color: var(--focus-ink); }
+
+/* ===== AGENT PANEL ======================================================= */
+.composer { padding: 12px 14px 4px; display: flex; flex-direction: column; gap: 8px; }
+.gatebanner {
+  margin: 10px 14px 0; padding: 9px 12px; border-radius: 7px;
+  border: 1px solid rgba(210,153,34,.45); background: var(--warn-bg);
+  color: var(--warn-ink); font: 11.5px/1.55 var(--mono);
+}
+.crow .meter { flex: 1; height: 6px; border-radius: 3px; background: #151a29; overflow: hidden; min-width: 60px; }
+.meter i {
+  display: block; height: 100%; width: 0; border-radius: 3px;
+  background: linear-gradient(90deg, #2f7c3d, var(--ok));
+  transition: width .5s cubic-bezier(.16,1,.3,1);
+}
+#budget { font: 11px/1 var(--mono); white-space: nowrap; }
+
+/* Plan trace: a timeline. Numbered markers sit on one rail line, so the
+   machine's steps read as a sequence rather than a wall of boxes. */
+.trace { position: relative; margin: 10px 14px 14px; padding: 4px 0; max-height: 420px; min-height: 120px; }
+.traceempty { padding: 26px 18px; text-align: center; font: 12px/1.6 var(--mono); }
+.trace::before {
+  content: ""; position: absolute; left: 27px; top: 10px; bottom: 10px;
+  width: 1px; background: linear-gradient(180deg, var(--line-hi), var(--line));
+}
+.step { position: relative; padding: 4px 10px 10px 58px; }
+.step::before {
+  content: ""; position: absolute; left: 21px; top: 8px; width: 13px; height: 13px;
+  border-radius: 50%; background: var(--panel-hi); border: 1px solid var(--line-hi);
+  box-shadow: 0 0 0 3px var(--panel);
+}
+.sline { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.stok { margin-left: auto; font: 10.5px/1 var(--mono); color: var(--faint); font-variant-numeric: tabular-nums; }
+.sthought { margin-top: 4px; font: 12px/1.55 var(--mono); color: var(--dim); }
+.sobs {
+  margin-top: 4px; white-space: pre-wrap; color: var(--dim);
+  font: 11.5px/1.55 var(--mono);
+  border-left: 1px solid var(--line); padding-left: 9px;
+  max-height: 120px; overflow: auto;
+}
+.sobs.clip { cursor: zoom-in; mask-image: linear-gradient(180deg, #000 70%, transparent); }
+.sobs.open { max-height: none; cursor: zoom-out; mask-image: none; }
+.sobs.answer { color: var(--fg); font-size: 12.5px; border-left-color: rgba(63,185,80,.5); }
+.slinks { margin-top: 4px; font: 11.5px/1.6 var(--mono); }
+
+.tag {
+  display: inline-block; padding: 2px 8px; border: 1px solid #333a4f;
+  border-radius: 4px; font: 600 10.5px/1.2 var(--mono); color: #b6c0d8;
+  background: #1c2233; letter-spacing: .04em;
+}
+.tag.rep { color: var(--warn-ink); border-color: rgba(210,153,34,.4); background: transparent; }
+
+/* Gate interstitial — the one place the machine stops and asks a human. */
+.step.gate {
+  background: #241d0c; border: 1px solid rgba(210,153,34,.4); border-radius: 8px;
+  padding: 10px 12px 12px 58px;
+  animation: enter .26s cubic-bezier(.16,1,.3,1) both, gatepulse 1.5s ease-in-out 3 .26s;
+}
+.step.gate::before {
+  background: var(--warn); border-color: var(--warn);
+  box-shadow: 0 0 0 3px var(--panel), 0 0 12px rgba(210,153,34,.7);
+}
+@keyframes gatepulse { 50% { background: #2e2410; } }
+.gateline { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.gmark { font: 700 10.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .18em; color: var(--warn-ink); }
+.gmark.ok { color: var(--ok-ink); }
+.gmark.bad { color: var(--bad-ink); }
+.sargs {
+  margin-top: 6px; padding: 8px 10px; border-radius: 6px;
+  background: #0e1220; border: 1px solid var(--line);
+  font: 11px/1.55 var(--mono); color: var(--dim); white-space: pre-wrap; word-break: break-word;
+}
+.ga { margin-top: 8px; display: flex; gap: 8px; align-items: center; font: 12px/1.4 var(--mono); }
+
+.step.deny { background: #1d0e11; border: 1px solid rgba(248,81,73,.35); border-radius: 8px; }
+.step.deny::before { background: var(--bad); border-color: var(--bad); box-shadow: 0 0 0 3px var(--panel); }
+.step.deny .sthought, .step.deny .sobs { color: #d8a5a2; }
+.step.done { background: #0f2018; border: 1px solid rgba(63,185,80,.35); border-radius: 8px; }
+.step.done::before {
+  background: var(--ok); border-color: var(--ok);
+  box-shadow: 0 0 0 3px var(--panel), 0 0 12px rgba(63,185,80,.6);
+}
+
+/* ===== FOOTER ============================================================ */
+.foot {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center;
+  font: 11px/1.5 var(--mono); color: var(--faint); padding: 2px 0 6px;
+}
+.foot b { color: var(--dim); font-weight: 600; }
+
+/* ===== RESPONSIVE ======================================================== */
+@media (max-width: 1180px) {
+  .shell { grid-template-columns: 1fr; }
+  .rail { position: static; max-height: none; }
+  .audit { max-height: 300px; }
+  .duo, .duo.flip { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .toolgrid { grid-template-columns: 1fr; }
+  .big { font-size: 44px; }
+  .count { flex-direction: column; gap: 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanning::after { display: none; }
+  .step.gate { animation: enter .01ms both; background: #241d0c; }
+}
+
+
+

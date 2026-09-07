@@ -2,100 +2,168 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Sovereign Workbench · Containment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sovereign Workbench · containment console</title>
+<meta name="description" content="Self-hosted, air-gapped agentic AI workbench. SIH 2026 PS 26117.">
 <!-- No CDN, no webfont, no npm build. AGENTS.md §2.1. -->
 <!-- ?v= is a cache buster. /static is served with an ETag but no cache-control,
-     so Chrome heuristically serves a stale app.css on a normal reload and CSS
-     changes appear not to have landed. Bump this whenever app.css changes. -->
-<link rel="stylesheet" href="/static/app.css?v=11">
+     so Chrome heuristically serves stale assets on a normal reload. Bump this
+     whenever the CSS changes. -->
+<link rel="stylesheet" href="/static/app.css?v=12">
+<link rel="stylesheet" href="/static/panels.css?v=12">
 </head>
 <body>
 
-<header>
-  <h1>SOVEREIGN WORKBENCH</h1>
-  <span class="dim">PS 26117 · containment panel</span>
-  <span style="margin-left:auto" id="chain" class="dim">chain: …</span>
-  <button class="plain" onclick="checkChain()">verify chain</button>
+<header class="topbar">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">◈</span>
+    <div>
+      <h1>SOVEREIGN WORKBENCH</h1>
+      <span class="bsub">SIH 2026 · PS 26117 · on-premise agentic console</span>
+    </div>
+  </div>
+  <div class="pills">
+    <span id="resident" class="pill" title="model currently resident in VRAM — one at a time (§4.2)">resident —</span>
+    <button id="chain" class="pill led" onclick="checkChain()" title="verify the audit hash chain">chain: …</button>
+    <span id="backend" class="pill led" title="ollama backend health">ollama: …</span>
+    <span id="clock" class="pill clock" aria-hidden="true">--:--:--</span>
+  </div>
 </header>
 
-<div class="grid">
+<div class="shell">
 
-  <section>
-    <h2>Egress · blocked packets</h2>
-    <div class="big" id="drops">0</div>
-    <div class="dim" id="mon">connecting…</div>
+  <!-- The sovereignty rail is never hidden behind a tab (§10.2): the drop
+       stream is the graded claim, so it stays on screen for the whole demo. -->
+  <aside class="rail">
 
-    <p><button id="firebtn" onclick="fire()">▶ Attempt external call (api.openai.com:443)</button></p>
-    <div id="result" class="dim">no attempt this session</div>
+    <section class="panel plate scanning" aria-label="Egress containment">
+      <header class="phead"><span class="pcode">EGR·00</span><h2>Egress · blocked packets</h2></header>
+      <div class="count">
+        <span id="drops" class="big dim">0</span>
+        <span class="countcap">packets killed by the firewall this session</span>
+      </div>
+      <div id="mon" class="mon dim">connecting…</div>
+      <div class="probe">
+        <button id="firebtn" class="red" onclick="fire()">
+          <i class="rled" aria-hidden="true"></i>
+          <span class="rlabel">Attempt external call</span>
+          <span class="rtarget">api.openai.com · 443</span>
+        </button>
+        <div id="result" class="verdict dim">no attempt this session</div>
+      </div>
+      <h3 class="shead">live drop feed</h3>
+      <div class="scroll feed">
+        <table>
+          <thead><tr><th>time</th><th>proto</th><th>destination</th><th>port</th></tr></thead>
+          <tbody id="droptbl"><tr><td colspan="4" class="dim">none yet — nothing has tried to leave</td></tr></tbody>
+        </table>
+      </div>
+    </section>
 
-    <h2 style="margin-top:18px">Recent drops</h2>
-    <div class="scroll">
-      <table><thead><tr><th>time</th><th>proto</th><th>destination</th><th>port</th></tr></thead>
-      <tbody id="droptbl"><tr><td colspan="4" class="dim">none yet</td></tr></tbody></table>
+    <section class="panel auditpanel" aria-label="Audit ledger">
+      <header class="phead">
+        <span class="pcode">AUD·01</span><h2>Audit ledger</h2>
+        <span class="pnote">append-only · hash-chained</span>
+      </header>
+      <div class="scroll audit" id="audit"><span class="dim">waiting…</span></div>
+    </section>
+
+  </aside>
+
+<main class="stage">
+
+    <section class="panel" aria-label="Agent">
+      <header class="phead">
+        <span class="pcode">AGT·02</span><h2>Agent · plan trace, human gate</h2>
+        <span class="pspacer"></span>
+        <label class="toggle" title="arm only outside the demo — writes then run without sign-off">
+          <input type="checkbox" id="autoapprove"> auto mode · accept edits
+        </label>
+      </header>
+      <div id="gatebanner" class="gatebanner" hidden></div>
+      <div class="composer">
+        <textarea id="task" rows="2" placeholder="Read inbox/UT-2024-114-V-2301.md and draft an approval note for the recommendations"></textarea>
+        <input id="agentattach" placeholder="attachments · workspace-relative, e.g. inbox/hello.png" aria-label="attachments">
+        <div class="crow">
+          <button id="runbtn" class="go" onclick="runAgent()">▶ Run</button>
+          <span id="agentstat" class="stat dim">idle</span>
+          <span class="meter" aria-hidden="true"><i id="budgetbar"></i></span>
+          <span id="budget" class="dim"></span>
+        </div>
+      </div>
+      <div id="agentroute" class="routecard" hidden></div>
+      <div class="scroll trace" id="trace" aria-live="polite">
+        <div class="traceempty dim">the plan trace renders here — every step, tool call and observation is visible and audited</div>
+      </div>
+    </section>
+
+    <div class="duo">
+      <section class="panel" aria-label="Router">
+        <header class="phead"><span class="pcode">RTR·03</span><h2>Router · deterministic, no LLM</h2></header>
+        <div class="pbody">
+          <textarea id="prompt" rows="2" placeholder="Draft an approval note for replacing the PSV-4402 spring"></textarea>
+          <div class="crow">
+            <input id="attach" placeholder="attachments, e.g. titleblock.png" aria-label="router attachments">
+            <button class="act" onclick="doRoute()">Route</button>
+          </div>
+          <div id="decision" class="routecard" hidden></div>
+          <div class="scroll scores"><table id="scoretbl"></table></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Registry">
+        <header class="phead"><span class="pcode">REG·04</span><h2>Registry · <span id="profile" class="dim">…</span></h2></header>
+        <div class="pbody">
+          <div class="crow">
+            <button id="reloadbtn" class="act" onclick="reloadRegistry()">↻ Reload registry</button>
+            <span id="reloadmsg" class="dim"></span>
+          </div>
+          <div class="scroll modelwrap">
+            <table>
+              <thead><tr><th>id</th><th>ref</th><th>dev</th><th>VRAM</th><th>routes</th></tr></thead>
+              <tbody id="modeltbl"></tbody>
+            </table>
+          </div>
+          <div id="rejected"></div>
+        </div>
+      </section>
     </div>
-  </section>
 
-  <section>
-    <h2>Audit log · hash-chained, append-only</h2>
-    <div class="scroll" id="audit"><span class="dim">waiting…</span></div>
-  </section>
+    <div class="duo flip">
+      <section class="panel" aria-label="Tool roster">
+        <header class="phead"><span class="pcode">TLS·05</span><h2>Tool roster · what the gate covers</h2></header>
+        <div class="pbody">
+          <div id="toolgrid" class="toolgrid"><span class="dim">loading…</span></div>
+        </div>
+      </section>
 
-  <section>
-    <h2>Router · deterministic, no LLM</h2>
-    <textarea id="prompt" rows="3" placeholder="Draft an approval note for replacing the PSV-4402 spring"></textarea>
-    <div style="display:flex; gap:8px; align-items:center; margin:8px 0">
-      <input id="attach" placeholder="attachments, e.g. titleblock.png" style="flex:1">
-      <button class="plain" onclick="doRoute()">Route</button>
+      <section class="panel" aria-label="Firewall ruleset">
+        <header class="phead"><span class="pcode">FWL·06</span><h2>Firewall ruleset · verbatim</h2></header>
+        <pre id="rules" class="scroll rules">loading…</pre>
+      </section>
     </div>
-    <div id="decision" class="dim">no decision yet</div>
-    <div class="scroll" style="max-height:150px"><table id="scoretbl"></table></div>
-  </section>
 
-  <section>
-    <h2>Registry · <span id="profile" class="dim">…</span></h2>
-    <p><button class="plain" onclick="reloadRegistry()">↻ Reload registry</button>
-       <span id="reloadmsg" class="dim"></span></p>
-    <div class="scroll">
-      <table><thead><tr><th>id</th><th>ref</th><th>dev</th><th>VRAM</th><th>routes</th></tr></thead>
-      <tbody id="modeltbl"></tbody></table>
-    </div>
-    <div id="rejected"></div>
-  </section>
+    <footer class="foot">
+      <span>bound to loopback <b>127.0.0.1</b> only</span>
+      <span>·</span>
+      <span>three containment layers — host firewall, net_guard socket patch, sandbox <b>--network none</b></span>
+      <span>·</span>
+      <span>every action lands in the hash-chained ledger</span>
+    </footer>
 
-
-  <section style="grid-column:1/-1">
-    <h2>Agent · plan trace, human gate
-      <span id="backend" class="dim" style="text-transform:none; letter-spacing:0">…</span></h2>
-    <textarea id="task" rows="2" placeholder="Read inbox/UT-2024-114-V-2301.md and draft an approval note for the recommendations"></textarea>
-    <input id="agentattach" placeholder="attachments, workspace-relative, e.g. inbox/hello.png" style="width:100%; margin-top:6px">
-    <div style="display:flex; gap:8px; align-items:center; margin:8px 0">
-      <button class="go" onclick="runAgent()" id="runbtn">▶ Run</button>
-      <span id="agentstat" class="dim">idle</span>
-      <label class="dim" style="text-transform:none; letter-spacing:0">
-        <input type="checkbox" id="autoapprove" onchange="renderGateBanner()"
-               style="vertical-align:middle; margin:0 4px 0 0"> auto mode · accept edits
-      </label>
-      <span style="margin-left:auto" class="dim" id="budget"></span>
-    </div>
-    <div id="gatebanner" class="warn" style="margin:0 0 8px; display:none"></div>
-    <div id="agentroute" class="dim"></div>
-    <div class="scroll" id="trace" style="max-height:420px; margin-top:8px"></div>
-  </section>
-
-  <section style="grid-column:1/-1; min-height:0">
-    <h2>Firewall ruleset · verbatim</h2>
-    <pre id="rules">loading…</pre>
-  </section>
+</main>
 
 </div>
 
 <!-- Vendored locally, loaded in dependency order. No CDN, no webfont, no npm
      build step (AGENTS.md §2.1, §7). tests/test_web.py asserts this. -->
 <script src="/static/js/util.js"></script>
+<script src="/static/js/ambient.js?v=12"></script>
 <script src="/static/js/sovereignty.js"></script>
 <script src="/static/js/router.js"></script>
 <script src="/static/js/registry.js"></script>
+<script src="/static/js/tools.js"></script>
+<script src="/static/js/firewall.js"></script>
 <script src="/static/js/agent.js"></script>
-<script src="/static/js/ambient.js?v=11"></script>
 </body>
 </html>
