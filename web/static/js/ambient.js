@@ -67,22 +67,77 @@
 
   if (reduced.matches) return;
 
-  var x = 0, y = 0, queued = false;
+  // ---- Trailing cursor light ------------------------------------------------
+  // Three points chase the pointer at different rates, so the light reads as a
+  // trail rather than a dot welded to the cursor. This is the CSS-native stand-in
+  // for the threejs-components "tubes" cursor: that one needs three.js from a
+  // CDN (§2.1 forbids it, and test_no_remote_es_module_import fails the build)
+  // and runs WebGL continuously on the same 6 GB card that holds an 8B model
+  // (§17: GPU pressure here does not raise, it runs 20-25x slower).
+  //
+  // Cost is bounded two ways: the rAF loop STOPS once the points have settled,
+  // so a still pointer costs nothing, and the paint is three radial gradients on
+  // one already-composited layer.
+  var PT = [
+    { x: 0, y: 0, ease: 0.22 },
+    { x: 0, y: 0, ease: 0.12 },
+    { x: 0, y: 0, ease: 0.07 }
+  ];
+  var tx = window.innerWidth / 2, ty = window.innerHeight * 0.4, running = false;
 
-  function paint() {
-    queued = false;
-    root.style.setProperty('--mx', x + 'px');
-    root.style.setProperty('--my', y + 'px');
+  PT.forEach(function (p) { p.x = tx; p.y = ty; });
+
+  function frame() {
+    var moved = false;
+    for (var i = 0; i < PT.length; i++) {
+      var p = PT[i];
+      p.x += (tx - p.x) * p.ease;
+      p.y += (ty - p.y) * p.ease;
+      if (Math.abs(tx - p.x) > 0.5 || Math.abs(ty - p.y) > 0.5) moved = true;
+      root.style.setProperty('--x' + i, p.x.toFixed(1) + 'px');
+      root.style.setProperty('--y' + i, p.y.toFixed(1) + 'px');
+    }
+    // Settled: stop the loop entirely rather than idling a rAF forever.
+    if (moved) requestAnimationFrame(frame); else running = false;
   }
 
+  function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
+
   window.addEventListener('pointermove', function (e) {
-    x = e.clientX; y = e.clientY;
-    if (!queued) { queued = true; requestAnimationFrame(paint); }
+    tx = e.clientX; ty = e.clientY;
+    root.style.setProperty('--mx', tx + 'px');
+    root.style.setProperty('--my', ty + 'px');
+    kick();
   }, { passive: true });
 
   // Pointer leaving the window parks the light instead of freezing it mid-edge.
   window.addEventListener('pointerleave', function () {
+    tx = window.innerWidth / 2; ty = window.innerHeight * 0.4;
     root.style.setProperty('--mx', '50vw');
     root.style.setProperty('--my', '40vh');
+    kick();
+  }, { passive: true });
+
+  // Click cycles the palette, as in the reference. The palettes are this
+  // console's own semantic hues rather than random colours: a security panel
+  // that flashes arbitrary pink on click stops looking like an instrument, and
+  // random hex would collide with the green/amber/red the UI uses for state.
+  var PALETTES = [
+    ['rgba(121,192,255,.13)', 'rgba(63,185,80,.10)',  'rgba(88,140,255,.09)'],
+    ['rgba(63,185,80,.13)',   'rgba(121,192,255,.09)','rgba(140,200,255,.08)'],
+    ['rgba(210,153,34,.11)',  'rgba(121,192,255,.10)','rgba(63,185,80,.08)'],
+    ['rgba(160,120,255,.12)', 'rgba(121,192,255,.10)','rgba(63,185,80,.08)']
+  ];
+  var pal = 0;
+  function applyPalette(n) {
+    PALETTES[n].forEach(function (c, i) { root.style.setProperty('--c' + i, c); });
+  }
+  applyPalette(0);
+
+  document.addEventListener('click', function (e) {
+    // Never steal a click that was meant for the app.
+    if (e.target.closest('button, a, input, textarea, select, label')) return;
+    pal = (pal + 1) % PALETTES.length;
+    applyPalette(pal);
   }, { passive: true });
 })();

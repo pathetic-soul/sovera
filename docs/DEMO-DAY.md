@@ -121,7 +121,7 @@ Route line reads `-> coder [swap from writer]`. Then show the audited argv
 verbatim — the flag is evidence, not a claim:
 
 ```
-docker run --rm --network none --read-only --tmpfs /work:rw,size=256m,exec
+docker run --rm --network none --read-only --tmpfs /work:rw,size=256m,exec,mode=1777
   --memory 2g --cpus 2 --pids-limit 128 --security-opt no-new-privileges --cap-drop ALL
 ```
 

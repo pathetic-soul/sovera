@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -313,3 +315,34 @@ def test_sandbox_command_carries_the_hardening_flags() -> None:
 
 def test_sandbox_is_gated_by_the_human() -> None:
     assert PySandbox().requires_approval is True
+
+
+def test_sandbox_tmpfs_is_writable_by_the_non_root_user() -> None:
+    """The image runs as uid 10001 and a tmpfs mounts root-owned 0755, so /work
+    -- the sandbox's own cwd -- was not writable by the process using it. Every
+    generated script that saved a scratch file died on PermissionError. The
+    other sandbox tests are all mocked, so nothing caught it."""
+    from tools.py_sandbox import HARDENING
+
+    tmpfs = HARDENING[HARDENING.index("--tmpfs") + 1]
+    assert "mode=1777" in tmpfs, f"/work would mount root-owned and unwritable: {tmpfs}"
+
+
+@pytest.mark.skipif(shutil.which("docker") is None, reason="needs docker")
+def test_sandbox_can_actually_create_and_read_files(ctx: RunContext) -> None:
+    """The one non-mocked sandbox check: a script must be able to write a file
+    in its working directory, read it back, and still be network-less."""
+    if subprocess.run(["docker", "image", "inspect", "sandbox-py:local"],
+                      capture_output=True).returncode != 0:
+        pytest.skip("sandbox-py:local not built")
+    result = PySandbox().run({"code": (
+        "open('scratch.txt','w').write('working file')\n"
+        "print('read back:', open('scratch.txt').read())\n"
+        "import socket\n"
+        "try:\n"
+        "    socket.create_connection(('1.1.1.1',443), timeout=3); print('REACHABLE')\n"
+        "except OSError as e: print('blocked:', e)\n"
+    )}, ctx)
+    assert result.ok, result.output
+    assert "read back: working file" in result.output
+    assert "Network is unreachable" in result.output, "containment regressed"

@@ -174,6 +174,25 @@ class Calc(Tool):
             return ToolResult(ok=False, output="", error=f"{msg}. {_help()}")
         except Exception as exc:  # noqa: BLE001 - sympy raises a wide variety
             msg = f"{type(exc).__name__}: {str(exc)[:200]}"
+            # sympy's auto_symbol transformation reaches for `Function` when it
+            # meets a call it does not know, and global_dict={} (deliberately,
+            # §2.3) means the name is absent -- so an unknown function surfaced
+            # as "NameError: name 'Function' is not defined". That told the model
+            # nothing about what it did wrong, and it retried the same call six
+            # times in a row. §12.6: the error has to name the actual mistake.
+            if "Function" in msg and "not defined" in msg:
+                unknown = _unknown_call(raw)
+                msg = (f"unknown function {unknown!r}" if unknown
+                       else "unknown function in the expression")
+                ctx.audit.append(
+                    "tool_call", {"tool": self.name, "ok": False, "error": msg}
+                )
+                return ToolResult(
+                    ok=False, output="",
+                    error=f"{msg}. calc evaluates arithmetic and the named "
+                          f"inspection formulas only; it cannot call arbitrary "
+                          f"functions. {_help()}",
+                )
             ctx.audit.append("tool_call", {"tool": self.name, "ok": False, "error": msg})
             return ToolResult(ok=False, output="", error=f"could not evaluate: {msg}")
 
@@ -181,6 +200,15 @@ class Calc(Tool):
             "tool_call", {"tool": self.name, "ok": True, "expression": raw[:200]}
         )
         return ToolResult(ok=True, output=output)
+
+
+def _unknown_call(expression: str) -> str | None:
+    """First `name(` in the expression that sympy does not know, for the error."""
+    for match in re.finditer(r"([A-Za-z_]\w*)\s*\(", expression):
+        name = match.group(1)
+        if name not in NAMESPACE:
+            return name
+    return None
 
 
 def _reject(expression: str) -> str | None:

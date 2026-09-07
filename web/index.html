@@ -9,8 +9,8 @@
 <!-- ?v= is a cache buster. /static is served with an ETag but no cache-control,
      so Chrome heuristically serves stale assets on a normal reload. Bump this
      whenever the CSS changes. -->
-<link rel="stylesheet" href="/static/app.css?v=12">
-<link rel="stylesheet" href="/static/panels.css?v=12">
+<link rel="stylesheet" href="/static/app.css?v=13">
+<link rel="stylesheet" href="/static/panels.css?v=13">
 </head>
 <body>
 
@@ -158,7 +158,7 @@
 <!-- Vendored locally, loaded in dependency order. No CDN, no webfont, no npm
      build step (AGENTS.md §2.1, §7). tests/test_web.py asserts this. -->
 <script src="/static/js/util.js"></script>
-<script src="/static/js/ambient.js?v=12"></script>
+<script src="/static/js/ambient.js?v=13"></script>
 <script src="/static/js/sovereignty.js"></script>
 <script src="/static/js/router.js"></script>
 <script src="/static/js/registry.js"></script>

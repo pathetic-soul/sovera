@@ -455,7 +455,7 @@ have one.
 
 ```
 docker run --rm --network none --read-only
-  --tmpfs /work:rw,size=256m,exec
+  --tmpfs /work:rw,size=256m,exec,mode=1777
   --memory 2g --cpus 2 --pids-limit 128
   --security-opt no-new-privileges --cap-drop ALL
   -v "$ARTIFACT_DIR":/out

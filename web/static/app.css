@@ -63,11 +63,21 @@ body::before {
     repeating-linear-gradient(0deg,  rgba(255,255,255,.012) 0 1px, transparent 1px 32px),
     repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 32px);
 }
+/* Three trailing lights, not one. ambient.js chases the pointer with three
+   different easings, so the lead light sits under the cursor and the two behind
+   lag into a trail. Click cycles --c0/--c1/--c2 through the console's own
+   palettes. This is the native stand-in for the threejs "tubes" cursor: same
+   read, no CDN import (§2.1) and no WebGL competing with a resident 8B model
+   for the GPU (§17). Three gradients on one composited layer. */
 body::after {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(circle 640px at var(--mx, 50vw) var(--my, 40vh),
-             var(--glow-color), transparent 66%);
-  animation: glowshift 9s ease-in-out infinite alternate;
+  background:
+    radial-gradient(circle 300px at var(--x0, 50vw) var(--y0, 40vh),
+                    var(--c0, rgba(121,192,255,.13)), transparent 68%),
+    radial-gradient(circle 460px at var(--x1, 50vw) var(--y1, 40vh),
+                    var(--c1, rgba(63,185,80,.10)), transparent 70%),
+    radial-gradient(circle 640px at var(--x2, 50vw) var(--y2, 40vh),
+                    var(--c2, rgba(88,140,255,.09)), transparent 72%);
   transition: opacity .5s ease; opacity: 0;
 }
 @keyframes glowshift {

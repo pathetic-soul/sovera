@@ -37,7 +37,13 @@ HARDENING = (
     "--rm",
     "--network", "none",
     "--read-only",
-    "--tmpfs", "/work:rw,size=256m,exec",
+    # mode=1777 (like /tmp) because the image runs as a NON-ROOT uid and a tmpfs
+    # mounts root-owned 0755 by default — so the sandbox's own working directory
+    # was not writable by the process using it, and every generated script that
+    # saved a scratch file died on PermissionError. Sticky bit keeps the usual
+    # /tmp semantics; this widens nothing about network, caps or the read-only
+    # root, which are what §9.3 is actually protecting.
+    "--tmpfs", "/work:rw,size=256m,exec,mode=1777",
     "--memory", "2g",
     "--cpus", "2",
     "--pids-limit", "128",
