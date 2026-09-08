@@ -196,6 +196,8 @@ class Agent:
         approve: Approver | None = None,
         resident: str | None = None,
         auto_approve: bool | None = None,
+        stop_event: asyncio.Event | None = None,
+        ctx: RunContext | None = None,
     ) -> AsyncIterator[AgentEvent]:
         """Stream the run. Yields one event per step so the UI renders a live
         plan trace (§8.4) instead of a spinner.
@@ -203,12 +205,27 @@ class Agent:
         `auto_approve` arms the §2.4 relaxation for this run only; None means
         "use the configured default". The gate still emits its event and still
         audits, so an unattended grant is visible rather than invisible.
+
+        `stop_event` is the operator kill switch. Checked at the top of every
+        step, which is enough on its own to stop a run between steps and to
+        catch a kill that arrived while a sandboxed tool was running — the
+        websocket layer `docker kill`s that container directly, which unblocks
+        the tool's `subprocess.run` and brings control back here naturally.
+        The one call with no such external unblock is the model call itself,
+        so it additionally races `_decide` against the event below.
+
+        `ctx` lets the caller supply its own `RunContext` and keep a reference
+        to it — that reference is how `core/api/agent.py`'s kill handler reads
+        `ctx.active_container` from outside this loop to `docker kill` a
+        running sandbox. Callers that do not need that (tests, `finetune/`)
+        omit it and get the same internally-constructed context as before.
         """
         approver: Approver = approve or _deny_by_default
         auto_gate = self.settings.auto_approve if auto_approve is None else auto_approve
-        ctx = RunContext(
-            workspace=self.workspace, audit=self.audit, session_id=self.audit.session_id
-        )
+        if ctx is None:
+            ctx = RunContext(
+                workspace=self.workspace, audit=self.audit, session_id=self.audit.session_id
+            )
 
         decision = self.router.route(task, attachments, resident)
         spec = self.router.registry.models[decision.model_id]
@@ -224,6 +241,9 @@ class Agent:
 
         while step_n < self.settings.max_steps:
             step_n += 1
+            if stop_event is not None and stop_event.is_set():
+                yield self._killed(spent, step_n - 1)
+                return
             if spent >= self.settings.max_tokens:
                 yield self._stop(
                     f"token cap {self.settings.max_tokens} reached after {step_n - 1} steps", spent
@@ -231,7 +251,12 @@ class Agent:
                 return
 
             try:
-                obj, used, repaired = await self._decide(spec.ref, messages, spec.max_ctx)
+                obj, used, repaired = await self._decide_or_stop(
+                    spec.ref, messages, spec.max_ctx, stop_event
+                )
+            except _Killed:
+                yield self._killed(spent, step_n - 1)
+                return
             except BackendError as exc:
                 yield AgentEvent(type="error", data={"error": str(exc), "step": step_n})
                 return
@@ -381,6 +406,51 @@ class Agent:
         return AgentEvent(type="final", data={"answer": f"Stopped: {why}. Partial work above.",
                                               "halted": True, "tokens_used": spent,
                                               "max_tokens": self.settings.max_tokens})
+
+    def _killed(self, spent: int, steps: int) -> AgentEvent:
+        """The operator kill switch fired. Distinct from `_stop` (a budget
+        limit) — this is a deliberate human interrupt, and §2.2 wants that
+        distinction visible in the chain, not folded into a generic halt."""
+        self.audit.append("error", {"event": "operator_kill", "tokens": spent, "steps": steps})
+        return AgentEvent(type="final", data={
+            "answer": "Stopped: operator pressed Stop. Partial work above.",
+            "halted": True, "killed": True, "tokens_used": spent,
+            "max_tokens": self.settings.max_tokens,
+        })
+
+    async def _decide_or_stop(
+        self, ref: str, messages: list[Message], max_ctx: int, stop_event: asyncio.Event | None
+    ) -> tuple[dict[str, Any], int, bool]:
+        """`_decide`, raced against the kill switch.
+
+        A non-streaming Ollama call offers no cancel token, so this cannot
+        stop the model generating server-side — only asyncio.to_thread's own
+        limit applies: cancelling the Task stops US waiting on it immediately;
+        the worker thread's blocked HTTP call runs to completion in the
+        background regardless, and its result is simply discarded. That is
+        still the useful half of "kill switch": the loop and the UI stop
+        waiting right away instead of sitting through whatever hung the call
+        (this is exactly the shape of the 300s Ollama timeouts that motivated
+        building this at all).
+        """
+        decide_task: asyncio.Task[tuple[dict[str, Any], int, bool]] = asyncio.ensure_future(
+            self._decide(ref, messages, max_ctx)
+        )
+        if stop_event is None:
+            return await decide_task
+        stop_task = asyncio.ensure_future(stop_event.wait())
+        done, _ = await asyncio.wait(
+            {decide_task, stop_task}, return_when=asyncio.FIRST_COMPLETED
+        )
+        if decide_task in done:
+            stop_task.cancel()
+            return await decide_task
+        decide_task.cancel()
+        raise _Killed()
+
+
+class _Killed(RuntimeError):
+    """The operator pressed Stop while a model call was in flight."""
 
 
 class _Unrepairable(RuntimeError):

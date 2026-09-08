@@ -212,6 +212,12 @@ button:disabled { cursor: not-allowed; opacity: .6; transform: none; }
 button.go { border-color: rgba(63,185,80,.5); background: #12291b; color: var(--ok-ink); }
 button.go:hover { background: var(--ok); color: #04140a; border-color: var(--ok); }
 button.denybtn:hover { background: var(--bad); color: #1c0507; border-color: var(--bad); }
+/* The operator kill switch — same red as every other "this stops something
+   real" control (button.red, denybtn), so its severity reads consistently
+   rather than inventing a fourth danger colour. */
+button.stopbtn { border-color: rgba(248,81,73,.55); background: #221016; color: var(--bad-ink); }
+button.stopbtn:hover:not(:disabled) { background: var(--bad); color: #1c0507; border-color: var(--bad); }
+button.stopbtn:disabled { opacity: .5; cursor: not-allowed; }
 
 /* ===== MOTION =============================================================
    Operate mode: motion explains feedback and state, it does not perform.

@@ -47,6 +47,8 @@ function runAgent() {
   $('agentstat').textContent = 'connecting…';
   $('agentstat').className = 'stat warn';
   $('runbtn').disabled = true;
+  $('stopbtn').hidden = false;
+  $('stopbtn').disabled = false;
 
   const ws = new WebSocket(`ws://${location.host}/ws/agent`);
   agentWs = ws;
@@ -59,11 +61,26 @@ function runAgent() {
   ws.onmessage = e => onAgentEvent(JSON.parse(e.data));
   ws.onclose = () => {
     $('runbtn').disabled = false;
+    $('stopbtn').hidden = true;
     if ($('agentstat').textContent === 'running') {
       $('agentstat').textContent = 'disconnected';
       $('agentstat').className = 'stat bad';
     }
   };
+}
+
+// The operator kill switch. Sent on the same channel as approve/reject —
+// core/api/agent.py's reader task demultiplexes it from an approval answer.
+// A stop mid-approval is answered as a denial server-side, so the pending
+// button prompt (if any) is cleared here rather than left stale on screen.
+function stopAgent() {
+  if (!agentWs || agentWs.readyState !== WebSocket.OPEN) return;
+  agentWs.send(JSON.stringify({ stop: true }));
+  $('stopbtn').disabled = true;
+  $('agentstat').textContent = 'stopping…';
+  $('agentstat').className = 'stat warn';
+  const pending = $('trace').querySelector('.gate .gateactions');
+  if (pending) pending.remove();
 }
 
 function onAgentEvent(ev) {

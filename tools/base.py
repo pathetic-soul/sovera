@@ -42,6 +42,10 @@ class RunContext:
     workspace: Path
     audit: AuditLog
     session_id: str
+    # Set by py_sandbox.py for the duration of a container run, cleared after.
+    # Lets the kill switch (core/api/agent.py) `docker kill` the right
+    # container by name instead of waiting out its own 60s timeout.
+    active_container: str | None = None
 
 
 class JailBreak(RuntimeError):

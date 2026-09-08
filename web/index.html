@@ -86,6 +86,7 @@
         <input id="agentattach" placeholder="attachments · workspace-relative, e.g. inbox/hello.png" aria-label="attachments">
         <div class="crow">
           <button id="runbtn" class="go" onclick="runAgent()">▶ Run</button>
+          <button id="stopbtn" class="stopbtn" onclick="stopAgent()" hidden>■ Stop</button>
           <span id="agentstat" class="stat dim">idle</span>
           <span class="meter" aria-hidden="true"><i id="budgetbar"></i></span>
           <span id="budget" class="dim"></span>

@@ -22,6 +22,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Literal
@@ -63,7 +64,17 @@ class AuditRecord(BaseModel):
 
 
 class AuditLog:
-    """Append-only JSONL chain. Resumes from an existing file on construction."""
+    """Append-only JSONL chain. Resumes from an existing file on construction.
+
+    One `AuditLog` instance is shared by every tool call in a run, and a tool
+    runs inside `asyncio.to_thread` (core/agent.py) — a real OS thread, not
+    just another coroutine. The operator kill switch (core/api/agent.py) can
+    call `append()` from the main thread at the same instant a tool's worker
+    thread is mid-`append()` of its own, and without a lock both read the
+    same `_seq`/`_prev` before either had written, producing two records
+    claiming the same seq — measured, not hypothetical: it broke the chain
+    the first time a kill landed while a model call was in flight.
+    """
 
     def __init__(self, path: Path = DEFAULT_PATH, session_id: str = "adhoc") -> None:
         self.path = Path(path)
@@ -71,6 +82,7 @@ class AuditLog:
         self.session_id = session_id
         self._seq, self._prev = self._resume()
         self._size = self.path.stat().st_size if self.path.exists() else 0
+        self._lock = threading.Lock()
 
     def _resume(self) -> tuple[int, str]:
         last: str | None = None
@@ -87,24 +99,33 @@ class AuditLog:
     def append(
         self, kind: Kind, payload: dict[str, Any], ref: int | None = None
     ) -> AuditRecord:
-        """Write one record. `ref` links a result record back to its intent record."""
-        body = dict(payload) if ref is None else {**payload, "ref": ref}
-        rec = AuditRecord(
-            seq=self._seq,
-            ts=datetime.now(timezone.utc).isoformat(),
-            session_id=self.session_id,
-            kind=kind,
-            payload=body,
-            prev_hash=self._prev,
-        )
-        rec.hash = rec.digest()
-        self._assert_sole_writer()
-        with self.path.open("a", encoding="utf-8") as fh:
-            fh.write(rec.model_dump_json() + "\n")
-        self._seq += 1
-        self._prev = rec.hash
-        self._size = self.path.stat().st_size
-        return rec
+        """Write one record. `ref` links a result record back to its intent record.
+
+        The whole method is one critical section: reading `_seq`/`_prev`,
+        writing the line, and advancing that state must happen as a unit, or
+        two threads can each read the pre-write state and both claim the same
+        seq (see the class docstring). `threading.Lock`, not `asyncio.Lock` —
+        the callers this actually races are OS threads (`asyncio.to_thread`
+        workers), which an asyncio-level lock does not serialize at all.
+        """
+        with self._lock:
+            body = dict(payload) if ref is None else {**payload, "ref": ref}
+            rec = AuditRecord(
+                seq=self._seq,
+                ts=datetime.now(timezone.utc).isoformat(),
+                session_id=self.session_id,
+                kind=kind,
+                payload=body,
+                prev_hash=self._prev,
+            )
+            rec.hash = rec.digest()
+            self._assert_sole_writer()
+            with self.path.open("a", encoding="utf-8") as fh:
+                fh.write(rec.model_dump_json() + "\n")
+            self._seq += 1
+            self._prev = rec.hash
+            self._size = self.path.stat().st_size
+            return rec
 
     def _assert_sole_writer(self) -> None:
         """Refuse to append if the file grew behind our back.

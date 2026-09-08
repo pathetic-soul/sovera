@@ -30,9 +30,10 @@ class ScriptedBackend(LLMBackend):
     """Replays canned replies. Raises if the loop asks for more than scripted —
     an over-run is a bug we want loud, not a hang."""
 
-    def __init__(self, replies: list[str], tokens: int = 100) -> None:
+    def __init__(self, replies: list[str], tokens: int = 100, delay: float = 0.0) -> None:
         self.replies = list(replies)
         self.tokens = tokens
+        self.delay = delay  # simulates a slow/hung call, for kill-switch races
         self.calls: list[list[Message]] = []
 
     def chat(
@@ -45,6 +46,9 @@ class ScriptedBackend(LLMBackend):
         json_mode: bool = False,
     ) -> Completion:
         self.calls.append(list(messages))
+        if self.delay:
+            import time
+            time.sleep(self.delay)
         if not self.replies:
             raise AssertionError("agent asked for more turns than the script provides")
         return Completion(
@@ -82,11 +86,11 @@ def finish(answer: str = "done") -> str:
 
 @pytest.fixture
 def build(tmp_path: Path):  # type: ignore[no-untyped-def]
-    def _build(replies: list[str], tools: list[Tool] | None = None, tokens: int = 100):  # type: ignore[no-untyped-def]
+    def _build(replies: list[str], tools: list[Tool] | None = None, tokens: int = 100, delay: float = 0.0):  # type: ignore[no-untyped-def]
         ws = tmp_path / "workspace"
         (ws / "inbox").mkdir(parents=True, exist_ok=True)
         audit = AuditLog(ws / ".audit" / "audit.jsonl", "test")
-        backend = ScriptedBackend(replies, tokens)
+        backend = ScriptedBackend(replies, tokens, delay)
         registry = Registry()
         chosen = tools if tools is not None else [EchoTool()]
         agent = Agent(backend, Router(registry), {t.name: t for t in chosen}, ws, audit)
@@ -423,3 +427,65 @@ def test_multiline_code_in_json_is_parsed_not_rejected(build: Any) -> None:
     assert step.data["tool"] == "echo"
     assert step.data["repaired"] is False, "should parse first time, not need repair"
     assert events[-1].type == "final"
+
+
+# --- the operator kill switch ------------------------------------------------
+
+def test_stop_event_already_set_exits_before_the_first_step(build: Any) -> None:
+    agent, backend, _, _ = build([call("echo", msg="x"), finish()])
+    stop = asyncio.Event()
+    stop.set()
+
+    events = drain(agent, "do it", stop_event=stop)
+
+    assert kinds(events) == ["route", "final"]
+    assert events[-1].data["killed"] is True
+    assert backend.calls == [], "a model was called after the run was already killed"
+
+
+def test_stop_event_wins_the_race_against_a_slow_model_call(build: Any) -> None:
+    """The scenario that motivated building this: a hung/slow Ollama call
+    (measured at 300s+ earlier tonight) must not hold the loop hostage."""
+    agent, backend, _, _ = build([finish()], delay=2.0)
+    stop = asyncio.Event()
+
+    async def go() -> list[AgentEvent]:
+        # Fire the stop shortly after the run starts, while the scripted
+        # backend's 2s delay is still sleeping in its worker thread.
+        async def flip() -> None:
+            await asyncio.sleep(0.1)
+            stop.set()
+
+        results: list[AgentEvent] = []
+        flipper = asyncio.ensure_future(flip())
+        start = asyncio.get_event_loop().time()
+        async for ev in agent.run("do it", stop_event=stop):
+            results.append(ev)
+        elapsed = asyncio.get_event_loop().time() - start
+        await flipper
+        return results, elapsed
+
+    events, elapsed = asyncio.run(go())
+    assert events[-1].data["killed"] is True
+    assert elapsed < 1.0, f"stop did not preempt the slow call ({elapsed:.2f}s)"
+
+
+def test_kill_is_audited_distinctly_from_a_budget_stop(build: Any) -> None:
+    agent, _, audit, _ = build([call("echo", msg="x"), finish()])
+    stop = asyncio.Event()
+    stop.set()
+
+    drain(agent, "do it", stop_event=stop)
+
+    records = [r for r in audit.tail() if r.kind == "error"]
+    assert records[-1].payload["event"] == "operator_kill"
+
+
+def test_no_stop_event_behaves_exactly_as_before(build: Any) -> None:
+    """stop_event is optional; omitting it must not change existing behaviour."""
+    agent, _, _, ws = build([call("fs_read", path="inbox/r.md"), finish("8.9 mm")],
+                            tools=[FsRead()])
+    (ws / "inbox" / "r.md").write_text("min thickness 8.9 mm", encoding="utf-8")
+    events = drain(agent, "What is the minimum thickness?")
+    assert kinds(events) == ["route", "step", "final"]
+    assert events[-1].data["answer"] == "8.9 mm"

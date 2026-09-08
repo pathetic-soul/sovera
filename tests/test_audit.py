@@ -43,6 +43,36 @@ def test_a_second_writer_is_refused_instead_of_breaking_the_chain(tmp_path: Path
     assert AuditLog(path, "s3").verify() == (True, None), "chain damaged despite the guard"
 
 
+def test_concurrent_appends_from_real_threads_do_not_corrupt_the_chain(tmp_path: Path) -> None:
+    """The real incident this guards: a tool call runs inside asyncio.to_thread
+    (a genuine OS thread), and the operator kill switch can append from the
+    main thread at the same instant. Without a lock, both read the same
+    seq/prev_hash before either had written, and both wrote seq N — measured
+    live: pressing Stop while a model call was in flight broke the chain on
+    the very first try. This uses real `threading.Thread`s, not asyncio tasks,
+    because that is what actually raced."""
+    import threading
+
+    path = tmp_path / "a.jsonl"
+    log = AuditLog(path, "s1")
+    barrier = threading.Barrier(8)
+
+    def hammer(n: int) -> None:
+        barrier.wait()  # line every thread up so they all append at once
+        log.append("tool_call", {"n": n})
+
+    threads = [threading.Thread(target=hammer, args=(i,)) for i in range(8)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+    rows = [json.loads(l) for l in path.read_text(encoding="utf-8").splitlines() if l.strip()]
+    seqs = [r["seq"] for r in rows]
+    assert len(seqs) == len(set(seqs)), f"duplicate seq values: {seqs}"
+    assert AuditLog(path, "s2").verify() == (True, None)
+
+
 def test_verify_cli_fails_when_the_log_is_absent(tmp_path: Path) -> None:
     """§10.5 pre-demo assertion: a missing log must not print 'chain intact'.
     verify() itself still answers True — nothing is broken — but the CLI, whose

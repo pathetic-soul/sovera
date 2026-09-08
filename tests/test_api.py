@@ -18,6 +18,7 @@ therefore checked at the source instead (each router's own, un-included
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any, AsyncIterator
 
 from fastapi.testclient import TestClient
@@ -26,6 +27,7 @@ from starlette.types import Scope
 
 from core.agent import AgentEvent
 from core.api import ROUTERS
+from core.audit import AuditLog
 from core.orchestrator import app
 
 EXPECTED_PATHS = {
@@ -68,10 +70,18 @@ def test_no_duplicate_paths() -> None:
 # --- the §2.4 auto-approve flag, over the wire ------------------------------
 
 class _RecordingAgent:
-    """Stands in for the real Agent to capture what /ws/agent forwards."""
+    """Stands in for the real Agent to capture what /ws/agent forwards.
 
-    def __init__(self) -> None:
+    Needs real `workspace`/`audit` attributes since core/api/agent.py builds
+    a `RunContext` from `agent.workspace`/`agent.audit` up front (for the
+    kill switch's `docker kill` handle) — the real Agent always had these;
+    this fake just never needed them before that context moved to the caller.
+    """
+
+    def __init__(self, workspace: Path) -> None:
         self.seen: list[bool | None] = []
+        self.workspace = workspace
+        self.audit = AuditLog(workspace / ".audit" / "audit.jsonl", "test")
 
     async def run(
         self,
@@ -80,13 +90,15 @@ class _RecordingAgent:
         approve: Any = None,
         resident: Any = None,
         auto_approve: bool | None = None,
+        stop_event: Any = None,
+        ctx: Any = None,
     ) -> AsyncIterator[AgentEvent]:
         self.seen.append(auto_approve)
         yield AgentEvent(type="final", data={"answer": "done"})
 
 
-def _forwarded(payload: dict[str, Any]) -> bool | None:
-    agent = _RecordingAgent()
+def _forwarded(payload: dict[str, Any], tmp_path: Path) -> bool | None:
+    agent = _RecordingAgent(tmp_path / "workspace")
     app.state.agent = agent
     app.state.resident = None
     with TestClient(app).websocket_connect("/ws/agent") as ws:
@@ -96,11 +108,11 @@ def _forwarded(payload: dict[str, Any]) -> bool | None:
     return agent.seen[0]
 
 
-def test_ws_forwards_auto_approve_when_the_panel_arms_it() -> None:
-    assert _forwarded({"text": "do it", "auto_approve": True}) is True
+def test_ws_forwards_auto_approve_when_the_panel_arms_it(tmp_path: Path) -> None:
+    assert _forwarded({"text": "do it", "auto_approve": True}, tmp_path) is True
 
 
-def test_ws_omitting_the_flag_defers_to_config_rather_than_auto_approving() -> None:
+def test_ws_omitting_the_flag_defers_to_config_rather_than_auto_approving(tmp_path: Path) -> None:
     """Absent must mean "use the configured default", never an implicit yes —
     an API client that never heard of this flag must still hit the §2.4 gate."""
-    assert _forwarded({"text": "do it"}) is None
+    assert _forwarded({"text": "do it"}, tmp_path) is None

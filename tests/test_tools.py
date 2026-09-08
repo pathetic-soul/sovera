@@ -357,6 +357,37 @@ def test_sandbox_tmpfs_is_writable_by_the_non_root_user() -> None:
     assert "mode=1777" in tmpfs, f"/work would mount root-owned and unwritable: {tmpfs}"
 
 
+def test_sandbox_names_its_container_and_tracks_it_on_ctx(
+    ctx: RunContext, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The operator kill switch (core/api/agent.py) reads ctx.active_container
+    to `docker kill` a running sandbox by name instead of waiting out its 60s
+    timeout. That only works if the container is actually named, and if the
+    name is visible on ctx for the DURATION of the call, not after."""
+    seen: dict[str, object] = {}
+
+    def fake_run(argv, **kwargs):  # type: ignore[no-untyped-def]
+        if argv[:2] == ["docker", "image"]:  # preflight()'s own probe call
+            return subprocess.CompletedProcess(argv, 0, stdout="", stderr="")
+        seen["argv"] = argv
+        seen["active_container_during_call"] = ctx.active_container
+        return subprocess.CompletedProcess(argv, 0, stdout="ok", stderr="")
+
+    monkeypatch.setattr("tools.py_sandbox.shutil.which", lambda _: "/usr/bin/docker")
+    monkeypatch.setattr("tools.py_sandbox.subprocess.run", fake_run)
+
+    assert ctx.active_container is None
+    PySandbox().run({"code": "print('hi')"}, ctx)
+
+    argv = seen["argv"]
+    assert "--name" in argv
+    name = argv[argv.index("--name") + 1]
+    assert name.startswith("sovereign-sandbox-")
+    assert seen["active_container_during_call"] == name, \
+        "ctx.active_container must be set BEFORE the blocking call, not after"
+    assert ctx.active_container is None, "must be cleared once the call returns"
+
+
 @pytest.mark.skipif(shutil.which("docker") is None, reason="needs docker")
 def test_sandbox_can_actually_create_and_read_files(ctx: RunContext) -> None:
     """The one non-mocked sandbox check: a script must be able to write a file
