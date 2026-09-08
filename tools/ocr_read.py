@@ -20,7 +20,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from tools.base import JailBreak, RunContext, Tool, ToolResult, resolve_in_jail
+from tools.base import JailBreak, RunContext, Tool, ToolResult, nearby_files, resolve_in_jail
 
 MAX_CHARS = 6000  # same context-budget cap as fs_read.py (§8.4)
 IMAGE_EXT = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp", ".webp"}
@@ -102,9 +102,14 @@ class OcrRead(Tool):
             return ToolResult(ok=False, output="", error=str(exc))
 
         if not target.is_file():
+            # §12.6: named nothing else the model could act on — a guessed
+            # path (or a genuinely mistyped one) had no way to self-correct
+            # in the same run. fs_read.py already solved this; ocr_read.py
+            # is a jailed read of the identical shape and hit the same gap.
+            listing = nearby_files(ctx.workspace)
             msg = f"no such file: {rel}"
             audit({"ok": False, "error": msg})
-            return ToolResult(ok=False, output="", error=msg)
+            return ToolResult(ok=False, output="", error=f"{msg}. {listing}")
 
         if target.suffix.lower() not in IMAGE_EXT:
             msg = f"{rel} is not an image ({', '.join(sorted(IMAGE_EXT))})"

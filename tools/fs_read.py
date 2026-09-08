@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from tools.base import JailBreak, RunContext, Tool, ToolResult, resolve_in_jail
+from tools.base import JailBreak, RunContext, Tool, ToolResult, nearby_files, resolve_in_jail
 
 MAX_CHARS = 6000  # ~1500 tokens at the ~4 chars/token used throughout (§8.4)
 
@@ -48,7 +48,7 @@ class FsRead(Tool):
             return ToolResult(ok=False, output="", error=str(exc))
 
         if not target.is_file():
-            listing = _nearby(ctx, target)
+            listing = nearby_files(ctx.workspace)
             msg = f"no such file: {rel}"
             ctx.audit.append("file_read", {"path": rel, "ok": False, "error": msg})
             return ToolResult(ok=False, output="", error=f"{msg}. {listing}")
@@ -68,16 +68,3 @@ class FsRead(Tool):
             },
         )
         return ToolResult(ok=True, output=text)
-
-
-def _nearby(ctx: RunContext, target: object) -> str:
-    """Name what *is* readable. §12.6: assume malformed output and make the
-    repair path cheap — a 4B that guessed a filename can only fix it if the
-    error tells it the real ones."""
-    root = ctx.workspace.resolve()
-    names = sorted(
-        str(p.relative_to(root)).replace("\\", "/")
-        for p in root.rglob("*")
-        if p.is_file() and ".audit" not in p.parts
-    )[:20]
-    return f"Files available: {', '.join(names)}" if names else "The workspace is empty."

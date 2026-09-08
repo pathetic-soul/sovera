@@ -56,8 +56,9 @@ HARDENING = (
 class PySandbox(Tool):
     name = "py_sandbox"
     description = (
-        "Run a Python 3 script offline (no network, 60s, standard library only "
-        "- no numpy/pandas). Returns stdout, stderr, exit code. /out is kept."
+        "Run a Python 3 script offline (no network, 60s). numpy, pandas, scipy, "
+        "matplotlib, flask, sqlalchemy and more are pre-installed. Returns "
+        "stdout, stderr, exit code. /out is kept."
     )
     schema: dict[str, Any] = {
         "type": "object",

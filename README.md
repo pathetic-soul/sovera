@@ -313,7 +313,7 @@ Firewall, drop counters → drop log) are recorded in [AGENTS.md §17](AGENTS.md
 | `tools/fs_read.py` | jailed read, truncated to the context budget |
 | `tools/doc_write.py` | `.docx` deliverable via python-docx |
 | `tools/py_sandbox.py` | `docker run --network none`, no host fallback, ever |
-| `sandbox/Dockerfile` | the sandbox image — stdlib only, non-root, pre-built |
+| `sandbox/Dockerfile` | the sandbox image — non-root, pre-built; ~86 packages (numpy/pandas/flask/sqlalchemy/etc.) pre-staged offline (2026-09-09) |
 | `data/corpus/inbox/` | a realistic API 510 UT report, seeded into `workspace/` |
 
 ## Legs 6 and 7 — multimodal and hybrid retrieval

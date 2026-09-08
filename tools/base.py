@@ -59,9 +59,15 @@ def resolve_in_jail(workspace: Path, candidate: str) -> Path:
     first and comparing afterwards — string-prefix checks on the raw argument
     are what jail escapes are made of. Symlinks resolve too, so a link planted
     inside workspace/ pointing at C:\\Windows does not get you out either.
+
+    `candidate.strip()` — a stray leading space (easy to pick up pasting a
+    path into the UI) used to resolve to a silently different, nonexistent
+    directory (`" inbox/x.png"` -> `workspace/ inbox/x.png`) with no jail
+    rejection and no diagnostic beyond a plain "no such file". Whitespace is
+    never a real part of a path here, so trimming it costs nothing.
     """
     root = workspace.resolve()
-    raw = Path(candidate)
+    raw = Path(candidate.strip())
     if raw.is_absolute() or raw.drive:
         raise JailBreak(f"absolute paths are refused: {candidate!r}")
     target = (root / raw).resolve()
@@ -110,6 +116,21 @@ def validate_args(schema: dict[str, Any], args: dict[str, Any]) -> str | None:
         if enum and value not in enum:
             return f"parameter {key!r} must be one of {enum}, got {value!r}"
     return None
+
+
+def nearby_files(workspace: Path, limit: int = 20) -> str:
+    """Name what actually exists in the jail (§12.6): a small model — or a
+    user typing from memory — that got a filename wrong can only fix it if
+    the error names the real ones. Shared by fs_read and ocr_read rather than
+    kept as fs_read's own private helper, since ocr_read hit the identical
+    "guessed wrong, told nothing" gap it was already built to close."""
+    root = workspace.resolve()
+    names = sorted(
+        str(p.relative_to(root)).replace("\\", "/")
+        for p in root.rglob("*")
+        if p.is_file() and ".audit" not in p.parts
+    )[:limit]
+    return f"Files available: {', '.join(names)}" if names else "The workspace is empty."
 
 
 class Tool(ABC):

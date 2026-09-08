@@ -146,6 +146,31 @@ def test_ocr_read_missing_file_names_it(ctx: RunContext) -> None:
     assert result.error is not None and "no such file" in result.error
 
 
+def test_ocr_read_missing_file_lists_what_exists(ctx: RunContext) -> None:
+    """§12.6, the same fix fs_read already had: a guessed or mistyped path
+    (e.g. dropping the inbox/ prefix, exactly the real report) must point at
+    the real files so a small model can self-correct in the same run."""
+    (ctx.workspace / "inbox" / "hello.png").write_bytes(b"\x89PNG\r\n")
+    result = OcrRead().run({"path": "hello.png"}, ctx)  # missing the inbox/ prefix
+    assert not result.ok
+    assert result.error is not None and "inbox/hello.png" in result.error
+
+
+def test_a_leading_space_in_the_path_no_longer_silently_resolves_elsewhere(
+    ctx: RunContext,
+) -> None:
+    """A stray leading space (easy to pick up pasting into the UI) used to
+    resolve to a different, nonexistent directory with no jail rejection and
+    no diagnostic — resolve_in_jail() now strips it. Checked at the jail
+    level directly: whether PaddleOCR can decode a given image's pixels is a
+    separate concern from whether path resolution found the right file."""
+    from tools.base import resolve_in_jail
+
+    (ctx.workspace / "inbox" / "hello.png").write_bytes(b"\x89PNG\r\n")
+    target = resolve_in_jail(ctx.workspace, " inbox/hello.png")
+    assert target == (ctx.workspace / "inbox" / "hello.png").resolve()
+
+
 def test_ocr_read_rejects_non_image_extensions(ctx: RunContext) -> None:
     (ctx.workspace / "inbox" / "r.md").write_text("hi", encoding="utf-8")
     result = OcrRead().run({"path": "inbox/r.md"}, ctx)
@@ -340,6 +365,19 @@ def test_sandbox_command_carries_the_hardening_flags() -> None:
     assert ("--network", "none") == HARDENING[1:3]
     for flag in ("--read-only", "--cap-drop", "--pids-limit", "--security-opt"):
         assert flag in HARDENING
+
+
+def test_every_tool_description_fits_the_200_char_budget() -> None:
+    """§8.3: "<=200 chars, small models can't read essays." Not a style
+    preference to eyeball per tool — the sandbox's own description drifted to
+    213 chars the moment its capability list grew (more corporate libraries,
+    2026-09-09) and nothing caught it until this test was written to."""
+    from tools.registry import build_tools
+
+    for tool in build_tools().values():
+        assert len(tool.description) <= 200, (
+            f"{tool.name}: {len(tool.description)} chars, over the §8.3 budget"
+        )
 
 
 def test_sandbox_is_gated_by_the_human() -> None:

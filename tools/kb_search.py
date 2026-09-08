@@ -54,10 +54,9 @@ def get_index() -> Index:
 class KbSearch(Tool):
     name = "kb_search"
     description = (
-        "Search the reference corpus (inspection reports, MRPL filings) for "
-        "relevant passages. Hybrid lexical+semantic, finds exact tags "
-        "(V-2301) and paraphrased matches alike. Use before answering "
-        "questions the current workspace document does not cover."
+        "Search the reference corpus (reports, filings) for relevant "
+        "passages. Finds exact tags (V-2301) and paraphrases alike. Use "
+        "before answering questions the workspace document does not cover."
     )
     schema: dict[str, Any] = {
         "type": "object",
